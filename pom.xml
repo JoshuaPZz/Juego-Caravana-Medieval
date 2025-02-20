@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>co.edu.javeriana</groupId>
-	<artifactId>Caravana-Medieval</artifactId>
+	<artifactId>caravana-medieval</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Caravana-Medieval</name>
+	<name>caravana-medieval</name>
 	<description>Proyecto De Caravana Medieval Prieto - Orduz - Henao</description>
 	<url/>
 	<licenses>

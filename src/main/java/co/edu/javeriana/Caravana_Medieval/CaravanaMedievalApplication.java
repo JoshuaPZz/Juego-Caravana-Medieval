@@ -1,4 +1,4 @@
-package co.edu.javeriana.Caravana_Medieval;
+package co.edu.javeriana.caravana_medieval;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
