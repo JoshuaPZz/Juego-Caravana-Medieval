@@ -1,0 +1,12 @@
+2025-02-20 18:54:10.557051-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROM SERVICIO ID_CARAVANA [*]ID_CARAVANA ID_CARAVANA"
+Syntax error in SQL statement "SELECT * FROM SERVICIO ID_CARAVANA [*]ID_CARAVANA ID_CARAVANA"; SQL statement:
+SELECT * FROM SERVICIO ID_CARAVANA ID_CARAVANA ID_CARAVANA [42000-232]
+2025-02-20 18:54:13.740785-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]CAPACIDAD_MAX"; se esperaba "COMMIT, CREATE, CALL, CHECKPOINT, COMMENT"
+Syntax error in SQL statement "[*]CAPACIDAD_MAX"; expected "COMMIT, CREATE, CALL, CHECKPOINT, COMMENT"; SQL statement:
+CAPACIDAD_MAX [42001-232]
+2025-02-20 18:54:20.955738-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]=CARAVANA CAPACIDAD_MAX"
+Syntax error in SQL statement "[*]=CARAVANA CAPACIDAD_MAX"; SQL statement:
+=CARAVANA CAPACIDAD_MAX [42000-232]
