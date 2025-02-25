@@ -7,5 +7,6 @@ import co.edu.javeriana.caravana_medieval.model.Caravana;
 
 @Repository
 public interface CaravanaRepository extends JpaRepository<Caravana, Long> {
+
     
 }

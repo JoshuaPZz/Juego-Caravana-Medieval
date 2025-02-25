@@ -10,3 +10,7 @@ CAPACIDAD_MAX [42001-232]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]=CARAVANA CAPACIDAD_MAX"
 Syntax error in SQL statement "[*]=CARAVANA CAPACIDAD_MAX"; SQL statement:
 =CARAVANA CAPACIDAD_MAX [42000-232]
+2025-02-25 17:35:21.671987-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]=RUTA"
+Syntax error in SQL statement "[*]=RUTA"; SQL statement:
+=RUTA [42000-232]

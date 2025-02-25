@@ -1,8 +1,10 @@
 package co.edu.javeriana.caravana_medieval.init;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +43,11 @@ public class DbInitializer implements CommandLineRunner {
     @Autowired
     private RutaRepository rutaRepository;
 
+
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String[] NOMBRES_CIUDADES = { "Anor Londo", "Leyndell", "Raya Lucaria", "Irithyll", "Casa de Henao" };
-    private static final String[] NOMBRES_PRODUCTOS = { "Especias", "Telas", "Armas", "Metales Preciosos", "Ganado" };
+    // Modificado para 100 ciudades
+    private static final int NUM_CIUDADES = 100;
     private static final String[] NOMBRES_SERVICIOS = { "Reparar", "Mejorar capacidad", "Mejorar velocidad", "Guardias" };
     private static final String[] ROLES = { "Comerciante", "Caravanero", "Administrador" };
 
@@ -53,73 +56,76 @@ public class DbInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Random random = new Random();
 
-        // Crear ciudades
+        // Crear 100 ciudades con nombres numerados
         List<Ciudad> ciudades = new ArrayList<>();
-        for (String nombre : NOMBRES_CIUDADES) {
-            Ciudad ciudad = ciudadRepository.save(new Ciudad(nombre, random.nextInt(10) + 5)); // Impuesto aleatorio entre 5 y 15 MO
+        for (int i = 1; i <= NUM_CIUDADES; i++) {
+            Ciudad ciudad = ciudadRepository.save(new Ciudad("Casa de Henao" + i, random.nextInt(10) + 5));
             ciudades.add(ciudad);
-            //log.info("Ciudad creada: {} con impuesto {}", ciudad.getNombre(), ciudad.getImpuesto());
         }
 
-        // Crear productos
+        // Crear 50 productos con nombres numerados
         List<Producto> productos = new ArrayList<>();
-        for (int i = 0; i < NOMBRES_PRODUCTOS.length; i++) {
-            Producto producto = productoRepository.save(new Producto(NOMBRES_PRODUCTOS[i], i, "Descripción de " + NOMBRES_PRODUCTOS[i]));
+        for (int i = 1; i <= 50; i++) {
+            Producto producto = productoRepository.save(new Producto("Producto" + i, i, "Descripción de Producto" + i));
             productos.add(producto);
         }
 
-        // Asociar productos a ciudades con stock y factores aleatorios
+        // Asociar productos a ciudades (todas las ciudades tienen todos los productos)
         for (Ciudad ciudad : ciudades) {
             for (Producto producto : productos) {
-                double factorDemanda = 0.5 + (random.nextDouble() * 1.5); // Factor de demanda entre 0.5 y 2.0
-                double factorOferta = 0.5 + (random.nextDouble() * 1.5); // Factor de oferta entre 0.5 y 2.0
-                CiudadProducto ciudadProducto = ciudadProductoRepository.save(new CiudadProducto(ciudad, producto, factorDemanda, factorOferta));
-                //log.info("Ciudad {} comercia {} con FD={} y FO={}", ciudad.getNombre(), producto.getNombre(), factorDemanda, factorOferta);
+                double factorDemanda = 0.5 + (random.nextDouble() * 1.5);
+                double factorOferta = 0.5 + (random.nextDouble() * 1.5);
+                ciudadProductoRepository.save(new CiudadProducto(ciudad, producto, factorDemanda, factorOferta));
             }
         }
 
-        // Crear servicios
+        // Crear servicios (igual que antes)
         List<Servicio> servicios = new ArrayList<>();
         for (String nombre : NOMBRES_SERVICIOS) {
-            Servicio servicio = servicioRepository.save(new Servicio(nombre, "Descripción de " + nombre));
-            servicios.add(servicio);
+            servicios.add(servicioRepository.save(new Servicio(nombre, "Descripción de " + nombre)));
         }
 
-        // Asociar servicios a ciudades con precios aleatorios
+        // Asociar servicios a ciudades
         for (Ciudad ciudad : ciudades) {
             for (Servicio servicio : servicios) {
-                double precio = 50 + random.nextInt(100); // Precio entre 50 y 150 MO
-                CiudadServicio ciudadServicio = ciudadServicioRepository.save(new CiudadServicio(ciudad, servicio, precio));
-                //log.info("Ciudad {} ofrece servicio {} por {} MO", ciudad.getNombre(), servicio.getNombre(), precio);
+                double precio = 50 + random.nextInt(100);
+                ciudadServicioRepository.save(new CiudadServicio(ciudad, servicio, precio));
             }
         }
 
-        // Crear caravanas
+        // Crear 3 caravanas
         List<Caravana> caravanas = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
-            Caravana caravana = caravanaRepository.save(new Caravana("Caravana" + i, 10 + i, 100 + i * 10, 500 + i * 100, 100));
-            caravanas.add(caravana);
-            //log.info("Caravana creada: {} con {} MO disponibles", caravana.getNombre(), caravana.getDineroDisponible());
+            caravanas.add(caravanaRepository.save(new Caravana("Caravana" + i, 10 + i, 100 + i * 10, 500 + i * 100, 100)));
         }
 
-        // Crear jugadores y asignarlos a caravanas con diferentes roles
+        // Crear 10 jugadores (4 en la primera caravana, 3 en las demás)
+        int jugadoresCreados = 0;
         for (Caravana caravana : caravanas) {
-            for (int j = 0; j < ROLES.length; j++) {
-                Jugador jugador = jugadorRepository.save(new Jugador(ROLES[j], "Jugador_" + j, caravana));
-                //log.info("Jugador creado: {} con rol {} en {}", jugador.getNombre(), jugador.getRol(), caravana.getNombre());
+            int jugadoresPorCaravana = (caravana.getNombre().equals("Caravana1")) ? 4 : 3;
+            for (int j = 0; j < jugadoresPorCaravana; j++) {
+                jugadorRepository.save(new Jugador(ROLES[j % ROLES.length], "Jugador_" + (jugadoresCreados + 1), caravana));
+                jugadoresCreados++;
             }
         }
 
-        // Crear rutas entre ciudades (alternando seguras e inseguras)
-        for (int i = 0; i < ciudades.size() - 1; i++) {
-            boolean segura = random.nextBoolean();
-            int longitud = 20 + random.nextInt(30); // Longitud entre 20 y 50
-            int dano = segura ? 0 : 10 + random.nextInt(20); // Daño entre 10 y 30 si es insegura
+        // Generar 100 rutas aleatorias únicas
+        Set<String> rutasExistentes = new HashSet<String>();
+        int rutasCreadas = 0;
+        while (rutasCreadas < 100) {
+            Ciudad origen = ciudades.get(random.nextInt(NUM_CIUDADES));
+            Ciudad destino = ciudades.get(random.nextInt(NUM_CIUDADES));
+            if (!origen.equals(destino) && !rutasExistentes.contains(origen.getId() + "-" + destino.getId())) {
+                boolean segura = random.nextBoolean();
+                int longitud = 20 + random.nextInt(30);
+                int dano = segura ? 0 : 10 + random.nextInt(20); //la ruta depende de la longitud, revisar esto
 
-            Ruta ruta = rutaRepository.save(new Ruta(ciudades.get(i), ciudades.get(i + 1), longitud, dano));
-            //log.info("Ruta creada de {} a {} ({}segura) - Longitud: {}, Daño: {}", ciudades.get(i).getNombre(), ciudades.get(i + 1).getNombre(), segura ? "" : "In", longitud, dano);
+                rutaRepository.save(new Ruta(origen, destino, longitud, dano));
+                rutasExistentes.add(origen.getId() + "-" + destino.getId());
+                rutasCreadas++;
+            }
         }
 
-        log.info("Base de datos inicializada correctamente.");
+        log.info("Base de datos inicializada con {} ciudades, {} productos, 10 jugadores y 100 rutas.", NUM_CIUDADES, productos.size());
     }
 }
