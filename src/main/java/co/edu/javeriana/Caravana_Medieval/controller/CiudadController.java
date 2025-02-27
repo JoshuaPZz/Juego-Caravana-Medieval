@@ -2,19 +2,23 @@ package co.edu.javeriana.caravana_medieval.controller;
 
 import java.util.List;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import ch.qos.logback.core.model.Model;
+import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
 import co.edu.javeriana.caravana_medieval.service.CiudadService;
 import co.edu.javeriana.caravana_medieval.model.Ciudad;
 
-@Controller
+@RestController
+
 @RequestMapping("/ciudades")
+
 public class CiudadController {
+    private Logger log = LoggerFactory.getLogger(getClass().getName());
     @Autowired
     private CiudadService ciudadService;
 
@@ -24,6 +28,7 @@ public class CiudadController {
         List<Ciudad> ciudades = ciudadService.getAllCiudades();
         ModelAndView modelAndView = new ModelAndView("ciudades-list");
         modelAndView.addObject("listaciudades", ciudades);
+        log.info("MOSTRANDO CIUDADES");
         return modelAndView;
     }
 
@@ -32,8 +37,11 @@ public class CiudadController {
             Ciudad ciudad = ciudadService.getCiudadById(id);
             ModelAndView modelAndView = new ModelAndView("ciudad-view");
             modelAndView.addObject("ciudad", ciudad);
+            log.info("MOSTRANDO CIUDAD");
+            log.info(ciudad.getNombre());
             return modelAndView;
         }
+
     }
 
 
