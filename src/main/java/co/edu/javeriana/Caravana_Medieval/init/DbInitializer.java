@@ -59,14 +59,14 @@ public class DbInitializer implements CommandLineRunner {
         // Crear 100 ciudades con nombres numerados
         List<Ciudad> ciudades = new ArrayList<>();
         for (int i = 1; i <= NUM_CIUDADES; i++) {
-            Ciudad ciudad = ciudadRepository.save(new Ciudad("Casa de Henao" + i, random.nextInt(10) + 5));
+            Ciudad ciudad = ciudadRepository.save(new Ciudad("Casa de Henao calle #" + i, random.nextInt(10) + 5));
             ciudades.add(ciudad);
         }
 
         // Crear 50 productos con nombres numerados
         List<Producto> productos = new ArrayList<>();
         for (int i = 1; i <= 50; i++) {
-            Producto producto = productoRepository.save(new Producto("Producto" + i, i, "Descripción de Producto" + i));
+            Producto producto = productoRepository.save(new Producto("Vitafer #" + i, i, "Multivitanimico para la salud #" + i));
             productos.add(producto);
         }
 
