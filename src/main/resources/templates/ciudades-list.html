@@ -18,16 +18,18 @@
           <th>Rutas donde es Origen</th>
           <th>Rutas donde es Destino</th>
           <th>Impuesto</th>
+          <th>View</th>
         </tr>
       </thead>
       <tbody>
         <tr th:each="ciudad : ${listaciudades}">
           <td th:text="${ciudad.nombre}"></td>
+
           <td>
             <table>
               <thead>
                 <tr>
-                  <th>Productos de esta ciudad</th>
+                  <th th:text="|Productos de ${ciudad.nombre}|"></th>
                 </tr>
               </thead>
               <tbody>
@@ -37,6 +39,68 @@
               </tbody>
             </table>
           </td>
+
+          <td>
+            <table>
+              <thead>
+                <tr>
+                  <th th:text="|Servicios de ${ciudad.nombre}|"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="servicio : ${ciudad.servicios}">
+                  <td th:text="${servicio.servicio.nombre}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+
+          <td><table>
+            <thead>
+              <tr>
+                <th th:text="|Servicio de ${ciudad.nombre}|"></th>
+                <th th:text="|Comprado por ${ciudad.compras}|"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="servicio : ${ciudad.servicios}">
+                <td th:text="${servicio.servicio.nombre}"></td>
+              </tr>
+            </tbody>
+          </table></td>
+
+          <td><table>
+            <thead>
+              <tr>
+                <th>Destino</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="rutas : ${ciudad.rutasOrigen}">
+                <td th:text="${rutas.destino.nombre}"></td>
+              </tr>
+            </tbody>
+          </table></td>
+
+          <td><table>
+            <thead>
+              <tr>
+                <th>Origen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="rutas : ${ciudad.rutasDestino}">
+                <td th:text="${rutas.origen.nombre}"></td>
+              </tr>
+            </tbody>
+          </table></td>
+
+          <td th:text="${ciudad.impuesto}"></td>
+
+          <td>
+            <a th:href="@{/ciudades/{id}(id=${ciudad.id})}">View</a>
+          </td>
+          
         </tr>
       </tbody>
     </table>
