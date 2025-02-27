@@ -28,7 +28,7 @@ public class CiudadController {
         List<Ciudad> ciudades = ciudadService.getAllCiudades();
         ModelAndView modelAndView = new ModelAndView("ciudades-list");
         modelAndView.addObject("listaciudades", ciudades);
-        log.info("MOSTRANDO CIUDADES");
+        log.info("MOSTRANDO CIUDADES: ");
         return modelAndView;
     }
 
@@ -37,7 +37,7 @@ public class CiudadController {
             Ciudad ciudad = ciudadService.getCiudadById(id);
             ModelAndView modelAndView = new ModelAndView("ciudad-view");
             modelAndView.addObject("ciudad", ciudad);
-            log.info("MOSTRANDO CIUDAD");
+            log.info("MOSTRANDO CIUDAD: ");
             log.info(ciudad.getNombre());
             return modelAndView;
         }
