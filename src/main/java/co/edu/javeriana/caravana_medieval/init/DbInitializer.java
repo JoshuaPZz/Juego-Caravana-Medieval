@@ -70,14 +70,17 @@ public class DbInitializer implements CommandLineRunner {
             productos.add(producto);
         }
 
-        // Asociar productos a ciudades (todas las ciudades tienen todos los productos)
-        for (Ciudad ciudad : ciudades) {
-            for (Producto producto : productos) {
-                double factorDemanda = 0.5 + (random.nextDouble() * 1.5);
-                double factorOferta = 0.5 + (random.nextDouble() * 1.5);
-                ciudadProductoRepository.save(new CiudadProducto(ciudad, producto, factorDemanda, factorOferta));
-            }
+       // Asociar productos a ciudades (no todas las ciudades tienen todos los productos)
+for (Ciudad ciudad : ciudades) {
+    for (Producto producto : productos) {
+        if (random.nextDouble() < 0.5) { // Solo asigna el producto a la ciudad en un 50% de los casos
+            double factorDemanda = 0.5 + (random.nextDouble() * 1.5);
+            double factorOferta = 0.5 + (random.nextDouble() * 1.5);
+            ciudadProductoRepository.save(new CiudadProducto(ciudad, producto, factorDemanda, factorOferta));
         }
+    }
+}
+
 
         // Crear servicios (igual que antes)
         List<Servicio> servicios = new ArrayList<>();

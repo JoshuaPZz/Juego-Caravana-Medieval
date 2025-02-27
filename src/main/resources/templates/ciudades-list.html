@@ -1,47 +1,44 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Lista de Ciudades</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>Ciudades list</h1>
 
     <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Productos</th>
-                <th>Servicios</th>
-                <th>Compras</th>
-                <th>Rutas donde es Origen</th>
-                <th>Rutas donde es Destino</th>
-                <th>Impuesto</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="ciudad : ${listaciudades}">
-                <td th:text="${ciudad.nombre}"></td>
-                <td>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Productos de esta ciudad</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="producto : ${ciudad.productos}">
-                                <td th:text="${producto.nombre}">
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Productos</th>
+          <th>Servicios</th>
+          <th>Compras</th>
+          <th>Rutas donde es Origen</th>
+          <th>Rutas donde es Destino</th>
+          <th>Impuesto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="ciudad : ${listaciudades}">
+          <td th:text="${ciudad.nombre}"></td>
+          <td>
+            <table>
+              <thead>
+                <tr>
+                  <th>Productos de esta ciudad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="producto : ${ciudad.productos}">
+                  <td th:text="${producto.producto.nombre}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
     </table>
-
-</body>
-
+  </body>
 </html>
