@@ -1,36 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8"/>
-    <title>Vista particular de ciudad</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/ciudad-view.css" />
+    <script src="/js/ciudad-view.js" defer></script>
+    <title>Vista de Ciudad</title>
   </head>
 
   <body>
-    <h1>Ciudad View</h1>
-    <ul>
-        <li th:text="${ciudad.nombre}"></li>
-        <li th:text="|Productos de ${ciudad.nombre}|"></li>
-        <ul th:each="producto : ${ciudad.productos}">
-            <li th:text="${producto.producto.nombre}"></li>
-        </ul>
-        <li th:text="|Servicios de ${ciudad.nombre}|"></li>
-        <ul th:each="servicio : ${ciudad.servicios}">
-            <li th:text="${servicio.servicio.nombre}"></li>
-        </ul>
-        <li>Acá van las compras</li>
-        <li th:text="|Destinos donde ${ciudad.nombre} es el origen de la ruta|"></li>
-        <ul th:each="rutas: ${ciudad.rutasOrigen}">
-            <li th:text="${rutas.destino.nombre}"></li>
-        </ul>
-        <li th:text="|Origenes donde ${ciudad.nombre} es el destino de la ruta|"></li>
-        <ul th:each="rutas: ${ciudad.rutasDestino}">
-            <li th:text="${rutas.origen.nombre}"></li>
-        </ul>
-        <li th:text="${ciudad.impuesto}"></li>
-        <li>
-            <a th:href="@{/ciudades/list}">Volver a vista general</a>
-        </li>
-    </ul>
+    <div class="info-card">
+      <h1 th:text="${ciudad.nombre}"></h1>
 
+      <!-- Impuesto -->
+      <div class="impuesto-badge">
+        Impuesto: <span th:text="${ciudad.impuesto}"></span>%
+      </div>
+    </div>
+
+    <!-- Productos -->
+    <div class="dropdown-section">
+      <div class="dropdown-header">
+        <span class="section-title">📦 Productos disponibles</span>
+        <span>▼</span>
+      </div>
+      <div class="dropdown-content">
+        <ul class="item-list">
+          <li
+            th:each="producto : ${ciudad.productos}"
+            th:text="${producto.producto.nombre}"
+          ></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Servicios -->
+    <div class="dropdown-section">
+      <div class="dropdown-header">
+        <span class="section-title">🛠️ Servicios disponibles</span>
+        <span>▼</span>
+      </div>
+      <div class="dropdown-content">
+        <ul class="item-list">
+          <li
+            th:each="servicio : ${ciudad.servicios}"
+            th:text="${servicio.servicio.nombre}"
+          ></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Rutas Origen -->
+    <div class="dropdown-section">
+      <div class="dropdown-header">
+        <span class="section-title">📍 Rutas como Origen</span>
+        <span>▼</span>
+      </div>
+      <div class="dropdown-content">
+        <ul class="item-list">
+          <li
+            th:each="ruta : ${ciudad.rutasOrigen}"
+            th:text="${ruta.destino.nombre}"
+          ></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Rutas Destino -->
+    <div class="dropdown-section">
+      <div class="dropdown-header">
+        <span class="section-title">🏁 Rutas como Destino</span>
+        <span>▼</span>
+      </div>
+      <div class="dropdown-content">
+        <ul class="item-list">
+          <li
+            th:each="ruta : ${ciudad.rutasDestino}"
+            th:text="${ruta.origen.nombre}"
+          ></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Botón de volver -->
+    <div class="info-card" style="text-align: center">
+      <a class="back-button" th:href="@{/ciudades/list}">
+        ← Volver a la lista
+      </a>
+    </div>
   </body>
-</html> 
+</html>
