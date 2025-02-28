@@ -62,13 +62,13 @@
             <div class="dropdown">
               <div class="dropdown-header">
                 <span
-                  th:text="|Servicio de ${ciudad.nombre} - Comprado por ${ciudad.compras}|"
+                  th:text="|Servicio de ${ciudad.nombre} comprados|"
                 ></span>
               </div>
               <div class="dropdown-content">
                 <div
-                  th:each="servicio : ${ciudad.servicios}"
-                  th:text="${servicio.servicio.nombre}"
+                  th:each="compra : ${ciudad.compras}"
+                  th:text="|${compra.servicio.nombre} comprado por ${compra.caravana.nombre}|"
                 ></div>
               </div>
             </div>

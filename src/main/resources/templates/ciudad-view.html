@@ -50,6 +50,22 @@
       </div>
     </div>
 
+    <!-- Compras -->
+    <div class="dropdown-section">
+      <div class="dropdown-header">
+        <span class="section-title">🤑 Servicios comprados</span>
+        <span>▼</span>
+      </div>
+      <div class="dropdown-content">
+        <ul class="item-list">
+          <li
+            th:each="compra : ${ciudad.compras}"
+            th:text="|${compra.servicio.nombre} comprado por la caravana ${compra.caravana.nombre}|"
+          ></li>
+        </ul>
+      </div>
+    </div>
+
     <!-- Rutas Origen -->
     <div class="dropdown-section">
       <div class="dropdown-header">
