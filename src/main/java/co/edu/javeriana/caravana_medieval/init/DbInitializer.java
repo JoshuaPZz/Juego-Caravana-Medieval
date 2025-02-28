@@ -43,6 +43,9 @@ public class DbInitializer implements CommandLineRunner {
     @Autowired
     private RutaRepository rutaRepository;
 
+    @Autowired
+    private ServicioCompraRepository servicioCompraRepository;
+
     private Logger log = LoggerFactory.getLogger(getClass());
 
     private static final int NUM_CIUDADES = 100;
@@ -96,11 +99,16 @@ public class DbInitializer implements CommandLineRunner {
         }
 
         // Asociar servicios a ciudades
+        
         for (Ciudad ciudad : ciudades) {
+            List<CiudadServicio> serviciosDeLaCiudad = new ArrayList<>();
             for (Servicio servicio : servicios) {
                 double precio = 50 + random.nextInt(100);
-                ciudadServicioRepository.save(new CiudadServicio(ciudad, servicio, precio));
+                CiudadServicio ciudadServicio = new CiudadServicio(ciudad, servicio, precio);
+                serviciosDeLaCiudad.add(ciudadServicio);
+                ciudadServicioRepository.save(ciudadServicio);
             }
+            ciudad.setServicios(serviciosDeLaCiudad);
         }
 
         // Crear 3 caravanas
@@ -116,6 +124,19 @@ public class DbInitializer implements CommandLineRunner {
             for (int j = 0; j < jugadoresPorCaravana; j++) {
                 jugadorRepository.save(new Jugador(ROLES[j % ROLES.length], "Jugador_" + (jugadoresCreados + 1), caravana));
                 jugadoresCreados++;
+            }
+        }
+
+        // Crear las compras
+        for(Caravana caravana : caravanas){
+            for(Ciudad ciudad : ciudades){
+                List<CiudadServicio> serviciosCiudad = ciudad.getServicios();
+                if (serviciosCiudad != null && !serviciosCiudad.isEmpty()) {
+                    int indexRandom = random.nextInt(serviciosCiudad.size());
+                    ServicioCompra servicioCompra = new ServicioCompra(caravana, ciudad, serviciosCiudad.get(indexRandom).getServicio());
+                    ciudad.getCompras().add(servicioCompra);
+                    servicioCompraRepository.save(servicioCompra);
+                }                
             }
         }
 
