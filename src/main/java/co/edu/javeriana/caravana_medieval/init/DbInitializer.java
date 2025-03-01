@@ -56,6 +56,7 @@ public class DbInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
+         if (ciudadRepository.count() == 0) {
         Random random = new Random();
 
         // Crear 100 ciudades con nombres numerados
@@ -74,23 +75,27 @@ public class DbInitializer implements CommandLineRunner {
 
         // Asociar productos a ciudades y calcular precios de venta (PV) y compra (PC)
         for (Ciudad ciudad : ciudades) {
-            for (Producto producto : productos) {
-                if (random.nextDouble() < 0.5) { // Solo algunas ciudades tienen algunos productos
-                    double factorDemanda = 0.5 + (random.nextDouble() * 1.5);
-                    double factorOferta = 0.5 + (random.nextDouble() * 1.5);
-                    int stock = random.nextInt(50) + 1; // Stock aleatorio entre 1 y 50
+    int numProductosPorCiudad = 5 + random.nextInt(16); // Entre 5 y 20 productos por ciudad
+    Set<Producto> productosSeleccionados = new HashSet<>();
+    while (productosSeleccionados.size() < numProductosPorCiudad) {
+        int index = random.nextInt(productos.size());
+        Producto producto = productos.get(index);
+        productosSeleccionados.add(producto);
+    }
+    for (Producto producto : productosSeleccionados) {
+        double factorDemanda = 0.5 + (random.nextDouble() * 1.5);
+        double factorOferta = 0.5 + (random.nextDouble() * 1.5);
+        int stock = random.nextInt(50) + 1;
 
-                    double precioVenta = factorDemanda / (1 + stock);
-                    double precioCompra = factorOferta / (1 + stock);
+        double precioVenta = factorDemanda / (1 + stock);
+        double precioCompra = factorOferta / (1 + stock);
 
-                    CiudadProducto ciudadProducto = new CiudadProducto(ciudad, producto, factorDemanda, factorOferta);
-                    ciudadProducto.setPrecioVenta(precioVenta);
-                    ciudadProducto.setPrecioCompra(precioCompra);
-
-                    ciudadProductoRepository.save(ciudadProducto);
-                }
-            }
-        }
+        CiudadProducto ciudadProducto = new CiudadProducto(ciudad, producto, factorDemanda, factorOferta);
+        ciudadProducto.setPrecioVenta(precioVenta);
+        ciudadProducto.setPrecioCompra(precioCompra);
+        ciudadProductoRepository.save(ciudadProducto);
+    }
+}
 
         // Crear servicios
         List<Servicio> servicios = new ArrayList<>();
@@ -187,6 +192,10 @@ public class DbInitializer implements CommandLineRunner {
         }
 
         log.info("Base de datos inicializada con {} ciudades, {} productos, 10 jugadores y 100 rutas.", NUM_CIUDADES, productos.size());
+        log.info("Base de datos inicializada desde cero");
+    } else {
+        log.info("La base de datos ya contiene informacion - omitiendo inicializacion");
+    }
     }
 
     /**
