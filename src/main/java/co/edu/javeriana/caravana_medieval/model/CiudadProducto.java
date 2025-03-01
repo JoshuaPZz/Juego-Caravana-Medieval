@@ -19,6 +19,8 @@ public class CiudadProducto {
 
     private double factorDemanda;
     private double factorOferta;
+    private double precioCompra;
+    private double precioVenta;
 
     public CiudadProducto() {}
 
@@ -67,5 +69,21 @@ public class CiudadProducto {
 
     public void setFactorOferta(double factorOferta) {
         this.factorOferta = factorOferta;
+    }
+
+    public double getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public void setPrecioCompra(double precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public double getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(double precioVenta) {
+        this.precioVenta = precioVenta;
     }
 }
