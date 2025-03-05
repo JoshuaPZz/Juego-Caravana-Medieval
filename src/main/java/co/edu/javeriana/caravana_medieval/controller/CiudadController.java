@@ -42,9 +42,7 @@ public class CiudadController {
             log.info(ciudad.getNombre());
             return modelAndView;
         }
-
-
-
+        
     }
 
 
