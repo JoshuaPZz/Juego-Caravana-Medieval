@@ -40,8 +40,8 @@
               </div>
               <div class="dropdown-content">
                 <div
-                  th:each="producto : ${ciudad.productos}"
-                  th:text="${producto.producto.nombre}"
+                  th:each="producto : ${ciudad.productoNombres}"
+                  th:text="${producto}"
                 ></div>
               </div>
             </div>
@@ -55,8 +55,8 @@
               </div>
               <div class="dropdown-content">
                 <div
-                  th:each="servicio : ${ciudad.servicios}"
-                  th:text="${servicio.servicio.nombre}"
+                  th:each="servicio : ${ciudad.servicioNombres}"
+                  th:text="${servicio}"
                 ></div>
               </div>
             </div>
@@ -71,10 +71,10 @@
                 ></span>
               </div>
               <div class="dropdown-content">
-                <div
-                  th:each="compra : ${ciudad.compras}"
-                  th:text="|${compra.servicio.nombre} comprado por ${compra.caravana.nombre}|"
-                ></div>
+                <div th:each="i : ${#numbers.sequence(0, ciudad.compraServicioNombres.size() - 1)}">
+                  <span th:text="|${ciudad.compraServicioNombres[i]} comprado por ${ciudad.compraCaravanaNombres[i]}|"></span>
+                </div>
+              </div>
               </div>
             </div>
           </td>
@@ -87,8 +87,8 @@
               </div>
               <div class="dropdown-content">
                 <div
-                  th:each="ruta : ${ciudad.rutasOrigen}"
-                  th:text="${ruta.destino.nombre}"
+                  th:each="ruta : ${ciudad.rutaOrigenNombres}"
+                  th:text="${ruta}"
                 ></div>
               </div>
             </div>
@@ -102,8 +102,8 @@
               </div>
               <div class="dropdown-content">
                 <div
-                  th:each="ruta : ${ciudad.rutasDestino}"
-                  th:text="${ruta.origen.nombre}"
+                  th:each="ruta : ${ciudad.rutaDestinoNombres}"
+                  th:text="${ruta}"
                 ></div>
               </div>
             </div>
