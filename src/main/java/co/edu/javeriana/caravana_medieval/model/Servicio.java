@@ -6,7 +6,8 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-public class Servicio {
+public class
+Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -100,7 +100,32 @@ tr:hover {
   transition: background-color 0.3s ease;
 }
 
+.edit-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #178833;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.delete-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #178833;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
 .view-button:hover {
+  background-color: #00ff40;
+}
+.edit-button:hover {
+  background-color: #00ff40;
+}
+.delete-button:hover {
   background-color: #00ff40;
 }
 

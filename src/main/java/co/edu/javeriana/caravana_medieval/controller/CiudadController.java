@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
 import co.edu.javeriana.caravana_medieval.service.CiudadService;
 import co.edu.javeriana.caravana_medieval.model.Ciudad;
+import co.edu.javeriana.caravana_medieval.dto.CiudadDTO;
 
 @RestController
 
@@ -25,7 +26,7 @@ public class CiudadController {
 
     @GetMapping("/list")
     public ModelAndView getAllCiudades() {
-        List<Ciudad> ciudades = ciudadService.getAllCiudades();
+        List<CiudadDTO> ciudades = ciudadService.getAllCiudades();
         ModelAndView modelAndView = new ModelAndView("ciudades-list");
         modelAndView.addObject("listaciudades", ciudades);
         log.info("MOSTRANDO CIUDADES: ");
@@ -34,13 +35,15 @@ public class CiudadController {
 
     @GetMapping("/view/{id}")
         public ModelAndView getCiudadById(@PathVariable("id") Long id) {
-            Ciudad ciudad = ciudadService.getCiudadById(id);
+            CiudadDTO ciudad = ciudadService.getCiudadById(id).orElseThrow();
             ModelAndView modelAndView = new ModelAndView("ciudad-view");
             modelAndView.addObject("ciudad", ciudad);
             log.info("MOSTRANDO CIUDAD: ");
             log.info(ciudad.getNombre());
             return modelAndView;
         }
+
+
 
     }
 
