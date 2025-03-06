@@ -19,85 +19,50 @@
     </div>
 
     <!-- Productos -->
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <span class="section-title">📦 Productos disponibles</span>
-        <span>▼</span>
+
+    <div class="sigmadiv">
+      <div>
+        <a
+          class="view-productos"
+          th:href="@{/ciudades/view/{id}(id=${ciudad.id})}"
+          >Productos
+        </a>
       </div>
-      <div class="dropdown-content">
-        <ul class="item-list">
-          <li
-            th:each="producto : ${ciudad.productoNombres}"
-            th:text="${producto}"
-          ></li>
-        </ul>
+
+      <!-- Servicios -->
+      <div>
+        <a
+          class="view-servicios"
+          th:href="@{/ciudades/view/{id}(id=${ciudad.id})}"
+          >Servicios
+        </a>
+      </div>
+
+      <!-- Compras -->
+      <div>
+        <a
+          class="view-compras"
+          th:href="@{/ciudades/view/{id}(id=${ciudad.id})}"
+          >Compras
+        </a>
+      </div>
+
+      <!-- Rutas Origen -->
+      <div>
+        <a class="view-origen" th:href="@{/ciudades/view/{id}(id=${ciudad.id})}"
+          >Origen
+        </a>
+      </div>
+
+      <!-- Rutas Destino -->
+      <div>
+        <a
+          class="view-destino"
+          th:href="@{/ciudades/view/{id}(id=${ciudad.id})}"
+          >Destino
+        </a>
       </div>
     </div>
-
-    <!-- Servicios -->
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <span class="section-title">🛠️ Servicios disponibles</span>
-        <span>▼</span>
-      </div>
-      <div class="dropdown-content">
-        <ul class="item-list">
-          <li
-            th:each="servicio : ${ciudad.servicioNombres}"
-            th:text="${servicio}"
-          ></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Compras -->
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <span class="section-title">🤑 Servicios comprados</span>
-        <span>▼</span>
-      </div>
-      <div class="dropdown-content">
-        <ul class="item-list">
-          <li
-            th:each="i : ${#numbers.sequence(0, ciudad.compraServicioNombres.size() - 1)}"
-            th:text="|${ciudad.compraServicioNombres[i]} comprado por ${ciudad.compraCaravanaNombres[i]}|"
-          ></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Rutas Origen -->
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <span class="section-title">📍 Rutas como Origen</span>
-        <span>▼</span>
-      </div>
-      <div class="dropdown-content">
-        <ul class="item-list">
-          <li
-            th:each="ruta : ${ciudad.rutaOrigenNombres}"
-            th:text="${ruta}"
-          ></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Rutas Destino -->
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <span class="section-title">🏁 Rutas como Destino</span>
-        <span>▼</span>
-      </div>
-      <div class="dropdown-content">
-        <ul class="item-list">
-          <li
-            th:each="ruta : ${ciudad.rutaDestinoNombres}"
-            th:text="${ruta}"
-          ></li>
-        </ul>
-      </div>
-    </div>
-
     <!-- Botón de volver -->
     <div class="info-card" style="text-align: center">
       <a class="back-button" th:href="@{/ciudades/list}">

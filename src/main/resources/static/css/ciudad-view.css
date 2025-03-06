@@ -41,22 +41,32 @@ h1 {
   margin: 0.5rem 0;
 }
 
-.item-list li {
-  padding: 0.8rem;
+.sigmadiv > div > a {
+  padding: 0.8rem 1.5rem; /* Add more horizontal padding */
   margin: 0.3rem 0;
   background-color: #f8f9fa;
-  border-radius: 5px;
+  border-radius: 8px; /* Slightly larger border radius */
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for all effects */
 }
 
-.item-list li::before {
+.sigmadiv > div a::before {
   content: "•";
   color: #00a24f;
   font-weight: bold;
   display: inline-block;
   width: 1em;
+}
+
+.sigmadiv > div > a:hover {
+  background-color: #178833; /* Green background on hover */
+  color: white; /* Change text color */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  transform: translateY(-3px); /* Slight lift effect */
 }
 
 .back-button {
@@ -106,12 +116,6 @@ h1 {
 
 .dropdown-header:hover {
   background-color: #e9ecef;
-}
-
-.dropdown-content {
-  display: none;
-  padding: 1rem;
-  background-color: white;
 }
 
 .dropdown.active .dropdown-content {
