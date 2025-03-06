@@ -29,6 +29,13 @@ public class CiudadService {
                 .map(CiudadMapper::toDTO);
     }
 
+
+    public void guardarCiudad(CiudadDTO ciudadDTO) {
+        Ciudad ciudad = CiudadMapper.toEntity(ciudadDTO);
+        ciudadRepository.save(ciudad);
+
+    }
+
     public Optional<CiudadProductoDTO> getCiudadProducto(Long ciudadId) {
         Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
         if(ciudadOpt.isEmpty()) {
@@ -43,4 +50,6 @@ public class CiudadService {
         CiudadProductoDTO ciudadProductoDTO = new CiudadProductoDTO(ciudadId, idProductos);
         return Optional.of(ciudadProductoDTO);
     }
+
+
 }
