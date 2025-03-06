@@ -17,11 +17,6 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Productos</th>
-          <th>Servicios</th>
-          <th>Compras</th>
-          <th>Rutas donde es Origen</th>
-          <th>Rutas donde es Destino</th>
           <th>Impuesto</th>
           <th>View</th>
           <th>Edit</th>
@@ -31,86 +26,7 @@
       <tbody>
         <tr th:each="ciudad : ${listaciudades}">
           <td th:text="${ciudad.nombre}"></td>
-
-          <!-- Productos -->
-          <td>
-            <div class="dropdown">
-              <div class="dropdown-header">
-                <span th:text="|Productos de ${ciudad.nombre}|"></span>
-              </div>
-              <div class="dropdown-content">
-                <div
-                  th:each="producto : ${ciudad.productoNombres}"
-                  th:text="${producto}"
-                ></div>
-              </div>
-            </div>
-          </td>
-
-          <!-- Servicios -->
-          <td>
-            <div class="dropdown">
-              <div class="dropdown-header">
-                <span th:text="|Servicios de ${ciudad.nombre}|"></span>
-              </div>
-              <div class="dropdown-content">
-                <div
-                  th:each="servicio : ${ciudad.servicioNombres}"
-                  th:text="${servicio}"
-                ></div>
-              </div>
-            </div>
-          </td>
-
-          <!-- Compras -->
-          <td>
-            <div class="dropdown">
-              <div class="dropdown-header">
-                <span
-                  th:text="|Servicio de ${ciudad.nombre} comprados|"
-                ></span>
-              </div>
-              <div class="dropdown-content">
-                <div th:each="i : ${#numbers.sequence(0, ciudad.compraServicioNombres.size() - 1)}">
-                  <span th:text="|${ciudad.compraServicioNombres[i]} comprado por ${ciudad.compraCaravanaNombres[i]}|"></span>
-                </div>
-              </div>
-              </div>
-            </div>
-          </td>
-
-          <!-- Rutas Origen -->
-          <td>
-            <div class="dropdown">
-              <div class="dropdown-header">
-                <span>Rutas como Origen</span>
-              </div>
-              <div class="dropdown-content">
-                <div
-                  th:each="ruta : ${ciudad.rutaOrigenNombres}"
-                  th:text="${ruta}"
-                ></div>
-              </div>
-            </div>
-          </td>
-
-          <!-- Rutas Destino -->
-          <td>
-            <div class="dropdown">
-              <div class="dropdown-header">
-                <span>Rutas como Destino</span>
-              </div>
-              <div class="dropdown-content">
-                <div
-                  th:each="ruta : ${ciudad.rutaDestinoNombres}"
-                  th:text="${ruta}"
-                ></div>
-              </div>
-            </div>
-          </td>
-
           <td th:text="${ciudad.impuesto}"></td>
-
           <td>
             <a
               class="view-button"

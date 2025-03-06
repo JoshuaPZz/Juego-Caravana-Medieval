@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.slf4j.Logger;
 import co.edu.javeriana.caravana_medieval.service.CiudadService;
-import co.edu.javeriana.caravana_medieval.model.Ciudad;
 import co.edu.javeriana.caravana_medieval.dto.CiudadDTO;
 import org.springframework.web.servlet.view.RedirectView;
 

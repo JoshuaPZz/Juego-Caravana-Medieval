@@ -9,5 +9,4 @@ public class CaravanaMedievalApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CaravanaMedievalApplication.class, args);
 	}
-
 }
