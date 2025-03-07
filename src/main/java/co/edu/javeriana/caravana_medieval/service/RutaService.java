@@ -1,6 +1,7 @@
 package co.edu.javeriana.caravana_medieval.service;
 
 import java.lang.StackWalker.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,5 +44,13 @@ public class RutaService {
         RutaCiudadDTO rutaCiudadDTO = new RutaCiudadDTO(rutaId, origenId, destinoId);
 
         return Optional.of(rutaCiudadDTO);
+    }
+
+    public List<RutaDTO> listaIdstoRuta (List<Long> rutasId) {
+        List<RutaDTO> rutasDTO = new ArrayList<RutaDTO>();
+        for(Long id : rutasId){
+            rutasDTO.add(buscarRuta(id).get());
+        }
+        return rutasDTO;
     }
 }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Rutas donde la ciudad es desstino</title>
+</head>
+
+<body>
+    <h1 th:text="|Rutas donde ${ciudad.nombre} es destino|"></h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Longitud</th>
+                <th>Daño</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ruta : ${rutasDestino}">
+                <td th:text="${ruta.id}"></td>
+                <td th:text="${ruta.longitud}"></td>
+                <td th:text="${ruta.dano}"></td>
+                <td>
+                    <a 
+                      class="view-button" 
+                      th:href="@{/rutas/view/{id}(id=${ruta.id})}">View</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</table>
+</body>
+
+</html>
