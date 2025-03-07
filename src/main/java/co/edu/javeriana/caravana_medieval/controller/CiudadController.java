@@ -40,7 +40,6 @@ public class CiudadController {
         return modelAndView;
     }
 
-
     @GetMapping("/create")
     public ModelAndView formularioCrearCiudad() {
         ModelAndView modelAndView = new ModelAndView("ciudad-edit");

@@ -1,7 +1,9 @@
 package co.edu.javeriana.caravana_medieval.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.javeriana.caravana_medieval.repository.ProductoRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,11 +24,17 @@ public class CiudadProductoController {
     private CiudadService ciudadService;
     @Autowired
     private ProductoService productoService;
+    @Autowired
+    private ProductoRepository productoRepository;
 
     @GetMapping("/producto")
     public ModelAndView getProductosCiudad(@PathVariable("id") Long id) {
+        CiudadDTO ciudad = ciudadService.getCiudadById(id).get();
         CiudadProductoDTO ciudadProductoDTO = ciudadService.getCiudadProducto(id).orElseThrow();
-        ProductoDTO productoDTO = ciudadService.getCiudadProducto(id).orElseThrow().getIdProductos() 
+        List<ProductoDTO> productos = productoService.listaIdsToProducto(ciudadProductoDTO.getIdProductos());
+        ModelAndView modelAndView = new ModelAndView("producto-ciudad-view");
+        modelAndView.addObject("ciudad", ciudad);
+        modelAndView.addObject("productos", productos);
+        return modelAndView;
     }
-    
 }
