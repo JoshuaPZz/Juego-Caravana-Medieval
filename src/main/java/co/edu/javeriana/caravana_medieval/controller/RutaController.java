@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.edu.javeriana.caravana_medieval.dto.RutaDTO;
+import co.edu.javeriana.caravana_medieval.service.CiudadService;
 import co.edu.javeriana.caravana_medieval.service.RutaService;
 
 @RestController
 
-@RequestMapping("/rutass")
+@RequestMapping("/rutas")
 
 public class RutaController {
     private Logger log = LoggerFactory.getLogger(getClass().getName());
@@ -32,11 +33,4 @@ public class RutaController {
         return modelAndView;
     }
     
-    /*@GetMapping("/view/{idRuta}")
-    public ModelAndView buscarRuta(@PathVariable("idRuta") Long id){
-        RutaDTO ruta = rutaService.buscarRuta(id).orElseThrow();
-        ModelAndView modelAndView = new ModelAndView("rutas-view");
-        modelAndView.addObject("ruta", ruta);
-        return modelAndView;
-    }*/
 }
