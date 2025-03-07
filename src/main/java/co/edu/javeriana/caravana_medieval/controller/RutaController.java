@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.edu.javeriana.caravana_medieval.dto.RutaCiudadDTO;
 import co.edu.javeriana.caravana_medieval.dto.RutaDTO;
-import co.edu.javeriana.caravana_medieval.service.CiudadService;
 import co.edu.javeriana.caravana_medieval.service.RutaService;
 
 @RestController
@@ -30,6 +30,18 @@ public class RutaController {
         ModelAndView modelAndView = new ModelAndView("rutas-list");
         modelAndView.addObject("listarutas", rutas);
         log.info("MOSTRANDO RUTAS: ");
+        return modelAndView;
+    }
+
+    @GetMapping("/view/{id}")
+    public ModelAndView obtenerRutaPorId(@PathVariable("id") Long id){
+        RutaDTO ruta = rutaService.buscarRuta(id).orElseThrow();
+        RutaCiudadDTO rutaCiudad = rutaService.getRutaCiudad(id).orElseThrow();
+        ModelAndView modelAndView = new ModelAndView("ruta-view");
+        modelAndView.addObject("ruta", ruta);
+        modelAndView.addObject("rutaCiudad", rutaCiudad);
+        log.info("MOSTRANDO RUTA: ");
+        log.info(ruta.getId().toString());
         return modelAndView;
     }
     

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import co.edu.javeriana.caravana_medieval.dto.RutaCiudadDTO;
 import co.edu.javeriana.caravana_medieval.dto.RutaDTO;
+import co.edu.javeriana.caravana_medieval.mapper.CiudadMapper;
 import co.edu.javeriana.caravana_medieval.mapper.RutaMapper;
 import co.edu.javeriana.caravana_medieval.model.Ruta;
 import co.edu.javeriana.caravana_medieval.repository.RutaRepository;
@@ -29,7 +30,7 @@ public class RutaService {
         .map(RutaMapper::toDto);
     }
 
-    public Optional <RutaCiudadDTO> getOrigenRuta (Long rutaId) {
+    public Optional <RutaCiudadDTO> getRutaCiudad (Long rutaId) {
         Optional <Ruta> rutaOpt = rutaRepository.findById(rutaId);
         if(rutaOpt.isEmpty()){
             return Optional.empty();

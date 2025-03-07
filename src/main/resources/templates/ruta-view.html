@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/ciudad-view.css" />
+    <script src="/js/ciudades-view.js"></script>
+
+</head>
+
+<body>
+    <div class="info-card">
+        <h1 th:text="|Ruta # ${ruta.id}|"></h1>
+    </div>
+
+
+    <div class="sigmadiv">
+
+        <!-- Longitud -->
+        <div>
+            <a class="longitud" th:text="|Longitud de la ruta: ${ruta.longitud}|">
+            </a>
+        </div>
+
+        <!-- Daño -->
+        <div>
+            <a class="dano" th:text="|Daño aplicado a las carvanas: ${ruta.longitud}|">
+            </a>
+        </div>
+
+        <!-- Origen -->
+        <div>
+            <a class="view-origen" th:href="@{/ciudades/view/{id}(id=${rutaCiudad.ciudadOrigenId})}">Origen de la ruta
+            </a>
+        </div>
+
+        <!-- Destino -->
+        <div>
+            <a class="view-origen" th:href="@{/ciudades/view/{id}(id=${rutaCiudad.ciudadDestinoId})}">Destino de la ruta
+            </a>
+        </div>
+
+    </div>
+    <!-- Botón de volver -->
+    <div class="info-card" style="text-align: center">
+        <a class="back-button" th:href="@{/ciudades/list}">
+            ← Volver a la lista
+        </a>
+    </div>
+</body>
+
+</html>
