@@ -47,8 +47,8 @@
 
       <!-- Rutas Origen -->
       <div>
-        <a class="view-origen" th:href="@{/ciudades/view/{id}(id=${ciudad.id})}"
-          >Origen
+        <a class="view-origen" th:href="@{/ciudades/view/{id}/rutaorigen(id=${ciudad.id})}"
+          >Rutas donde es oirgen
         </a>
       </div>
 
@@ -56,8 +56,8 @@
       <div>
         <a
           class="view-destino"
-          th:href="@{/ciudades/view/{id}(id=${ciudad.id})}"
-          >Destino
+          th:href="@{/ciudades/view/{id}/rutadestino(id=${ciudad.id})}"
+          >Rutas donde es destino
         </a>
       </div>
     </div>
