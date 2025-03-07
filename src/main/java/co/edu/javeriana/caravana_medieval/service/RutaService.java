@@ -1,5 +1,6 @@
 package co.edu.javeriana.caravana_medieval.service;
 
+import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,5 +26,9 @@ public class RutaService {
         return rutaRepository.findById(id)
         .map(RutaMapper::toDto);
     }
+
+    /*public Optional <RutaCiudadDTO> getCiudadRuta (Long Person Id) {
+
+    }*/
     
 }
