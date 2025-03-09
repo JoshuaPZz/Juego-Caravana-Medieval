@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compras en la ciudad: <span th:text="${ciudad.nombre}">Ciudad</span></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Compras en la ciudad: <span th:text="${ciudad.nombre}">Ciudad</span></h1>
+
+<table border="1" cellspacing="0" cellpadding="5">
+    <thead>
+    <tr>
+        <th>Nombre Servicio</th>
+        <th>Nombre Caravana</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="compra : ${compras}">
+        <td th:text="${compra.nombreServicio}">Servicio</td>
+        <td th:text="${compra.nombreCaravana}">Caravana</td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/ciudades/view/{id}(id=${ciudad.id})}">Volver a ciudades</a>
+</body>
+</html>
