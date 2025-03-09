@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/servicio-ciudad-view.css" />
     <title>Productos de la ciudad</title>
 </head>
 <body>
@@ -24,6 +25,7 @@
 </table>
 </body>
 </table>
+<a th:href="@{/ciudades/view/{id}(id=${ciudad.id})}" class="back-button">← Volver a la Ciudad</a>
 </body>
 </html>
 
