@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/rutaorigen-ciudad-view.css" />
     <title>Rutas donde la ciudad es origen</title>
 </head>
 
@@ -31,6 +32,7 @@
         </tbody>
     </table>
 </body>
+<a th:href="@{/ciudades/view/{id}(id=${ciudad.id})}" class="back-button">← Volver a la Ciudad</a>
 </table>
 </body>
 
