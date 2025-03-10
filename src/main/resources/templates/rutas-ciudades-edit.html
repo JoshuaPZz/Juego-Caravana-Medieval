@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/css/rutas-ciudades-edit.css" />
     <title>Editar Ciudades de Ruta</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <form action="/rutas/ciudades/save" method="post">
-        <input type="hidden" name="rutaId" th:value="${rutaCiudad.rutaId}">
+      <input type="hidden" name="rutaId" th:value="${rutaCiudad.rutaId}" />
 
-        <label for="ciudadOrigen">Ciudad de Origen:</label>
-        <select id="ciudadOrigen" name="ciudadOrigenId">
-            <option value="" th:selected="${rutaCiudad.ciudadOrigenId == null}">-- Sin origen --</option>
-            <option th:each="ciudad : ${allCiudades}" 
-                    th:value="${ciudad.id}" 
-                    th:selected="${ciudad.id == rutaCiudad.ciudadOrigenId}"
-                    th:text="${ciudad.nombre}">
-            </option>
-        </select>
+      <label for="ciudadOrigen">Ciudad de Origen:</label>
+      <select id="ciudadOrigen" name="ciudadOrigenId">
+        <option value="" th:selected="${rutaCiudad.ciudadOrigenId == null}">
+          -- Sin origen --
+        </option>
+        <option
+          th:each="ciudad : ${allCiudades}"
+          th:value="${ciudad.id}"
+          th:selected="${ciudad.id == rutaCiudad.ciudadOrigenId}"
+          th:text="${ciudad.nombre}"
+        ></option>
+      </select>
 
-        <label for="ciudadDestino">Ciudad de Destino:</label>
-        <select id="ciudadDestino" name="ciudadDestinoId">  
-            <option value="" th:selected="${rutaCiudad.ciudadDestinoId == null}">-- Sin destino --</option>
-            <option th:each="ciudad : ${allCiudades}" 
-                    th:value="${ciudad.id}" 
-                    th:selected="${ciudad.id == rutaCiudad.ciudadDestinoId}"
-                    th:text="${ciudad.nombre}">
-            </option>
-        </select>
+      <label for="ciudadDestino">Ciudad de Destino:</label>
+      <select id="ciudadDestino" name="ciudadDestinoId">
+        <option value="" th:selected="${rutaCiudad.ciudadDestinoId == null}">
+          -- Sin destino --
+        </option>
+        <option
+          th:each="ciudad : ${allCiudades}"
+          th:value="${ciudad.id}"
+          th:selected="${ciudad.id == rutaCiudad.ciudadDestinoId}"
+          th:text="${ciudad.nombre}"
+        ></option>
+      </select>
 
-        <button type="submit">Guardar</button>
+      <button type="submit">Guardar</button>
     </form>
 
-    <a th:href="@{/rutas/list}" class="back-button">← Volver a la lista de Rutas</a>
-</body>
-
+    <a th:href="@{/rutas/list}" class="back-button"
+      >← Volver a la lista de Rutas</a
+    >
+  </body>
 </html>
