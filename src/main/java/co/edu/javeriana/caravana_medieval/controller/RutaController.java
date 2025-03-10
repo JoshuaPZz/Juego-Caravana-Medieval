@@ -55,9 +55,24 @@ public class RutaController {
         return modelAndView;
     }
 
+    @GetMapping("/edit/{id}")
+    public ModelAndView formularioEditarRuta(@PathVariable Long id){
+        RutaDTO rutaDTO = rutaService.buscarRuta(id).orElseThrow();
+        ModelAndView modelAndView = new ModelAndView("ruta-edit");
+        modelAndView.addObject("ruta", new RutaDTO());
+        modelAndView.addObject("ruta", rutaDTO);
+        return modelAndView;
+    }
+
     @PostMapping("/save")
     public RedirectView guardarRuta (@ModelAttribute RutaDTO rutaDTO){
         rutaService.guardarRuta(rutaDTO);
+        return new RedirectView("/rutas/list");
+    }
+
+    @GetMapping("delete/{id}")
+    public RedirectView borrarRuta (@PathVariable Long id){
+        rutaService.borrarRuta(id);
         return new RedirectView("/rutas/list");
     }
     

@@ -1,55 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/rutas-list.css" />
-    <title>Lista de Rutas</title>
-  </head>
-  <body>
-    <h1>Rutas list</h1>
-    <p>
-      <a class="create-button" th:href="@{/rutas/create}">Create</a>
-    </p>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Id de la ruta</th>
-          <th>Longitud</th>
-          <th>Daño</th>
-          <th>View</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="ruta : ${listarutas}">
-          <td th:text="${ruta.id}"></td>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/rutas-list.css" />
+  <title>Lista de Ciudades</title>
+</head>
 
-          <td th:text="${ruta.longitud}"></td>
+<body>
+  <h1>Rutas list</h1>
+  <p>
+    <a class="create-button" th:href="@{/rutas/create}">Create</a>
+  </p>
 
-          <td th:text="${ruta.dano}"></td>
+  <table>
+    <thead>
+      <tr>
+        <th>Id de la ruta</th>
+        <th>Longitud</th>
+        <th>Daño</th>
+        <th>View</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="ruta : ${listarutas}">
+        <td th:text="${ruta.id}"></td>
 
-          <td>
-            <a class="view-button" th:href="@{/rutas/view/{id}(id=${ruta.id})}"
-              >View</a
-            >
-          </td>
-          <td>
-            <a class="edit-button" th:href="@{/rutas/view/{id}(id=${ruta.id})}"
-              >Edit</a
-            >
-          </td>
-          <td>
-            <a
-              class="delete-button"
-              th:href="@{/rutas/view/{id}(id=${ruta.id})}"
-              >Delete</a
-            >
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </body>
+        <td th:text="${ruta.longitud}"></td>
+
+        <td th:text="${ruta.dano}"></td>
+
+        <td>
+          <a class="view-button" th:href="@{/rutas/view/{id}(id=${ruta.id})}">View</a>
+        </td>
+        <td>
+          <a class="edit-button" th:href="@{/rutas/edit/{id}(id=${ruta.id})}">Edit</a>
+        </td>
+        <td>
+          <a class="delete-button" th:href="@{/rutas/delete/{id}(id=${ruta.id})}">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
 </html>

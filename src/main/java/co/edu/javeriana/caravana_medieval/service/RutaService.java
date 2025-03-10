@@ -12,7 +12,9 @@ import co.edu.javeriana.caravana_medieval.dto.RutaCiudadDTO;
 import co.edu.javeriana.caravana_medieval.dto.RutaDTO;
 import co.edu.javeriana.caravana_medieval.mapper.CiudadMapper;
 import co.edu.javeriana.caravana_medieval.mapper.RutaMapper;
+import co.edu.javeriana.caravana_medieval.model.Ciudad;
 import co.edu.javeriana.caravana_medieval.model.Ruta;
+import co.edu.javeriana.caravana_medieval.repository.CiudadRepository;
 import co.edu.javeriana.caravana_medieval.repository.RutaRepository;
 
 @Service
@@ -20,6 +22,9 @@ public class RutaService {
 
     @Autowired
     private RutaRepository rutaRepository;
+
+    @Autowired
+    private CiudadRepository ciudadRepository;
 
     public List<RutaDTO> listarRutas() {
         return rutaRepository.findAll().stream()
@@ -31,20 +36,20 @@ public class RutaService {
         .map(RutaMapper::toDto);
     }
 
-    public Optional <RutaCiudadDTO> getRutaCiudad (Long rutaId) {
-        Optional <Ruta> rutaOpt = rutaRepository.findById(rutaId);
-        if(rutaOpt.isEmpty()){
+    public Optional<RutaCiudadDTO> getRutaCiudad(Long rutaId) {
+        Optional<Ruta> rutaOpt = rutaRepository.findById(rutaId);
+        if (rutaOpt.isEmpty()) {
             return Optional.empty();
         }
+
         Ruta ruta = rutaOpt.get();
-        ruta.getOrigen();
-        Long origenId = ruta.getOrigen().getId();
-        Long destinoId = ruta.getDestino().getId();
-
+        Long origenId = (ruta.getOrigen() != null) ? ruta.getOrigen().getId() : null;
+        Long destinoId = (ruta.getDestino() != null) ? ruta.getDestino().getId() : null;
+    
         RutaCiudadDTO rutaCiudadDTO = new RutaCiudadDTO(rutaId, origenId, destinoId);
-
         return Optional.of(rutaCiudadDTO);
     }
+    
 
     public List<RutaDTO> listaIdstoRuta (List<Long> rutasId) {
         List<RutaDTO> rutasDTO = new ArrayList<RutaDTO>();
@@ -57,5 +62,18 @@ public class RutaService {
     public void guardarRuta(RutaDTO rutaDTO) {
         Ruta ruta = RutaMapper.toEntity(rutaDTO);
         rutaRepository.save(ruta);       
+    }
+
+    public void actualizarRutaCiudad(RutaCiudadDTO rutaCiudadDTO){
+        Ruta ruta = rutaRepository.findById(rutaCiudadDTO.getRutaId()).orElseThrow();
+        Optional<Ciudad> origen = ciudadRepository.findById(rutaCiudadDTO.getCiudadOrigenId());
+        Optional<Ciudad> destino = ciudadRepository.findById(rutaCiudadDTO.getCiudadDestinoId());
+        ruta.setOrigen(origen.get());
+        ruta.setDestino(destino.get());
+        rutaRepository.save(ruta);
+    }
+
+    public void borrarRuta(Long id) {
+        rutaRepository.deleteById(id);        
     }
 }
