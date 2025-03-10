@@ -7,7 +7,6 @@ public class CiudadDTO {
     public CiudadDTO() {
     }
 
-    public CiudadDTO(String nombre, int impuesto) {
         this.nombre = nombre;
         this.impuesto = impuesto;
     }
@@ -16,17 +15,7 @@ public class CiudadDTO {
         return nombre;
     }
 
-    public int getImpuesto() {
-        return impuesto;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public void setImpuesto(int impuesto) {
-        this.impuesto = impuesto;
-    }
-    
-    
 }
