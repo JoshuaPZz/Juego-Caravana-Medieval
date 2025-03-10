@@ -9,11 +9,11 @@ public class Ruta {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "ciudad_origen", nullable = false)
+    @JoinColumn(name = "ciudad_origen", nullable = true)
     private Ciudad origen;
 
     @ManyToOne
-    @JoinColumn(name = "ciudad_destino", nullable = false)
+    @JoinColumn(name = "ciudad_destino", nullable = true)
     private Ciudad destino;
 
     private int longitud;
@@ -22,9 +22,7 @@ public class Ruta {
     public Ruta() {
     }
 
-    public Ruta(Ciudad origen, Ciudad destino, int longitud, int dano) {
-        this.origen = origen;
-        this.destino = destino;
+    public Ruta(int longitud, int dano) {
         this.longitud = longitud;
         this.dano = dano;
     }

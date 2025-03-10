@@ -18,7 +18,6 @@ public class RutaMapper {
         ruta.setId(rutaDTO.getId());
         ruta.setDano(rutaDTO.getDano());
         ruta.setLongitud(rutaDTO.getLongitud());
-
         return ruta;
     }
     
