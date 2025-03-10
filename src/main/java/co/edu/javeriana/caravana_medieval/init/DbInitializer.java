@@ -155,8 +155,10 @@ public class DbInitializer implements CommandLineRunner {
                 if (!ciudad.equals(destino) && !destinos.contains(destino)) {
                     int longitud = 10 + random.nextInt(131); // Rutas entre 10 y 140
                     int dano = calcularDanoRuta(longitud, caravanas);
-
-                    rutaRepository.save(new Ruta(ciudad, destino, longitud, dano));
+                    Ruta ruta = new Ruta(longitud, dano);
+                    ruta.setDestino(destino);
+                    ruta.setOrigen(ciudad);
+                    rutaRepository.save(ruta);
                     destinos.add(destino);
                 }
             }
@@ -166,8 +168,10 @@ public class DbInitializer implements CommandLineRunner {
                 if (!ciudad.equals(origen) && !origenes.contains(origen)) {
                     int longitud = 10 + random.nextInt(131);
                     int dano = calcularDanoRuta(longitud, caravanas);
-
-                    rutaRepository.save(new Ruta(origen, ciudad, longitud, dano));
+                    Ruta ruta = new Ruta(longitud, dano);
+                    ruta.setDestino(ciudad);
+                    ruta.setOrigen(origen);
+                    rutaRepository.save(ruta);
                     origenes.add(origen);
                 }
             }
@@ -184,8 +188,10 @@ public class DbInitializer implements CommandLineRunner {
             if (!origen.equals(destino) && !rutasExistentes.contains(origen.getId() + "-" + destino.getId())) {
                 int longitud = 10 + random.nextInt(131);
                 int dano = calcularDanoRuta(longitud, caravanas);
-
-                rutaRepository.save(new Ruta(origen, destino, longitud, dano));
+                Ruta ruta = new Ruta(longitud, dano);
+                ruta.setOrigen(origen);
+                ruta.setDestino(destino);
+                rutaRepository.save(ruta);
                 rutasExistentes.add(origen.getId() + "-" + destino.getId());
                 rutasCreadas++;
             }

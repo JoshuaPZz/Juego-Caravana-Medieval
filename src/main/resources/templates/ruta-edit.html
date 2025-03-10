@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Edit Ruta</title>
+</head>
+
+<body>
+    <form action="/rutas/save" method="post">
+        <label>Longitud</label>
+        <input type="text" id="longitud" name="longitud" th:value="${ruta.longitud}" />
+        <label>Daño</label>
+        <input type="text" id="dano" name="dano" th:value="${ruta.dano}" />
+        <button type="submit">Guardar</button>
+    </form>
+    <a th:href="@{/ciudades/list}" class="back-button">← Volver a la lista de Rutas</a>
+</body>
+
+</html>

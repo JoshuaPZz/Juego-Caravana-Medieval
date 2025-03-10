@@ -6,10 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import co.edu.javeriana.caravana_medieval.dto.RutaCiudadDTO;
 import co.edu.javeriana.caravana_medieval.dto.RutaDTO;
@@ -43,6 +46,19 @@ public class RutaController {
         log.info("MOSTRANDO RUTA: ");
         log.info(ruta.getId().toString());
         return modelAndView;
+    }
+
+    @GetMapping("/create")
+    public ModelAndView formularioCrearRuta(){
+        ModelAndView modelAndView = new ModelAndView("ruta-edit");
+        modelAndView.addObject("ruta", new RutaDTO());
+        return modelAndView;
+    }
+
+    @PostMapping("/save")
+    public RedirectView guardarRuta (@ModelAttribute RutaDTO rutaDTO){
+        rutaService.guardarRuta(rutaDTO);
+        return new RedirectView("/rutas/list");
     }
     
 }

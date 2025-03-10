@@ -53,4 +53,9 @@ public class RutaService {
         }
         return rutasDTO;
     }
+
+    public void guardarRuta(RutaDTO rutaDTO) {
+        Ruta ruta = RutaMapper.toEntity(rutaDTO);
+        rutaRepository.save(ruta);       
+    }
 }
