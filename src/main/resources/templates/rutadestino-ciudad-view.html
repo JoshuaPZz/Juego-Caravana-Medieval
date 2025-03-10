@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/rutadestino-ciudad-view.css" />
     <title>Rutas donde la ciudad es desstino</title>
 </head>
 
@@ -30,6 +31,7 @@
             </tr>
         </tbody>
     </table>
+    <a th:href="@{/ciudades/view/{id}(id=${ciudad.id})}" class="back-button">← Volver a la Ciudad</a>
 </body>
 </table>
 </body>
