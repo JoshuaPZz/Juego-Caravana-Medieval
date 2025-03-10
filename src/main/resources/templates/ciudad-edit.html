@@ -1,16 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Edit Ciudad</title>
-</head>
-<body>
+    <link rel="stylesheet" href="/css/ciudad-edit.css" />
+  </head>
+  <body>
     <form action="/ciudades/save" method="post">
-        <label>Nombre</label>
-        <input type="text" id="nombre" name="nombre" th:value="${ciudad.nombre}">
-        <label>Impuesto</label>
-        <input type="text" id="impuesto" name="impuesto" th:value="${ciudad.impuesto}">
-        <button type="submit">Guardar</button>
+      <label>Nombre</label>
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        th:value="${ciudad.nombre}"
+      />
+      <label>Impuesto</label>
+      <input
+        type="text"
+        id="impuesto"
+        name="impuesto"
+        th:value="${ciudad.impuesto}"
+      />
+      <button type="submit">Guardar</button>
     </form>
-</body>
-</html> 
+    <a th:href="@{/ciudades/list}" class="back-button"
+      >← Volver a la lista de Ciudades</a
+    >
+  </body>
+</html>

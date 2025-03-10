@@ -14,7 +14,7 @@ public class ProductoMapper {
         productoDTO.setId(producto.getId());
         productoDTO.setNombre(producto.getNombre());
         productoDTO.setTipo(producto.getTipo());
-        productoDTO.setDescripcion(producto.getNombre());
+        productoDTO.setDescripcion(producto.getDescripcion());
         return productoDTO;
     }
     public static Producto toEntity (ProductoDTO productoDTO) {

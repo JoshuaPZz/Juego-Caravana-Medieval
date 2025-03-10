@@ -2,26 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/producto-ciudad-view.css" />
-    <title>Servicios de la ciudad</title>
+    <link rel="stylesheet" href="/css/servicio-ciudad-view.css" />
+    <title>Productos de la ciudad</title>
 </head>
 <body>
-<h1 th:text="'Productos de ' + ${ciudad.nombre}"></h1>
+<h1 th:text="'Servicios de ' + ${ciudad.nombre}"></h1>
 <table>
     <thead>
     <tr>
         <th>ID</th>
         <th>Nombre</th>
-        <th>Tipo</th>
         <th>Descripción</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="producto : ${productos}">
-        <td th:text="${producto.id}"></td>
-        <td th:text="${producto.nombre}"></td>
-        <td th:text="${producto.tipo}"></td>
-        <td th:text="${producto.descripcion}"></td>
+    <tr th:each="servicio : ${servicios}">
+        <td th:text="${servicio.id}"></td>
+        <td th:text="${servicio.nombre}"></td>
+        <td th:text="${servicio.descripcion}"></td>
     </tr>
     </tbody>
 </table>

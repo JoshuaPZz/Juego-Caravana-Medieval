@@ -12,24 +12,23 @@ import co.edu.javeriana.caravana_medieval.service.*;
 import co.edu.javeriana.caravana_medieval.dto.*;
 
 import org.slf4j.Logger;
-
-
 @Controller
 @RequestMapping("/ciudades/view/{id}")
-public class CiudadProductoController {
+public class CiudadServicioController {
     private Logger log = LoggerFactory.getLogger(getClass().getName());
     @Autowired
     private CiudadService ciudadService;
     @Autowired
-    private ProductoService productoService;
-    @GetMapping("/producto")
+    private ServicioService servicioService;
+
+    @GetMapping("/servicios")
     public ModelAndView getProductosCiudad(@PathVariable("id") Long id) {
         CiudadDTO ciudad = ciudadService.getCiudadById(id).get();
-        CiudadProductoDTO ciudadProductoDTO = ciudadService.getCiudadProducto(id).orElseThrow();
-        List<ProductoDTO> productos = productoService.listaIdsToProducto(ciudadProductoDTO.getIdProductos());
-        ModelAndView modelAndView = new ModelAndView("producto-ciudad-view");
+        CiudadServicioDTO ciudadServicioDTO = ciudadService.getCiudadService(id).orElseThrow();
+        List<ServicioDTO> servicios = servicioService.listaIdsToProducto(ciudadServicioDTO.getIdServicios());
+        ModelAndView modelAndView = new ModelAndView("servicio-ciudad-view");
         modelAndView.addObject("ciudad", ciudad);
-        modelAndView.addObject("productos", productos);
+        modelAndView.addObject("servicios", servicios);
         return modelAndView;
     }
 }
