@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar productos</title>
+</head>
+<body>
+    <form action="/ciudades/edit/{id}/save" method="post">
+        <input type="hidden" name="idCiudad" th:value="${ciudad.id}">
+        <ul>
+            <li th:each="producto : ${productos}">
+                <input type = "checkbox" name="idProductos" th:value="${producto.id}"
+                    th:checked="${productosCiudad.idProductos.contains(producto.id)}"
+                >
+                <label th:text="${producto.nombre}"></label>
+            </li>
+        </ul>
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>

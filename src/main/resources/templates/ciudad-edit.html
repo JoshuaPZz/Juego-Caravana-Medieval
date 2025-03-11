@@ -7,6 +7,7 @@
   </head>
   <body>
     <form action="/ciudades/save" method="post">
+      <input type ="hidden" name="id" th:value="${ciudad.id}">
       <label>Nombre</label>
       <input
         type="text"
@@ -23,6 +24,7 @@
       />
       <button type="submit">Guardar</button>
     </form>
+    <a th:href="@{/ciudades/edit/{id}/productos(id=${ciudad.id})}">Agregar o quitar productos de esta ciudad</a>
     <a th:href="@{/ciudades/list}" class="back-button"
       >← Volver a la lista de Ciudades</a
     >

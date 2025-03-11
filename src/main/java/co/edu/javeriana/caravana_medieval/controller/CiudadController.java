@@ -47,6 +47,14 @@ public class CiudadController {
         return modelAndView;
     }
 
+    @GetMapping("/edit/{id}")
+    public ModelAndView formularioEditarCiudad(@PathVariable("id") Long id) {
+        CiudadDTO ciudad = ciudadService.getCiudadById(id).orElseThrow();
+        ModelAndView modelAndView = new ModelAndView("ciudad-edit");
+        modelAndView.addObject("ciudad", ciudad);
+        return modelAndView;
+    }
+
     @PostMapping("/save")
     public RedirectView guardarCiudad(@ModelAttribute CiudadDTO ciudadDTO) {
         ciudadService.guardarCiudad(ciudadDTO);
