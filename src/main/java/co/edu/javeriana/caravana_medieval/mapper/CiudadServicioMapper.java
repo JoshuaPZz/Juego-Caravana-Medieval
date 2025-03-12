@@ -16,10 +16,7 @@ public class CiudadServicioMapper {
 
     public static CiudadServicio toEntity (CiudadServicioDTO ciudadServicioDTO){
         CiudadServicio ciudadServicio = new CiudadServicio();
-        ciudadServicio.getServicio().setNombre(ciudadServicioDTO.getNombreServicio());;
         ciudadServicio.setId(ciudadServicioDTO.getId());
-        ciudadServicio.getCiudad().setId(ciudadServicioDTO.getIdCiudad());
-        ciudadServicio.getServicio().setId(ciudadServicioDTO.getIdServicio());
         ciudadServicio.setPrecio(ciudadServicioDTO.getPrecio());
         return ciudadServicio;
     }

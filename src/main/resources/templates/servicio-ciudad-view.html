@@ -13,7 +13,8 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Acciones</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +23,10 @@
                 <td th:text="${servicio.nombre}"></td>
                 <td th:text="${servicio.descripcion}"></td>
                 <td>
-                    <a th:href="@{/ciudades/view/{id}/servicios/{idServicio}(id=${ciudad.id}, idServicio=${servicio.id})}" class="button">View</a>
+                    <a th:href="@{/ciudades/view/{id}/servicios/{idServicio}(id=${ciudad.id}, idServicio=${servicio.id})}" class="button">Edit</a>
+                </td>
+                <td>
+                    <a th:href="@{/ciudades/view/{id}/servicio/{idServicio}/delete(id=${ciudad.id}, idServicio=${servicio.id})}" class="button">Delete</a>
                 </td>
             </tr>
         </tbody>

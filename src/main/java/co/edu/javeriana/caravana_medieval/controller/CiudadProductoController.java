@@ -12,6 +12,8 @@ import co.edu.javeriana.caravana_medieval.service.*;
 import co.edu.javeriana.caravana_medieval.dto.*;
 
 import org.slf4j.Logger;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 @Controller
@@ -32,12 +34,20 @@ public class CiudadProductoController {
         modelAndView.addObject("productos", productos);
         return modelAndView;
     }
-    @GetMapping("producto/{idProducto}")
+    @GetMapping("/producto/{idProducto}")
     public ModelAndView getProductoCiudadTupla(@PathVariable("id") Long id, @PathVariable("idProducto") Long productoId) {
         List<CiudadProductoDTO> ciudadProductosDTO = ciudadService.getCiudadProducto(id).get();
         CiudadProductoDTO ciudadProductoDTO = ciudadService.getCiudadProductoTupla(ciudadProductosDTO, id, productoId);
+        log.error(ciudadProductoDTO.getId().toString());
         ModelAndView modelAndView = new ModelAndView("producto-tupla");
         modelAndView.addObject("ciudadProducto", ciudadProductoDTO);
         return modelAndView;
+    }
+    @PostMapping("producto/{idProducto}/save")
+    public RedirectView saveEditProductoCiudad(@ModelAttribute CiudadProductoDTO ciudadProductoDTO, @PathVariable("id") Long id, @PathVariable("idProducto") Long idProducto) {
+        ciudadProductoDTO.setIdCiudad(id);
+        ciudadProductoDTO.setIdProducto(idProducto);
+        ciudadService.saveEditProductoCiudad(ciudadProductoDTO);
+        return new RedirectView("/ciudades/view/" + id + "/producto");
     }
 }

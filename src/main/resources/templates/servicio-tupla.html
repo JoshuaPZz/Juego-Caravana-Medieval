@@ -9,12 +9,14 @@
 
 <body>
     <h1 th:text="${ciudadServicio.nombreServicio}"></h1>
-    <form action="@{/ciudades/view/{id}/servicio/{idServicio}/save" method="post">
+    <form th:action="@{/ciudades/view/{id}/servicio/{idServicio}/save(id=${ciudadServicio.idCiudad}, idServicio=${ciudadServicio.idServicio})}" method="post">
         <input type="hidden" name="id" th:value="${ciudadServicio.id}">
-        <label>Nombre</label>
-        <input type="text" id="nombreServicio" name="nombreServicio" th:value="${ciudadServicio.nombreServicio}" />
+        <input type="hidden" name="idCiudad" th:value="${ciudadServicio.idCiudad}">
+        <input type="hidden" name="idServicio" th:value="${ciudadServicio.idServicio}">
+        <input type="hidden" id="nombreServicio" name="nombreServicio" th:value="${ciudadServicio.nombreServicio}" />
         <label>Precio</label>
         <input type="text" id="precio" name="precio" th:value="${ciudadServicio.precio}" />
+        <button type="submit">Guardar</button>
     </form>
 </body>
 

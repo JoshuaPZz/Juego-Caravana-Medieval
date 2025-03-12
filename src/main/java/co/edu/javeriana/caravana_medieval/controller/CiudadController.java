@@ -60,6 +60,12 @@ public class CiudadController {
         ciudadService.guardarCiudad(ciudadDTO);
         return new RedirectView("/ciudades/list");
     }
+
+    @GetMapping("/delete/{id}")
+    public RedirectView borrarCiudad(@PathVariable Long id) {
+        ciudadService.borrarCiudad(id);
+        return new RedirectView("/ciudades/list");
+    }
 }
 
 

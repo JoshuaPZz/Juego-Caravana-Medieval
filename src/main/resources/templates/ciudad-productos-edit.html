@@ -10,7 +10,7 @@
         <ul>
             <li th:each="producto : ${productos}">
                 <input type = "checkbox" name="idProductos" th:value="${producto.id}"
-                    th:checked="${productosCiudad.idProductos.contains(producto.id)}"
+                    th:checked="${productosId.contains(producto.id)}"
                 >
                 <label th:text="${producto.nombre}"></label>
             </li>

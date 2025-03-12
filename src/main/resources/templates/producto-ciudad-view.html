@@ -7,6 +7,7 @@
 </head>
 <body>
 <h1 th:text="'Productos de ' + ${ciudad.nombre}"></h1>
+<a th:href="@{/ciudades/edit/{id}/productos(id=${ciudad.id})}">Agregar o quitar productos de esta ciudad</a>
 <table>
     <thead>
     <tr>
@@ -24,7 +25,7 @@
         <td th:text="${producto.nombre}"></td>
         <td th:text="${producto.tipo}"></td>
         <td th:text="${producto.descripcion}"></td>
-        <td><a th:href="@{/ciudades/view/{id}/producto/{idProducto}(id=${ciudad.id}, idProducto=${producto.id})}" class="button"> View</a></td>
+        <td><a th:href="@{/ciudades/view/{id}/producto/{idProducto}(id=${ciudad.id}, idProducto=${producto.id})}" class="button"> Edit</a></td>
     </tr>
     </tbody>
 </table>

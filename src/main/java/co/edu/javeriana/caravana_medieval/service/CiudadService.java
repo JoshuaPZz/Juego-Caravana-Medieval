@@ -10,15 +10,11 @@ import co.edu.javeriana.caravana_medieval.mapper.CiudadProductoMapper;
 import co.edu.javeriana.caravana_medieval.mapper.CiudadServicioMapper;
 import co.edu.javeriana.caravana_medieval.mapper.ServicioCompraMapper;
 import co.edu.javeriana.caravana_medieval.model.*;
-import co.edu.javeriana.caravana_medieval.repository.CiudadProductoRepository;
-import co.edu.javeriana.caravana_medieval.repository.ProductoRepository;
-import co.edu.javeriana.caravana_medieval.repository.ServicioCompraRepository;
+import co.edu.javeriana.caravana_medieval.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import co.edu.javeriana.caravana_medieval.repository.CiudadRepository;
 
 @Service
 public class CiudadService {
@@ -32,6 +28,12 @@ public class CiudadService {
     private CiudadProductoRepository ciudadProductoRepository;
 
     private Logger log = LoggerFactory.getLogger(getClass().getName());
+    @Autowired
+    private ServicioRepository servicioRepository;
+    @Autowired
+    private CiudadServicioRepository ciudadServicioRepository;
+    @Autowired
+    private ServicioCompraRepository servicioCompraRepository;
 
     public List<CiudadDTO> getAllCiudades() {
         return ciudadRepository.findAll().stream()
@@ -115,6 +117,42 @@ public class CiudadService {
                 .stream()
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void saveEditProductoCiudad(CiudadProductoDTO ciudadProductoDTO) {
+        CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
+        ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
+        ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
+        ciudadProductoRepository.save(ciudadProducto);
+    }
+
+    public void saveEditServicioCiudad(CiudadServicioDTO ciudadServicioDTO) {
+        CiudadServicio ciudadServicio = CiudadServicioMapper.toEntity(ciudadServicioDTO);
+        ciudadServicio.setServicio(servicioRepository.findById(ciudadServicioDTO.getIdServicio()).get());
+        ciudadServicio.setCiudad(ciudadRepository.findById(ciudadServicioDTO.getIdCiudad()).get());
+        ciudadServicioRepository.save(ciudadServicio);
+    }
+
+    public void borrarCiudad(Long id) {
+        ciudadRepository.deleteById(id);
+    }
+
+    public void borrarCiudadServicio(Long idCiudad, Long idServicio) {
+        List<CiudadServicioDTO> ciudadServicioDTOs = getCiudadService(idCiudad).get();
+        CiudadServicioDTO ciudadServicioDTO = ciudadServicioDTOs.stream()
+                .filter(x -> x.getIdCiudad().equals(idCiudad) && x.getIdServicio().equals(idServicio))
+                .findFirst()
+                .orElse(null);
+        if (ciudadServicioDTO != null) {
+            log.error("ID DE CIUDAD: "+ciudadServicioDTO.getIdCiudad());
+            log.error("ID DE SERVICIO: "+ciudadServicioDTO.getIdServicio());
+            log.error("ID DE LA RELACION: "+ciudadServicioDTO.getId());
+            Long id = ciudadServicioDTO.getId();
+            servicioCompraRepository.deleteAll();
+            ciudadServicioRepository.deleteById(id);
+        } else {
+            log.error("es nulo");
+        }
     }
 
 /*
