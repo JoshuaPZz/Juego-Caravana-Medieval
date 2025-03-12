@@ -6,12 +6,20 @@ import co.edu.javeriana.caravana_medieval.model.*;
 public class CiudadProductoMapper {
     public static CiudadProductoDTO toDTO (CiudadProducto ciudadProducto) {
         CiudadProductoDTO ciudadProductoDTO = new CiudadProductoDTO();
+        ciudadProductoDTO.setId(ciudadProducto.getId());
         ciudadProductoDTO.setIdCiudad(ciudadProducto.getId());
+        ciudadProductoDTO.setIdProducto(ciudadProducto.getProducto().getId());
+        ciudadProductoDTO.setNombreProducto(ciudadProducto.getProducto().getNombre());
+        ciudadProductoDTO.setFactorDemanda(ciudadProducto.getFactorDemanda());
+        ciudadProductoDTO.setFactorOferta(ciudadProducto.getFactorOferta());
+        ciudadProductoDTO.setPrecioCompra(ciudadProducto.getPrecioCompra());
+        ciudadProductoDTO.setPrecioVenta(ciudadProducto.getPrecioVenta());
+        ciudadProductoDTO.setStock(ciudadProducto.getStock());        
         return ciudadProductoDTO;
     }
     public static CiudadProducto toEntity (CiudadProductoDTO ciudadProductoDTO) {
         CiudadProducto ciudadProducto = new CiudadProducto();
-        ciudadProducto.setId(ciudadProductoDTO.getIdCiudad());;
+        ciudadProducto.setId(ciudadProductoDTO.getId());
 
         return ciudadProducto;
     }

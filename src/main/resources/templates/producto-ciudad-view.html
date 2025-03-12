@@ -14,6 +14,8 @@
         <th>Nombre</th>
         <th>Tipo</th>
         <th>Descripción</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -22,6 +24,7 @@
         <td th:text="${producto.nombre}"></td>
         <td th:text="${producto.tipo}"></td>
         <td th:text="${producto.descripcion}"></td>
+        <td><a th:href="@{/ciudades/view/{id}/producto/{idProducto}(id=${ciudad.id}, idProducto=${producto.id})}" class="button"> View</a></td>
     </tr>
     </tbody>
 </table>

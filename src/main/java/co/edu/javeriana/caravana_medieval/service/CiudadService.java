@@ -7,10 +7,6 @@ import java.util.Optional;
 import co.edu.javeriana.caravana_medieval.dto.*;
 import co.edu.javeriana.caravana_medieval.mapper.CiudadMapper;
 import co.edu.javeriana.caravana_medieval.mapper.CiudadProductoMapper;
-import co.edu.javeriana.caravana_medieval.model.Ciudad;
-import co.edu.javeriana.caravana_medieval.model.Producto;
-import co.edu.javeriana.caravana_medieval.model.Ruta;
-
 import co.edu.javeriana.caravana_medieval.mapper.ServicioCompraMapper;
 import co.edu.javeriana.caravana_medieval.model.*;
 import co.edu.javeriana.caravana_medieval.repository.CiudadProductoRepository;
@@ -51,19 +47,16 @@ public class CiudadService {
         ciudadRepository.save(ciudad);
     }
 
-    public Optional<CiudadProductoDTO> getCiudadProducto(Long ciudadId) {
+    public Optional<List<CiudadProductoDTO>> getCiudadProducto(Long ciudadId) {
         Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
         if (ciudadOpt.isEmpty()) {
             return Optional.empty();
         }
         Ciudad ciudad = ciudadOpt.get();
-        List<CiudadProducto> relacionCiudadProducto = ciudad.getProductos();
-        List<Long> idProductos = relacionCiudadProducto.stream()
-                .map(CiudadProducto::getProducto)
-                .map(Producto::getId)
+        List<CiudadProductoDTO> ciudadProductoDTOs = ciudad.getProductos().stream()
+                .map(CiudadProductoMapper::toDTO)
                 .toList();
-        CiudadProductoDTO ciudadProductoDTO = new CiudadProductoDTO(ciudadId, idProductos);
-        return Optional.of(ciudadProductoDTO);
+        return Optional.of(ciudadProductoDTOs);
     }
 
     public Optional<CiudadRutasDTO> getCiudadRutas(Long ciudadId) {
@@ -108,6 +101,18 @@ public class CiudadService {
         return Optional.of(servicioCompras);
     }
 
+    public CiudadProductoDTO getCiudadProductoTupla(List<CiudadProductoDTO> ciudadProductosDTO, Long idCiudad, Long idProducto) {
+        
+        CiudadProductoDTO ciudadProducto = ciudadProductosDTO.stream()
+        .filter(x -> x.getIdCiudad() == idCiudad && x.getIdProducto() == idProducto)
+        .findFirst()
+        .orElse(null);
+        
+        return ciudadProducto;
+    }
+
+/*
+
     public void updateCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
         Ciudad ciudad;
         System.out.println(ciudadProductoDTO);
@@ -125,4 +130,5 @@ public class CiudadService {
             ciudadProductoRepository.save(ciudadProducto);
         }
     }
+         */
 }

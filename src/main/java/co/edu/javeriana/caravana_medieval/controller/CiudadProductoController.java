@@ -25,11 +25,20 @@ public class CiudadProductoController {
     @GetMapping("/producto")
     public ModelAndView getProductosCiudad(@PathVariable("id") Long id) {
         CiudadDTO ciudad = ciudadService.getCiudadById(id).get();
-        CiudadProductoDTO ciudadProductoDTO = ciudadService.getCiudadProducto(id).orElseThrow();
-        List<ProductoDTO> productos = productoService.listaIdsToProducto(ciudadProductoDTO.getIdProductos());
+        List<CiudadProductoDTO> ciudadProductosDTO = ciudadService.getCiudadProducto(id).orElseThrow();
+        List<ProductoDTO> productos = productoService.listaIdsToProducto(ciudadProductosDTO.stream().map(CiudadProductoDTO :: getIdProducto).toList());
         ModelAndView modelAndView = new ModelAndView("producto-ciudad-view");
         modelAndView.addObject("ciudad", ciudad);
         modelAndView.addObject("productos", productos);
+        return modelAndView;
+    }
+    @GetMapping("producto/{idProducto}")
+    public ModelAndView getProductoCiudadTupla(@PathVariable("id") Long id, @PathVariable("idProducto") Long productoId) {
+        List<CiudadProductoDTO> ciudadProductosDTO = ciudadService.getCiudadProducto(id).get();
+        CiudadProductoDTO ciudadProductoDTO = ciudadService.getCiudadProductoTupla(ciudadProductosDTO, id, productoId);
+        ModelAndView modelAndView = new ModelAndView("producto-tupla");
+        log.warn("oe esta mierda tiene de id: "+ciudadProductoDTO.getId());
+        modelAndView.addObject("ciudadProducto", ciudadProductoDTO);
         return modelAndView;
     }
 }
