@@ -37,7 +37,6 @@ public class CiudadProductoController {
         List<CiudadProductoDTO> ciudadProductosDTO = ciudadService.getCiudadProducto(id).get();
         CiudadProductoDTO ciudadProductoDTO = ciudadService.getCiudadProductoTupla(ciudadProductosDTO, id, productoId);
         ModelAndView modelAndView = new ModelAndView("producto-tupla");
-        log.warn("oe esta mierda tiene de id: "+ciudadProductoDTO.getId());
         modelAndView.addObject("ciudadProducto", ciudadProductoDTO);
         return modelAndView;
     }
