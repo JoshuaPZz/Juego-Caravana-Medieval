@@ -7,6 +7,7 @@ import java.util.Optional;
 import co.edu.javeriana.caravana_medieval.dto.*;
 import co.edu.javeriana.caravana_medieval.mapper.CiudadMapper;
 import co.edu.javeriana.caravana_medieval.mapper.CiudadProductoMapper;
+import co.edu.javeriana.caravana_medieval.mapper.CiudadServicioMapper;
 import co.edu.javeriana.caravana_medieval.mapper.ServicioCompraMapper;
 import co.edu.javeriana.caravana_medieval.model.*;
 import co.edu.javeriana.caravana_medieval.repository.CiudadProductoRepository;
@@ -76,19 +77,16 @@ public class CiudadService {
         CiudadRutasDTO ciudadRutasDTO = new CiudadRutasDTO(ciudadId, idRutasOrigen, idRutasDestino);
         return Optional.of(ciudadRutasDTO);
     }
-    public Optional<CiudadServicioDTO> getCiudadService(Long ciudadId) {
+    public Optional<List<CiudadServicioDTO>> getCiudadService(Long ciudadId) {
         Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
         if(ciudadOpt.isEmpty()) {
             return Optional.empty();
         }
         Ciudad ciudad = ciudadOpt.get();
-        List<CiudadServicio> relacionCiudadServicio = ciudad.getServicios();
-        List<Long> idServicios = relacionCiudadServicio.stream()
-                .map(CiudadServicio::getServicio)
-                .map(Servicio::getId)
+        List<CiudadServicioDTO> ciudadServiciosDTO = ciudad.getServicios().stream()
+                .map(CiudadServicioMapper::toDTO)
                 .toList();
-        CiudadServicioDTO ciudadServicioDTO = new CiudadServicioDTO(ciudadId, idServicios);
-        return Optional.of(ciudadServicioDTO);
+        return Optional.of(ciudadServiciosDTO);
     }
 
     public Optional<List<ServicioCompraDTO>> getCiudadCompras(Long ciudadId) {
@@ -104,6 +102,15 @@ public class CiudadService {
     public CiudadProductoDTO getCiudadProductoTupla(List<CiudadProductoDTO> ciudadProductosDTO, Long idCiudad, Long idProducto) {
         return ciudadProductosDTO.stream()
         .filter(x -> x.getIdCiudad() == idCiudad && x.getIdProducto() == idProducto).
+                findFirst()
+                .stream()
+                .findFirst()
+                .orElse(null);
+    }
+
+    public CiudadServicioDTO getCiudadServicioTupla(List<CiudadServicioDTO> ciudadServiciosDTO, Long idCiudad, Long idServicio) {
+        return ciudadServiciosDTO.stream()
+        .filter(x -> x.getIdCiudad() == idCiudad && x.getIdServicio() == idServicio).
                 findFirst()
                 .stream()
                 .findFirst()
