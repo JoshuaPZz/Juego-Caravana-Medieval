@@ -8,14 +8,16 @@
 </head>
 
 <body>
+    <h1 th:text="${ciudadProducto.nombreProducto}"></h1>
     <form action="@{/ciudades/view/{id}/producto/{idProducto}/save" method="post">
         <input type="hidden" name="id" th:value="${ciudadProducto.id}">
         <label>Stock</label>
         <input type="text" id="stock" name="stock" th:value="${ciudadProducto.stock}" />
-        <button type="submit">Guardar</button>
+        <label>Factor Demanda</label>
+        <input type="text" id="factorDemanda" name="factorDemanda" th:value="${ciudadProducto.factorDemanda}" />
+        <label>FactorOferta</label>
+        <input type="text" id="factorOferta" name="factorOferta-" th:value="${ciudadProducto.factorOferta}" />
     </form>
-
-
 </body>
 
 </html>

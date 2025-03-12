@@ -102,13 +102,12 @@ public class CiudadService {
     }
 
     public CiudadProductoDTO getCiudadProductoTupla(List<CiudadProductoDTO> ciudadProductosDTO, Long idCiudad, Long idProducto) {
-        
-        CiudadProductoDTO ciudadProducto = ciudadProductosDTO.stream()
-        .filter(x -> x.getIdCiudad() == idCiudad && x.getIdProducto() == idProducto)
-        .findFirst()
-        .orElse(null);
-        
-        return ciudadProducto;
+        return ciudadProductosDTO.stream()
+        .filter(x -> x.getIdCiudad() == idCiudad && x.getIdProducto() == idProducto).
+                findFirst()
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 
 /*

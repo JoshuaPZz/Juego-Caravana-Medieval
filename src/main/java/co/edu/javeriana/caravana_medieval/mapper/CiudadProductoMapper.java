@@ -7,7 +7,7 @@ public class CiudadProductoMapper {
     public static CiudadProductoDTO toDTO (CiudadProducto ciudadProducto) {
         CiudadProductoDTO ciudadProductoDTO = new CiudadProductoDTO();
         ciudadProductoDTO.setId(ciudadProducto.getId());
-        ciudadProductoDTO.setIdCiudad(ciudadProducto.getId());
+        ciudadProductoDTO.setIdCiudad(ciudadProducto.getCiudad().getId());
         ciudadProductoDTO.setIdProducto(ciudadProducto.getProducto().getId());
         ciudadProductoDTO.setNombreProducto(ciudadProducto.getProducto().getNombre());
         ciudadProductoDTO.setFactorDemanda(ciudadProducto.getFactorDemanda());
