@@ -99,6 +99,15 @@ tr:hover {
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
+.create-button {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background-color: #178833;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
 
 .edit-button {
   display: inline-block;
