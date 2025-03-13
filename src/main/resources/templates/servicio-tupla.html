@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicio Tupla</title>
+</head>
+
+<body>
+    <h1 th:text="${ciudadServicio.nombreServicio}"></h1>
+    <form th:action="@{/ciudades/view/{id}/servicio/{idServicio}/save(id=${ciudadServicio.idCiudad}, idServicio=${ciudadServicio.idServicio})}" method="post">
+        <input type="hidden" name="id" th:value="${ciudadServicio.id}">
+        <input type="hidden" name="idCiudad" th:value="${ciudadServicio.idCiudad}">
+        <input type="hidden" name="idServicio" th:value="${ciudadServicio.idServicio}">
+        <input type="hidden" id="nombreServicio" name="nombreServicio" th:value="${ciudadServicio.nombreServicio}" />
+        <label>Precio</label>
+        <input type="text" id="precio" name="precio" th:value="${ciudadServicio.precio}" />
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+
+</html>

@@ -1,39 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/servicio-ciudad-view.css" />
-    <title>Productos de la ciudad</title>
+    <title>Servicios de la Ciudad</title>
 </head>
 <body>
-<h1 th:text="'Servicios de ' + ${ciudad.nombre}"></h1>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Descripción</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="servicio : ${servicios}">
-        <td th:text="${servicio.id}"></td>
-        <td th:text="${servicio.nombre}"></td>
-        <td th:text="${servicio.descripcion}"></td>
-    </tr>
-    </tbody>
-</table>
-</body>
-</table>
-<a th:href="@{/ciudades/view/{id}(id=${ciudad.id})}" class="back-button">← Volver a la Ciudad</a>
+    <h1 th:text="'Servicios de ' + ${ciudad.nombre}"></h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="servicio : ${servicios}">
+                <td th:text="${servicio.id}"></td>
+                <td th:text="${servicio.nombre}"></td>
+                <td th:text="${servicio.descripcion}"></td>
+                <td>
+                    <a th:href="@{/ciudades/view/{id}/servicios/{idServicio}(id=${ciudad.id}, idServicio=${servicio.id})}" class="button">Edit</a>
+                </td>
+                <td>
+                    <a th:href="@{/ciudades/view/{id}/servicio/{idServicio}/delete(id=${ciudad.id}, idServicio=${servicio.id})}" class="button">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/ciudades/view/{id}(id=${ciudad.id})}" class="back-button">← Volver a la Ciudad</a>
 </body>
 </html>
-
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Productos de la Ciudad</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-

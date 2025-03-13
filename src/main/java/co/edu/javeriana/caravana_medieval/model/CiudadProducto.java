@@ -21,14 +21,18 @@ public class CiudadProducto {
     private double factorOferta;
     private double precioCompra;
     private double precioVenta;
+    private int stock;
 
     public CiudadProducto() {}
 
-    public CiudadProducto(Ciudad ciudad, Producto producto, double factorDemanda, double factorOferta) {
+    public CiudadProducto(Ciudad ciudad, Producto producto, double factorDemanda, double factorOferta, int stock) {
         this.ciudad = ciudad;
         this.producto = producto;
         this.factorDemanda = factorDemanda;
         this.factorOferta = factorOferta;
+        this.stock = stock;
+        this.precioVenta = calcularPrecioVenta();
+        this.precioCompra = calcularPrecioCompra();  
     }
 
     public Long getId() {
@@ -85,5 +89,21 @@ public class CiudadProducto {
 
     public void setPrecioVenta(double precioVenta) {
         this.precioVenta = precioVenta;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public double calcularPrecioVenta(){
+        return factorDemanda / (1 + stock);
+    }
+
+    public double calcularPrecioCompra(){
+        return factorOferta / (1 + stock);
     }
 }

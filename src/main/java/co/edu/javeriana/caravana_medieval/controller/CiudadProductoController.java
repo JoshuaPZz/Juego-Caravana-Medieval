@@ -12,6 +12,8 @@ import co.edu.javeriana.caravana_medieval.service.*;
 import co.edu.javeriana.caravana_medieval.dto.*;
 
 import org.slf4j.Logger;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 @Controller
@@ -25,11 +27,27 @@ public class CiudadProductoController {
     @GetMapping("/producto")
     public ModelAndView getProductosCiudad(@PathVariable("id") Long id) {
         CiudadDTO ciudad = ciudadService.getCiudadById(id).get();
-        CiudadProductoDTO ciudadProductoDTO = ciudadService.getCiudadProducto(id).orElseThrow();
-        List<ProductoDTO> productos = productoService.listaIdsToProducto(ciudadProductoDTO.getIdProductos());
+        List<CiudadProductoDTO> ciudadProductosDTO = ciudadService.getCiudadProducto(id).orElseThrow();
+        List<ProductoDTO> productos = productoService.listaIdsToProducto(ciudadProductosDTO.stream().map(CiudadProductoDTO :: getIdProducto).toList());
         ModelAndView modelAndView = new ModelAndView("producto-ciudad-view");
         modelAndView.addObject("ciudad", ciudad);
         modelAndView.addObject("productos", productos);
         return modelAndView;
+    }
+    @GetMapping("/producto/{idProducto}")
+    public ModelAndView getProductoCiudadTupla(@PathVariable("id") Long id, @PathVariable("idProducto") Long productoId) {
+        List<CiudadProductoDTO> ciudadProductosDTO = ciudadService.getCiudadProducto(id).get();
+        CiudadProductoDTO ciudadProductoDTO = ciudadService.getCiudadProductoTupla(ciudadProductosDTO, id, productoId);
+        log.error(ciudadProductoDTO.getId().toString());
+        ModelAndView modelAndView = new ModelAndView("producto-tupla");
+        modelAndView.addObject("ciudadProducto", ciudadProductoDTO);
+        return modelAndView;
+    }
+    @PostMapping("producto/{idProducto}/save")
+    public RedirectView saveEditProductoCiudad(@ModelAttribute CiudadProductoDTO ciudadProductoDTO, @PathVariable("id") Long id, @PathVariable("idProducto") Long idProducto) {
+        ciudadProductoDTO.setIdCiudad(id);
+        ciudadProductoDTO.setIdProducto(idProducto);
+        ciudadService.saveEditProductoCiudad(ciudadProductoDTO);
+        return new RedirectView("/ciudades/view/" + id + "/producto");
     }
 }
