@@ -1,0 +1,32 @@
+@base_url = http://localhost:8088
+
+###
+GET {{base_url}}/rutas/list
+
+###
+GET {{base_url}}/rutas/list/1
+
+###
+GET {{base_url}}/rutas/view/1
+
+###
+POST {{base_url}}/rutas
+Content-Type: application/json
+
+{
+    "longitud": 69,
+    "dano": 69
+}
+
+###
+PUT {{base_url}}/rutas
+Content-Type: application/json
+
+{
+    "id": 1,
+    "longitud": 1,
+    "dano": 1
+}
+
+###
+DELETE {{base_url}}/rutas/12
