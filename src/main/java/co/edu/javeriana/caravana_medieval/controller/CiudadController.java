@@ -22,49 +22,36 @@ public class CiudadController {
 
 
     @GetMapping("/list")
-    public ModelAndView getAllCiudades() {
+    public List<CiudadDTO>  getAllCiudades() {
         List<CiudadDTO> ciudades = ciudadService.getAllCiudades();
-        ModelAndView modelAndView = new ModelAndView("ciudades-list");
-        modelAndView.addObject("listaciudades", ciudades);
-        log.info("MOSTRANDO CIUDADES: ");
-        return modelAndView;
+        return ciudades;
     }
 
-    @GetMapping("/view/{id}")
-    public ModelAndView getCiudadById(@PathVariable("id") Long id) {
+    @GetMapping("/{id}")
+    public CiudadDTO getCiudadById(@PathVariable("id") Long id) {
         CiudadDTO ciudad = ciudadService.getCiudadById(id).orElseThrow();
-        ModelAndView modelAndView = new ModelAndView("ciudad-view");
-        modelAndView.addObject("ciudad", ciudad);
-        log.info("MOSTRANDO CIUDAD: ");
-        log.info(ciudad.getNombre());
-        return modelAndView;
+        return ciudad;
     }
 
-    @GetMapping("/create")
-    public ModelAndView formularioCrearCiudad() {
-        ModelAndView modelAndView = new ModelAndView("ciudad-edit");
-        modelAndView.addObject("ciudad", new CiudadDTO());
-        return modelAndView;
+    @PostMapping
+    public CiudadDTO createCiudad(@RequestBody CiudadDTO ciudadDTO) {
+        ciudadService.createCiudad(ciudadDTO);
+        return ciudadDTO;
     }
 
-    @GetMapping("/edit/{id}")
-    public ModelAndView formularioEditarCiudad(@PathVariable("id") Long id) {
-        CiudadDTO ciudad = ciudadService.getCiudadById(id).orElseThrow();
-        ModelAndView modelAndView = new ModelAndView("ciudad-edit");
-        modelAndView.addObject("ciudad", ciudad);
-        return modelAndView;
+    @PutMapping
+    public CiudadDTO editCiudad(@RequestBody CiudadDTO ciudadDTO) {
+        if(ciudadDTO!=null){
+        ciudadService.editCiudad(ciudadDTO);
+        return ciudadDTO;
+        }
+        return null;
     }
 
-    @PostMapping("/save")
-    public RedirectView guardarCiudad(@ModelAttribute CiudadDTO ciudadDTO) {
-        ciudadService.guardarCiudad(ciudadDTO);
-        return new RedirectView("/ciudades/list");
-    }
-
-    @GetMapping("/delete/{id}")
-    public RedirectView borrarCiudad(@PathVariable Long id) {
-        ciudadService.borrarCiudad(id);
-        return new RedirectView("/ciudades/list");
+    @DeleteMapping("/{id}")
+    public String  borrarCiudad(@PathVariable Long id) {
+        ciudadService.borrarAllCiudadServicio(id);
+        return "Borrado";
     }
 }
 

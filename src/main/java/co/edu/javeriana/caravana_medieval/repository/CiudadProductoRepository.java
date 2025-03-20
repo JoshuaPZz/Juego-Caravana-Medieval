@@ -16,4 +16,8 @@ public interface CiudadProductoRepository extends JpaRepository<CiudadProducto, 
     @Transactional
     @Query("DELETE FROM CiudadProducto cp WHERE cp.ciudad.id = :ciudadId")
     void deleteByCiudadId(@Param("ciudadId") Long ciudadId);
+
+   
+
+
 }
