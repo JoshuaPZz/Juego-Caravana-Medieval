@@ -2,6 +2,7 @@ package co.edu.javeriana.caravana_medieval.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 import java.util.Optional;
 
 import co.edu.javeriana.caravana_medieval.dto.*;
@@ -30,6 +31,9 @@ public class CiudadService {
     private CiudadProductoRepository ciudadProductoRepository;
 
     private Logger log = LoggerFactory.getLogger(getClass().getName());
+
+    @Autowired
+    private RutaRepository rutaRepository;
     @Autowired
     private ServicioRepository servicioRepository;
     @Autowired
@@ -47,11 +51,22 @@ public class CiudadService {
                 .map(CiudadMapper::toDTO);
     }
 
-    public void guardarCiudad(CiudadDTO ciudadDTO) {
+    public CiudadDTO createCiudad(CiudadDTO ciudadDTO) {
+        ciudadDTO.setId(null);
+        Ciudad ciudad = CiudadMapper.toEntity(ciudadDTO);
+        return CiudadMapper.toDTO( ciudadRepository.save(ciudad));
+    }
+    
+    public CiudadDTO editCiudad(CiudadDTO ciudadDTO) {
+        if(ciudadDTO.getId()!=null){
         Ciudad ciudad = CiudadMapper.toEntity(ciudadDTO);
         ciudadRepository.save(ciudad);
+        return CiudadMapper.toDTO( ciudad);
+        }
+        else {
+           return null;
+        }
     }
-
     public Optional<List<CiudadProductoDTO>> getCiudadProducto(Long ciudadId) {
         Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
         if (ciudadOpt.isEmpty()) {
@@ -147,6 +162,11 @@ public class CiudadService {
     public void borrarCiudad(Long id) {
         ciudadRepository.deleteById(id);
     }
+    
+   public void borrarAllCiudadServicio(Long idCiudad) {
+        ciudadRepository.deleteCiudadCascada(idCiudad);
+    }
+
 
     public void borrarCiudadServicio(Long idCiudad, Long idServicio) {
         List<CiudadServicioDTO> ciudadServicioDTOs = getCiudadService(idCiudad).get();

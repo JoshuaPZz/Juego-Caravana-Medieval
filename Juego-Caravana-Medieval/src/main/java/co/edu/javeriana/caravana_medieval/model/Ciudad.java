@@ -12,19 +12,19 @@ public class Ciudad {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "ciudad", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ciudad")
     private List<CiudadProducto> productos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "ciudad", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ciudad")
     private List<CiudadServicio> servicios = new ArrayList<>();
 
-    @OneToMany(mappedBy = "ciudad", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ciudad")
     private List<ServicioCompra> compras = new ArrayList<>();
 
-    @OneToMany(mappedBy = "origen", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "origen")
     private List<Ruta> rutasOrigen = new ArrayList<>();
 
-    @OneToMany(mappedBy = "destino", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "destino")
     private List<Ruta> rutasDestino = new ArrayList<>();
 
     private String nombre;

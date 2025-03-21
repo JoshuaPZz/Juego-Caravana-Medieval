@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import co.edu.javeriana.caravana_medieval.dto.RutaCiudadDTO;
 import co.edu.javeriana.caravana_medieval.dto.RutaDTO;
@@ -64,14 +66,20 @@ public class RutaService {
         rutaRepository.save(ruta);       
     }
 
-    public void actualizarRutaCiudad(RutaCiudadDTO rutaCiudadDTO){
-        Ruta ruta = rutaRepository.findById(rutaCiudadDTO.getRutaId()).orElseThrow();
-        Optional<Ciudad> origen = ciudadRepository.findById(rutaCiudadDTO.getCiudadOrigenId());
-        Optional<Ciudad> destino = ciudadRepository.findById(rutaCiudadDTO.getCiudadDestinoId());
-        ruta.setOrigen(origen.get());
-        ruta.setDestino(destino.get());
-        rutaRepository.save(ruta);
-    }
+   public void actualizarRutaCiudad(RutaCiudadDTO rutaCiudadDTO) {
+    Ruta ruta = rutaRepository.findById(rutaCiudadDTO.getRutaId())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ruta no encontrada"));
+
+    Ciudad origen = ciudadRepository.findById(rutaCiudadDTO.getCiudadOrigenId())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciudad de origen no encontrada"));
+
+    Ciudad destino = ciudadRepository.findById(rutaCiudadDTO.getCiudadDestinoId())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciudad de destino no encontrada"));
+
+    ruta.setOrigen(origen);
+    ruta.setDestino(destino);
+    rutaRepository.save(ruta);
+}
 
     public void borrarRuta(Long id) {
         rutaRepository.deleteById(id);        

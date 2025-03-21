@@ -1,6 +1,7 @@
 package co.edu.javeriana.caravana_medieval.dto;
 
 public class ServicioCompraDTO {
+    private Long id;
     private Long idCiudad;
     private Long idServicio;
     private Long idCaravana;
@@ -8,7 +9,8 @@ public class ServicioCompraDTO {
     private String nombreCaravana;
 
     public ServicioCompraDTO() {}
-    public ServicioCompraDTO(Long idCiudad, Long idServicio, Long idCaravana) {
+    public ServicioCompraDTO(Long id,Long idCiudad, Long idServicio, Long idCaravana) {
+         this.id = id;
         this.idCiudad = idCiudad;
         this.idServicio = idServicio;
         this.idCaravana = idCaravana;
@@ -53,4 +55,12 @@ public class ServicioCompraDTO {
     public void setIdCaravana(Long idCaravana) {
         this.idCaravana = idCaravana;
     }
+     public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }

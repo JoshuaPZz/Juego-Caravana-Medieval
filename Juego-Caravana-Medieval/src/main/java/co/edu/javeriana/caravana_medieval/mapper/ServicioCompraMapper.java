@@ -5,6 +5,7 @@ import co.edu.javeriana.caravana_medieval.model.*;
 public class ServicioCompraMapper {
     public static ServicioCompraDTO toDTO (ServicioCompra servicioCompra) {
         ServicioCompraDTO servicioCompraDTO = new ServicioCompraDTO();
+        servicioCompraDTO.setId(servicioCompra.getId());
         servicioCompraDTO.setIdCiudad(servicioCompra.getCiudad().getId());
         servicioCompraDTO.setIdServicio(servicioCompra.getServicio().getId());
         servicioCompraDTO.setIdCaravana(servicioCompra.getCaravana().getId());
@@ -14,6 +15,7 @@ public class ServicioCompraMapper {
     }
     public static ServicioCompra toEntity (ServicioCompraDTO servicioCompraDTO) {
         ServicioCompra servicioCompra = new ServicioCompra();
+        servicioCompra.setId(servicioCompra.getId());
         servicioCompra.getCiudad().setId(servicioCompraDTO.getIdCiudad());
         servicioCompra.getServicio().setId(servicioCompraDTO.getIdServicio());
         servicioCompra.getCaravana().setId(servicioCompraDTO.getIdCaravana());

@@ -1,0 +1,12 @@
+###
+GET http://localhost:8088/rutas/ciudades/5
+
+###
+POST http://localhost:8088/rutas/ciudades/save
+Content-Type: application/json
+
+{
+    "rutaId": 1,
+    "ciudadOrigenId": 23,
+    "ciudadDestinoId": 12
+}
