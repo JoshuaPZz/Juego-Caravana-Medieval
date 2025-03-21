@@ -1,0 +1,26 @@
+###
+Get http://localhost:8088/ciudades/list
+###
+Get http://localhost:8088/ciudades/1
+
+###
+POST http://localhost:8088/ciudades
+Content-Type: application/json
+
+{
+    "nombre": "Ciudad Nueva",
+    "impuesto": 23
+}
+
+###
+PUT http://localhost:8088/ciudades
+Content-Type: application/json
+
+{
+    "id": 2,
+    "nombre": "Ciudad Actualizada",
+    "impuesto": 23
+}
+
+###
+DELETE http://localhost:8088/ciudades/7
