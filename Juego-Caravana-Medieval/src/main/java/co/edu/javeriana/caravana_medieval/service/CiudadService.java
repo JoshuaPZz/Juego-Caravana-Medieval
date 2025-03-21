@@ -145,11 +145,11 @@ public class CiudadService {
         log.info(ciudadProducto.getProducto().getNombre());
         return ciudadProductoRepository.save(ciudadProducto);
     }
-    public void actualizarCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
+    public CiudadProducto actualizarCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
         CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
         ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
         ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
-        ciudadProductoRepository.save(ciudadProducto);
+        return ciudadProductoRepository.save(ciudadProducto);
     }
 
     public void saveEditServicioCiudad(CiudadServicioDTO ciudadServicioDTO) {

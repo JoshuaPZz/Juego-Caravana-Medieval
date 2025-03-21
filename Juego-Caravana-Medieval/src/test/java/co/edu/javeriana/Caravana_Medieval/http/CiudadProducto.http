@@ -4,6 +4,9 @@
 GET {{base_url}}/productoCiudad/1/12
 
 ###
+GET {{base_url}}/productoCiudad/list/1
+
+###
 POST {{base_url}}/productoCiudad
 Content-Type: application/json
 

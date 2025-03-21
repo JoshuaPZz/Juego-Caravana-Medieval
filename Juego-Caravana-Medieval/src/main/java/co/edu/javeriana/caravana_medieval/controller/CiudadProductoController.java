@@ -38,7 +38,7 @@ public class CiudadProductoController {
     }
 
     @PutMapping
-    public void actualizarCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
-        ciudadService.actualizarCiudadProducto(ciudadProductoDTO);
+    public CiudadProductoDTO actualizarCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
+        return CiudadProductoMapper.toDTO(ciudadService.actualizarCiudadProducto(ciudadProductoDTO));
     }
 }
