@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import co.edu.javeriana.caravana_medieval.service.*;
 import co.edu.javeriana.caravana_medieval.dto.*;
+import co.edu.javeriana.caravana_medieval.mapper.CiudadProductoMapper;
 
 import org.slf4j.Logger;
 import org.springframework.web.servlet.view.RedirectView;
@@ -33,8 +34,7 @@ public class CiudadProductoController {
     }
     @PostMapping
     public CiudadProductoDTO crearCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
-        ciudadService.crearCiudadProducto(ciudadProductoDTO);
-        return ciudadProductoDTO;
+        return CiudadProductoMapper.toDTO(ciudadService.crearCiudadProducto(ciudadProductoDTO));
     }
 
     @PutMapping

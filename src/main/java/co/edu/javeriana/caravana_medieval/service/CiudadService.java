@@ -121,15 +121,14 @@ public class CiudadService {
                 .orElse(null);
     }
 
-    public void crearCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
+    public CiudadProducto crearCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
         ciudadProductoDTO.setId(null);
         CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
         ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
         log.info(ciudadProducto.getCiudad().getNombre());
         ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
         log.info(ciudadProducto.getProducto().getNombre());
-        ciudadProductoRepository.save(ciudadProducto);
-        ciudadProductoRepository.flush();
+        return ciudadProductoRepository.save(ciudadProducto);
     }
     public void actualizarCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
         CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
