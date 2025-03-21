@@ -19,7 +19,7 @@ public class CiudadProductoController {
     private Logger log = LoggerFactory.getLogger(getClass().getName());
     @Autowired
     private CiudadService ciudadService;
-    @Autowired
+    @Autowired  
     private ProductoService productoService;
     @GetMapping("/list/{idCiudad}")
     public List<ProductoDTO> getProductosCiudad(@PathVariable Long idCiudad) {
@@ -32,12 +32,13 @@ public class CiudadProductoController {
         return ciudadService.getCiudadProductoTupla(ciudadProductosDTO, idCiudad, idProducto);
     }
     @PostMapping
-    public void crearCiudadPersona(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
-        ciudadService.crearCiudadPersona(ciudadProductoDTO);
+    public CiudadProductoDTO crearCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
+        ciudadService.crearCiudadProducto(ciudadProductoDTO);
+        return ciudadProductoDTO;
     }
 
     @PutMapping
-    public void actualizarCiudadPerona(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
-        ciudadService.actualizarCiudadPersona(ciudadProductoDTO);
+    public void actualizarCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
+        ciudadService.actualizarCiudadProducto(ciudadProductoDTO);
     }
 }

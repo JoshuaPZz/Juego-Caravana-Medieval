@@ -11,6 +11,8 @@ import co.edu.javeriana.caravana_medieval.mapper.CiudadServicioMapper;
 import co.edu.javeriana.caravana_medieval.mapper.ServicioCompraMapper;
 import co.edu.javeriana.caravana_medieval.model.*;
 import co.edu.javeriana.caravana_medieval.repository.*;
+import jakarta.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,14 +121,17 @@ public class CiudadService {
                 .orElse(null);
     }
 
-    public void crearCiudadPersona(CiudadProductoDTO ciudadProductoDTO) {
+    public void crearCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
         ciudadProductoDTO.setId(null);
         CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
         ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
+        log.info(ciudadProducto.getCiudad().getNombre());
         ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
+        log.info(ciudadProducto.getProducto().getNombre());
         ciudadProductoRepository.save(ciudadProducto);
+        ciudadProductoRepository.flush();
     }
-    public void actualizarCiudadPersona(CiudadProductoDTO ciudadProductoDTO) {
+    public void actualizarCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
         CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
         ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
         ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
