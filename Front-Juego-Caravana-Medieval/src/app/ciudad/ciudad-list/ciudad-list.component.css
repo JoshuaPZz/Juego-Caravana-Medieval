@@ -1,0 +1,146 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 2rem;
+  background-color: #f5f5f5;
+}
+
+h1 {
+  color: #00a24f;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  background-color: white;
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+th {
+  background-color: #178833;
+  color: white;
+  font-weight: 600;
+}
+
+tr:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdown {
+  position: relative;
+  margin: 0.5rem 0;
+}
+
+.dropdown-header {
+  cursor: pointer;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdown-header:hover {
+  background-color: #e9ecef;
+}
+
+.dropdown-content {
+  display: none;
+  padding: 0.5rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+.dropdown.active .dropdown-content {
+  display: block;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-header::after {
+  content: "▼";
+  font-size: 0.8rem;
+  color: #6c757d;
+  transition: transform 0.3s ease;
+}
+
+.dropdown.active .dropdown-header::after {
+  transform: rotate(180deg);
+}
+
+.view-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #178833;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.create-button {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background-color: #178833;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #178833;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.delete-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #178833;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: #00ff40;
+}
+.edit-button:hover {
+  background-color: #00ff40;
+}
+.delete-button:hover {
+  background-color: #00ff40;
+}
+
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}
