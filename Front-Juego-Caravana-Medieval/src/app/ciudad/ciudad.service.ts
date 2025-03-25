@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CiudadDto } from '../dto/ciudad-dto';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class CiudadService {
 
   listarCiudades(): Observable<CiudadDto[]> {
     return this.httpClient.get<CiudadDto[]>(
-      'http://localhost:8088/ciudades/list'
+      `${environment.serverUrl}/ciudades/list`
     );
   }
 }
