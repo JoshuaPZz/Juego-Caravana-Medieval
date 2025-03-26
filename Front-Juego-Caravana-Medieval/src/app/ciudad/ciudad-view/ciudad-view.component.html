@@ -1,1 +1,40 @@
-<p>ciudad-view works!</p>
+<div class="info-card">
+  <h1 *ngIf="parametroCiudad">{{ parametroCiudad.nombre }}</h1>
+
+  <!-- Impuesto -->
+  <div class="impuesto-badge">
+    Impuesto: <span>{{ parametroCiudad?.impuesto }}</span> %
+  </div>
+</div>
+
+<!-- Productos -->
+<div class="sigmadiv">
+  <div>
+    <a class="view-productos">Productos </a>
+  </div>
+
+  <!-- Servicios -->
+  <div>
+    <a class="view-servicios">Servicios </a>
+  </div>
+
+  <!-- Compras -->
+  <div>
+    <a class="view-compras">Compras </a>
+  </div>
+
+  <!-- Rutas Origen -->
+  <div>
+    <a class="view-origen">Rutas donde es origen </a>
+  </div>
+
+  <!-- Rutas Destino -->
+  <div>
+    <a class="view-destino">Rutas donde es destino </a>
+  </div>
+</div>
+
+<!-- Botón de volver -->
+<div class="info-card" style="text-align: center">
+  <a class="back-button" [routerLink]="['/ciudades/list']">← Volver a la </a>
+</div>

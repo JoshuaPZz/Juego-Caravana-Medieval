@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CiudadListComponent } from './ciudad/ciudad-list/ciudad-list.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CiudadListComponent],
+  imports: [RouterModule, CiudadListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

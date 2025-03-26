@@ -18,10 +18,11 @@
       <td>{{ ciudad.nombre }}</td>
       <td>{{ ciudad.impuesto }}</td>
       <td>
-        <a class="view-button" th:href="@{/ciudades/view/{id}(id=${ciudad.id})}"
+        <a class="view-button" [routerLink]="['/ciudades/view', ciudad.id]"
           >View</a
         >
       </td>
+
       <td>
         <a class="edit-button" th:href="@{/ciudades/edit/{id}(id=${ciudad.id})}"
           >Edit</a

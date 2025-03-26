@@ -15,4 +15,10 @@ export class CiudadService {
       `${environment.serverUrl}/ciudades/list`
     );
   }
+
+  getCiudadById(id: number): Observable<CiudadDto> {
+    return this.httpClient.get<CiudadDto>(
+      `${environment.serverUrl}/ciudades/${id}`
+    );
+  }
 }

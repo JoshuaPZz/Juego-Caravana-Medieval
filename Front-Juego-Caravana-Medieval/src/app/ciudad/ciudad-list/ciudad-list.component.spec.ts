@@ -2,15 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CiudadListComponent } from './ciudad-list.component';
 
+import { RouterModule } from '@angular/router';
+
 describe('CiudadListComponent', () => {
   let component: CiudadListComponent;
   let fixture: ComponentFixture<CiudadListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CiudadListComponent]
-    })
-    .compileComponents();
+      imports: [CiudadListComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CiudadListComponent);
     component = fixture.componentInstance;
