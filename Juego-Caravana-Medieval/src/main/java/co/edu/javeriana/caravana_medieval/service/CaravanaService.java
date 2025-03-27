@@ -21,6 +21,7 @@ public class CaravanaService {
     public Caravana getCaravanaById(Long id) {
         return caravanaRepository.findById(id).orElse(null);
     }
+    
 
 
     

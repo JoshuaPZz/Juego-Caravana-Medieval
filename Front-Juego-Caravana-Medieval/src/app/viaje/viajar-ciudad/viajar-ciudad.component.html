@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="current-city">
+    <h2>Ciudad Actual</h2>
+    <p>Nombre: {{ ciudadActual?.nombre }}</p>
+    <p>Impuesto:{{ parametroCiudad?.impuesto }}</p>
+  </div>
+
+  <div class="routes"></div>
+  <h2>Rutas Disponibles</h2>
+  <ul>
+    <li *ngFor="let ruta of rutas">
+      <p>Ruta: {{ ruta.nombre }}</p>
+      <p>Ciudad Destino: {{ ruta.ciudadDestino }}</p>
+      <button (click)="viajar()">VIAJAR</button>
+    </li>
+  </ul>
+</div>
