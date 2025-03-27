@@ -67,17 +67,6 @@ public class CiudadService {
             return null;
         }
     }
-    public Optional<List<CiudadProductoDTO>> getCiudadProducto(Long ciudadId) {
-        Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
-        if (ciudadOpt.isEmpty()) {
-            return Optional.empty();
-        }
-        Ciudad ciudad = ciudadOpt.get();
-        List<CiudadProductoDTO> ciudadProductoDTOs = ciudad.getProductos().stream()
-                .map(CiudadProductoMapper::toDTO)
-                .toList();
-        return Optional.of(ciudadProductoDTOs);
-    }
 
     public Optional<CiudadRutasDTO> getCiudadRutas(Long ciudadId) {
         Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
@@ -118,14 +107,6 @@ public class CiudadService {
         return Optional.of(servicioCompras);
     }
 
-    public CiudadProductoDTO getCiudadProductoTupla(List<CiudadProductoDTO> ciudadProductosDTO, Long idCiudad, Long idProducto) {
-        return ciudadProductosDTO.stream()
-        .filter(x -> x.getIdCiudad() == idCiudad && x.getIdProducto() == idProducto).
-                findFirst()
-                .stream()
-                .findFirst()
-                .orElse(null);
-    }
 
     public CiudadServicioDTO getCiudadServicioTupla(List<CiudadServicioDTO> ciudadServiciosDTO, Long idCiudadServicio) {
         return ciudadServiciosDTO.stream()
@@ -134,24 +115,6 @@ public class CiudadService {
                 .stream()
                 .findFirst()
                 .orElse(null);
-    }
-
-    public CiudadProducto createCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
-        ciudadProductoDTO.setId(null);
-        CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
-        ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
-        ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
-        return ciudadProductoRepository.save(ciudadProducto);
-    }
-    public CiudadProducto updateCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
-        CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
-        ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
-        ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
-        return ciudadProductoRepository.save(ciudadProducto);
-    }
-
-    public void deleteCiudadProducto(Long idCiudadProducto) {
-        ciudadProductoRepository.deleteById(idCiudadProducto);
     }
     
     public CiudadServicio createCiudadServicio(CiudadServicioDTO ciudadServicioDTO) {

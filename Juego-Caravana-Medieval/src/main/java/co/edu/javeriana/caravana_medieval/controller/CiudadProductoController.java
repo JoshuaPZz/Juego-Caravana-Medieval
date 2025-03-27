@@ -18,32 +18,34 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/productoCiudad")
 public class CiudadProductoController {
     private Logger log = LoggerFactory.getLogger(getClass().getName());
+    
     @Autowired
-    private CiudadService ciudadService;
+    private CiudadProductoService ciudadProductoService;
+    
     @Autowired  
     private ProductoService productoService;
     @GetMapping("/list/{idCiudad}")
     public List<ProductoDTO> getProductosCiudad(@PathVariable Long idCiudad) {
-        List<CiudadProductoDTO> ciudadProductosDTO = ciudadService.getCiudadProducto(idCiudad).orElseThrow();
+        List<CiudadProductoDTO> ciudadProductosDTO = ciudadProductoService.getCiudadProducto(idCiudad).orElseThrow();
         return productoService.listaIdsToProducto(ciudadProductosDTO.stream().map(CiudadProductoDTO :: getIdProducto).toList());
     }
     @GetMapping("{idCiudad}/{idProducto}")
     public CiudadProductoDTO getProductoCiudadTupla(@PathVariable Long idCiudad, @PathVariable Long idProducto) {
-        List<CiudadProductoDTO> ciudadProductosDTO = ciudadService.getCiudadProducto(idCiudad).get();
-        return ciudadService.getCiudadProductoTupla(ciudadProductosDTO, idCiudad, idProducto);
+        List<CiudadProductoDTO> ciudadProductosDTO = ciudadProductoService.getCiudadProducto(idCiudad).get();
+        return ciudadProductoService.getCiudadProductoTupla(ciudadProductosDTO, idCiudad, idProducto);
     }
     @PostMapping
     public CiudadProductoDTO createCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
-        return CiudadProductoMapper.toDTO(ciudadService.createCiudadProducto(ciudadProductoDTO));
+        return CiudadProductoMapper.toDTO(ciudadProductoService.createCiudadProducto(ciudadProductoDTO));
     }
 
     @PutMapping
     public CiudadProductoDTO updateCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
-        return CiudadProductoMapper.toDTO(ciudadService.updateCiudadProducto(ciudadProductoDTO));
+        return CiudadProductoMapper.toDTO(ciudadProductoService.updateCiudadProducto(ciudadProductoDTO));
     }
     
     @DeleteMapping("{idCiudadProducto}")
     public void deleteCiudadProducto(@PathVariable Long idCiudadProducto) {
-        ciudadService.deleteCiudadProducto(idCiudadProducto);
+        ciudadProductoService.deleteCiudadProducto(idCiudadProducto);
     }
 }
