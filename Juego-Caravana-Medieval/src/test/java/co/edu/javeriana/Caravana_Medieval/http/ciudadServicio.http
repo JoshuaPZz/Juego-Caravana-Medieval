@@ -1,0 +1,34 @@
+@base_url = http://localhost:8088/ciudad/
+
+###
+GET {{base_url}}1/servicios/list
+
+###
+GET {{base_url}}1/servicios/view/1
+
+###
+GET {{base_url}}1/servicios/list
+
+###
+POST {{base_url}}1/servicios
+Content-Type: application/json
+
+{
+    "idCiudad": 1,
+    "idServicio": 3,
+    "precio": 900
+}
+
+###
+PUT {{base_url}}1/servicios
+Content-Type: application/json
+
+{
+    "id": 1,
+    "idCiudad": 1,
+    "idServicio": 1,
+    "precio": 2
+}
+
+###
+DELETE {{base_url}}1/servicios/1

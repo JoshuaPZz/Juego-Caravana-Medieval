@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import co.edu.javeriana.caravana_medieval.dto.RutaCiudadDTO;
 import co.edu.javeriana.caravana_medieval.dto.RutaDTO;
@@ -30,12 +29,17 @@ public class RutaService {
 
     public List<RutaDTO> listarRutas() {
         return rutaRepository.findAll().stream()
-            .map(RutaMapper::toDto).toList();
+                .map(RutaMapper::toDto).toList();
     }
 
-    public Optional<RutaDTO> buscarRuta(Long id){
+    public List<RutaDTO> listarRutas(Pageable pageable) {
+        return rutaRepository.findAll(pageable).stream()
+                .map(RutaMapper::toDto).toList();
+    }
+
+    public Optional<RutaDTO> buscarRuta(Long id) {
         return rutaRepository.findById(id)
-        .map(RutaMapper::toDto);
+                .map(RutaMapper::toDto);
     }
 
     public Optional<RutaCiudadDTO> getRutaCiudad(Long rutaId) {
@@ -47,41 +51,44 @@ public class RutaService {
         Ruta ruta = rutaOpt.get();
         Long origenId = (ruta.getOrigen() != null) ? ruta.getOrigen().getId() : null;
         Long destinoId = (ruta.getDestino() != null) ? ruta.getDestino().getId() : null;
-    
+
         RutaCiudadDTO rutaCiudadDTO = new RutaCiudadDTO(rutaId, origenId, destinoId);
         return Optional.of(rutaCiudadDTO);
     }
-    
 
-    public List<RutaDTO> listaIdstoRuta (List<Long> rutasId) {
+    public List<RutaDTO> listaIdstoRuta(List<Long> rutasId) {
         List<RutaDTO> rutasDTO = new ArrayList<RutaDTO>();
-        for(Long id : rutasId){
+        for (Long id : rutasId) {
             rutasDTO.add(buscarRuta(id).get());
         }
         return rutasDTO;
     }
 
-    public void guardarRuta(RutaDTO rutaDTO) {
+    public RutaDTO crearRuta(RutaDTO rutaDTO) {
+        rutaDTO.setId(null);
         Ruta ruta = RutaMapper.toEntity(rutaDTO);
-        rutaRepository.save(ruta);       
+        return RutaMapper.toDto(rutaRepository.save(ruta));
     }
 
-   public void actualizarRutaCiudad(RutaCiudadDTO rutaCiudadDTO) {
-    Ruta ruta = rutaRepository.findById(rutaCiudadDTO.getRutaId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ruta no encontrada"));
-
-    Ciudad origen = ciudadRepository.findById(rutaCiudadDTO.getCiudadOrigenId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciudad de origen no encontrada"));
-
-    Ciudad destino = ciudadRepository.findById(rutaCiudadDTO.getCiudadDestinoId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ciudad de destino no encontrada"));
-
-    ruta.setOrigen(origen);
-    ruta.setDestino(destino);
-    rutaRepository.save(ruta);
-}
+    public void actualizarRutaCiudad(RutaCiudadDTO rutaCiudadDTO) {
+        Ruta ruta = rutaRepository.findById(rutaCiudadDTO.getRutaId()).orElseThrow();
+        Optional<Ciudad> origen = ciudadRepository.findById(rutaCiudadDTO.getCiudadOrigenId());
+        Optional<Ciudad> destino = ciudadRepository.findById(rutaCiudadDTO.getCiudadDestinoId());
+        ruta.setOrigen(origen.get());
+        ruta.setDestino(destino.get());
+        rutaRepository.save(ruta);
+    }
 
     public void borrarRuta(Long id) {
-        rutaRepository.deleteById(id);        
+        rutaRepository.deleteById(id);
+    }
+
+    public RutaDTO actualizarRuta(RutaDTO rutaDTO) {
+        if (rutaDTO.getId() != null) {
+            Ruta ruta = RutaMapper.toEntity(rutaDTO);
+            return RutaMapper.toDto(rutaRepository.save(ruta));
+        } else {
+            return null;
+        }
     }
 }

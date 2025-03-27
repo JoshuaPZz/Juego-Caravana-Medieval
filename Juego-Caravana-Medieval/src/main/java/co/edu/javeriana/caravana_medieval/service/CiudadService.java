@@ -12,6 +12,8 @@ import co.edu.javeriana.caravana_medieval.mapper.CiudadServicioMapper;
 import co.edu.javeriana.caravana_medieval.mapper.ServicioCompraMapper;
 import co.edu.javeriana.caravana_medieval.model.*;
 import co.edu.javeriana.caravana_medieval.repository.*;
+import jakarta.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +64,7 @@ public class CiudadService {
         return CiudadMapper.toDTO( ciudad);
         }
         else {
-           return null;
+            return null;
         }
     }
     public Optional<List<CiudadProductoDTO>> getCiudadProducto(Long ciudadId) {
@@ -87,7 +89,7 @@ public class CiudadService {
         List<Long> idRutasOrigen = relacionRutaOrigen.stream()
                             .map(Ruta::getId)
                             .toList();
-        List<Ruta> relacionRutaDestino = ciudad.getRutasOrigen();
+        List<Ruta> relacionRutaDestino = ciudad.getRutasDestino();
         List<Long> idRutasDestino = relacionRutaDestino.stream()
                             .map(Ruta::getId)
                             .toList();                                                    
@@ -125,55 +127,62 @@ public class CiudadService {
                 .orElse(null);
     }
 
-    public CiudadServicioDTO getCiudadServicioTupla(List<CiudadServicioDTO> ciudadServiciosDTO, Long idCiudad, Long idServicio) {
+    public CiudadServicioDTO getCiudadServicioTupla(List<CiudadServicioDTO> ciudadServiciosDTO, Long idCiudadServicio) {
         return ciudadServiciosDTO.stream()
-        .filter(x -> x.getIdCiudad() == idCiudad && x.getIdServicio() == idServicio).
+        .filter(x -> x.getId() == idCiudadServicio).
                 findFirst()
                 .stream()
                 .findFirst()
                 .orElse(null);
     }
 
-    public void saveEditProductoCiudad(CiudadProductoDTO ciudadProductoDTO) {
+    public CiudadProducto createCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
+        ciudadProductoDTO.setId(null);
         CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
         ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
         ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
-        ciudadProductoRepository.save(ciudadProducto);
+        return ciudadProductoRepository.save(ciudadProducto);
+    }
+    public CiudadProducto updateCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
+        CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
+        ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
+        ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
+        return ciudadProductoRepository.save(ciudadProducto);
     }
 
-    public void saveEditServicioCiudad(CiudadServicioDTO ciudadServicioDTO) {
+    public void deleteCiudadProducto(Long idCiudadProducto) {
+        ciudadProductoRepository.deleteById(idCiudadProducto);
+    }
+    
+    public CiudadServicio createCiudadServicio(CiudadServicioDTO ciudadServicioDTO) {
+        ciudadServicioDTO.setId(null);
         CiudadServicio ciudadServicio = CiudadServicioMapper.toEntity(ciudadServicioDTO);
-        ciudadServicio.setServicio(servicioRepository.findById(ciudadServicioDTO.getIdServicio()).get());
         ciudadServicio.setCiudad(ciudadRepository.findById(ciudadServicioDTO.getIdCiudad()).get());
-        ciudadServicioRepository.save(ciudadServicio);
+        ciudadServicio.setServicio(servicioRepository.findById(ciudadServicioDTO.getIdServicio()).get());
+        return ciudadServicioRepository.save(ciudadServicio);
+    }
+
+    public CiudadServicio updateCiudadServicio(CiudadServicioDTO ciudadServicioDTO) {
+        CiudadServicio ciudadServicio = CiudadServicioMapper.toEntity(ciudadServicioDTO);
+        ciudadServicio.setCiudad(ciudadRepository.findById(ciudadServicioDTO.getIdCiudad()).get());
+        ciudadServicio.setServicio(servicioRepository.findById(ciudadServicioDTO.getIdServicio()).get());
+        return ciudadServicioRepository.save(ciudadServicio);
     }
 
     public void borrarCiudad(Long id) {
         ciudadRepository.deleteById(id);
     }
     
-   public void borrarAllCiudadServicio(Long idCiudad) {
+    public void borrarAllCiudadServicio(Long idCiudad) {
         ciudadRepository.deleteCiudadCascada(idCiudad);
     }
 
 
-    public void borrarCiudadServicio(Long idCiudad, Long idServicio) {
-        List<CiudadServicioDTO> ciudadServicioDTOs = getCiudadService(idCiudad).get();
-        CiudadServicioDTO ciudadServicioDTO = ciudadServicioDTOs.stream()
-                .filter(x -> x.getIdCiudad().equals(idCiudad) && x.getIdServicio().equals(idServicio))
-                .findFirst()
-                .orElse(null);
-        if (ciudadServicioDTO != null) {
-            log.error("ID DE CIUDAD: "+ciudadServicioDTO.getIdCiudad());
-            log.error("ID DE SERVICIO: "+ciudadServicioDTO.getIdServicio());
-            log.error("ID DE LA RELACION: "+ciudadServicioDTO.getId());
-            Long id = ciudadServicioDTO.getId();
-            servicioCompraRepository.deleteAll();
-            ciudadServicioRepository.deleteById(id);
-        } else {
-            log.error("es nulo");
-        }
+    public void deleteCiudadServicio(Long idCiudadServicio) {
+        ciudadServicioRepository.deleteById(idCiudadServicio);       
     }
+
+ 
 
 /*
 

@@ -23,20 +23,20 @@ public class ServicioService {
                 .map(ServicioMapper::toDTO).toList();
     }
 
-    public Optional<ServicioDTO> getProductoById(Long id) {
+    public Optional<ServicioDTO> getServicioById(Long id) {
         return servicioRepository.findById(id)
                 .map(ServicioMapper::toDTO);
     }
 
-    public void guardarProducto(ServicioDTO servicioDTO) {
+    public void guardarServicio(ServicioDTO servicioDTO) {
         Servicio servicio = ServicioMapper.toEntity(servicioDTO);
         servicioRepository.save(servicio);
 
     }
-    public List<ServicioDTO> listaIdsToProducto (List<Long> serviciosId) {
+    public List<ServicioDTO> listaIdsToServicio (List<Long> serviciosId) {
         List<ServicioDTO> serviciosDTO = new ArrayList<ServicioDTO>();
         for(Long id : serviciosId) {
-            serviciosDTO.add(getProductoById(id).get());
+            serviciosDTO.add(getServicioById(id).get());
         }
         return serviciosDTO;
     }

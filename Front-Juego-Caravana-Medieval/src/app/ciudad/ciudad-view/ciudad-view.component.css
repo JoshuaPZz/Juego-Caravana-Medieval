@@ -1,0 +1,149 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 2rem;
+  background-color: #f5f5f5;
+}
+
+h1 {
+  color: #00a24f;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.info-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-3px);
+}
+
+.section-title {
+  color: #178833;
+  font-weight: 600;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+.sigmadiv > div > a {
+  padding: 0.8rem 1.5rem; /* Add more horizontal padding */
+  margin: 0.3rem 0;
+  background-color: #f8f9fa;
+  border-radius: 8px; /* Slightly larger border radius */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for all effects */
+}
+
+.sigmadiv > div a::before {
+  content: "•";
+  color: #00a24f;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+}
+
+.sigmadiv > div > a:hover {
+  background-color: #178833; /* Green background on hover */
+  color: white; /* Change text color */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  transform: translateY(-3px); /* Slight lift effect */
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  background-color: #178833;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.back-button:hover {
+  background-color: #00ff40;
+  transform: translateX(-5px);
+}
+
+.impuesto-badge {
+  background: #00a24f;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
+  margin: 1rem 0;
+}
+
+.dropdown-section {
+  margin: 1rem 0;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dropdown-header {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-header:hover {
+  background-color: #e9ecef;
+}
+
+.dropdown.active .dropdown-content {
+  display: block;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    margin: 1rem;
+  }
+
+  .info-card {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
