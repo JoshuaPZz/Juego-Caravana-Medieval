@@ -1,11 +1,15 @@
 package co.edu.javeriana.caravana_medieval.controller;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import co.edu.javeriana.caravana_medieval.dto.ErrorDTO;
 import co.edu.javeriana.caravana_medieval.dto.RutaCiudadDTO;
 import co.edu.javeriana.caravana_medieval.dto.RutaDTO;
 import co.edu.javeriana.caravana_medieval.mapper.RutaMapper;
@@ -40,13 +45,21 @@ public class RutaController {
     }
 
     @GetMapping("/list/{page}")
-    public List<RutaDTO> listarRutas(@PathVariable Integer page) {
-        return rutaService.listarRutas(PageRequest.of(page, 10));
+    public ResponseEntity<?> listarRutas(@PathVariable Integer page) {
+        if(page > 0){
+            return ResponseEntity.ok(rutaService.listarRutas(PageRequest.of(page, 10)));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDTO("El indice de la página no puede ser negativo"));
+        }
     }
 
     @GetMapping("/view/{id}")
-    public RutaDTO obtenerRutaPorId(@PathVariable("id") Long id) {
-        return rutaService.buscarRuta(id).orElseThrow();
+    public ResponseEntity<?> obtenerRutaPorId(@PathVariable("id") Long id) {
+        if (id > 0){
+            return ResponseEntity.ok(rutaService.buscarRuta(id).orElseThrow());
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDTO("El id de la ruta no puede ser negativo"));
+        }
     }
 
     @PostMapping
