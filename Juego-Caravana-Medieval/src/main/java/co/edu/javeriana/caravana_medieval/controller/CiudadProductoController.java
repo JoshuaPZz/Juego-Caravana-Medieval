@@ -33,12 +33,16 @@ public class CiudadProductoController {
         return ciudadService.getCiudadProductoTupla(ciudadProductosDTO, idCiudad, idProducto);
     }
     @PostMapping
-    public CiudadProductoDTO crearCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
-        return CiudadProductoMapper.toDTO(ciudadService.crearCiudadProducto(ciudadProductoDTO));
+    public CiudadProductoDTO createCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
+        return CiudadProductoMapper.toDTO(ciudadService.createCiudadProducto(ciudadProductoDTO));
     }
 
     @PutMapping
-    public CiudadProductoDTO actualizarCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
-        return CiudadProductoMapper.toDTO(ciudadService.actualizarCiudadProducto(ciudadProductoDTO));
+    public CiudadProductoDTO updateCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
+        return CiudadProductoMapper.toDTO(ciudadService.updateCiudadProducto(ciudadProductoDTO));
+    }
+    @DeleteMapping("{idCiudadProducto}")
+    public void deleteCiudadProducto(@PathVariable Long idCiudadProducto) {
+        ciudadService.deleteCiudadProducto(idCiudadProducto);
     }
 }

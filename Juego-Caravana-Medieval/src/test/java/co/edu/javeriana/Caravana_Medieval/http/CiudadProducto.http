@@ -21,3 +21,8 @@ Content-Type: application/json
   "stock": 25
 }
 
+###
+DELETE {{base_url}}/productoCiudad/10
+
+
+

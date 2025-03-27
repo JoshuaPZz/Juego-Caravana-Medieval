@@ -136,7 +136,7 @@ public class CiudadService {
                 .orElse(null);
     }
 
-    public CiudadProducto crearCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
+    public CiudadProducto createCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
         ciudadProductoDTO.setId(null);
         CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
         ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
@@ -145,11 +145,15 @@ public class CiudadService {
         log.info(ciudadProducto.getProducto().getNombre());
         return ciudadProductoRepository.save(ciudadProducto);
     }
-    public CiudadProducto actualizarCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
+    public CiudadProducto updateCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {
         CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
         ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
         ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
         return ciudadProductoRepository.save(ciudadProducto);
+    }
+
+    public void deleteCiudadProducto(Long idCiudadProducto) {
+        ciudadProductoRepository.deleteById(idCiudadProducto);
     }
 
     public void saveEditServicioCiudad(CiudadServicioDTO ciudadServicioDTO) {
@@ -185,6 +189,8 @@ public class CiudadService {
             log.error("es nulo");
         }
     }
+
+ 
 
 /*
 
