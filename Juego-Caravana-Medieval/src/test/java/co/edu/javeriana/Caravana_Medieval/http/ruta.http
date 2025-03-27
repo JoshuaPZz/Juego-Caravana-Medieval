@@ -10,6 +10,12 @@ GET {{base_url}}/rutas/list/1
 GET {{base_url}}/rutas/view/1
 
 ###
+GET {{base_url}}/rutas/list/-1
+
+###
+GET {{base_url}}/rutas/view/-1
+
+###
 POST {{base_url}}/rutas
 Content-Type: application/json
 
@@ -19,13 +25,16 @@ Content-Type: application/json
 }
 
 ###
+GET {{base_url}}/rutas/view/1552
+
+###
 PUT {{base_url}}/rutas
 Content-Type: application/json
 
 {
-    "id": 1,
-    "longitud": 1,
-    "dano": 1
+    "id": 1552,
+    "longitud": 2,
+    "dano": 69
 }
 
 ###
