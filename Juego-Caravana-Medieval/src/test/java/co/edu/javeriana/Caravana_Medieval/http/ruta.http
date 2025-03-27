@@ -11,6 +11,10 @@ GET {{base_url}}/rutas/view/1
 
 ###
 GET {{base_url}}/rutas/list/-1
+
+###
+GET {{base_url}}/rutas/view/-1
+
 ###
 POST {{base_url}}/rutas
 Content-Type: application/json
