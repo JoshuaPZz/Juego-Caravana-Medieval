@@ -89,7 +89,7 @@ public class CiudadService {
         List<Long> idRutasOrigen = relacionRutaOrigen.stream()
                             .map(Ruta::getId)
                             .toList();
-        List<Ruta> relacionRutaDestino = ciudad.getRutasOrigen();
+        List<Ruta> relacionRutaDestino = ciudad.getRutasDestino();
         List<Long> idRutasDestino = relacionRutaDestino.stream()
                             .map(Ruta::getId)
                             .toList();                                                    
@@ -140,9 +140,7 @@ public class CiudadService {
         ciudadProductoDTO.setId(null);
         CiudadProducto ciudadProducto = CiudadProductoMapper.toEntity(ciudadProductoDTO);
         ciudadProducto.setCiudad(ciudadRepository.findById(ciudadProductoDTO.getIdCiudad()).get());
-        log.info(ciudadProducto.getCiudad().getNombre());
         ciudadProducto.setProducto(productoRepository.findById(ciudadProductoDTO.getIdProducto()).get());
-        log.info(ciudadProducto.getProducto().getNombre());
         return ciudadProductoRepository.save(ciudadProducto);
     }
     public CiudadProducto updateCiudadProducto(CiudadProductoDTO ciudadProductoDTO) {

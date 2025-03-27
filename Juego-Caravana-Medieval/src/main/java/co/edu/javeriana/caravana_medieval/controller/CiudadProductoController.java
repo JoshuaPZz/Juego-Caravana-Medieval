@@ -41,6 +41,7 @@ public class CiudadProductoController {
     public CiudadProductoDTO updateCiudadProducto(@RequestBody CiudadProductoDTO ciudadProductoDTO) {
         return CiudadProductoMapper.toDTO(ciudadService.updateCiudadProducto(ciudadProductoDTO));
     }
+    
     @DeleteMapping("{idCiudadProducto}")
     public void deleteCiudadProducto(@PathVariable Long idCiudadProducto) {
         ciudadService.deleteCiudadProducto(idCiudadProducto);
