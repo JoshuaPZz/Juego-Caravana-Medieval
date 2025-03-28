@@ -1,21 +1,12 @@
 package co.edu.javeriana.caravana_medieval.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
 import java.util.Optional;
 
 import co.edu.javeriana.caravana_medieval.dto.*;
-import co.edu.javeriana.caravana_medieval.mapper.CiudadMapper;
-import co.edu.javeriana.caravana_medieval.mapper.CiudadProductoMapper;
-import co.edu.javeriana.caravana_medieval.mapper.CiudadServicioMapper;
-import co.edu.javeriana.caravana_medieval.mapper.ServicioCompraMapper;
 import co.edu.javeriana.caravana_medieval.model.*;
 import co.edu.javeriana.caravana_medieval.repository.*;
-import jakarta.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

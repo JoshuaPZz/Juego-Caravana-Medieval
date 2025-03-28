@@ -2,21 +2,16 @@ package co.edu.javeriana.caravana_medieval.controller;
 
 import java.util.List;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.slf4j.Logger;
 import co.edu.javeriana.caravana_medieval.service.CiudadService;
 import co.edu.javeriana.caravana_medieval.dto.CiudadDTO;
-import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 
 @RequestMapping("/ciudades")
 
 public class CiudadController {
-    private Logger log = LoggerFactory.getLogger(getClass().getName());
     @Autowired
     private CiudadService ciudadService;
 
