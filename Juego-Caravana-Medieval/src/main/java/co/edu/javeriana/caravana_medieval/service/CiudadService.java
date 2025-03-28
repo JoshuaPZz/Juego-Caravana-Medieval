@@ -68,6 +68,10 @@ public class CiudadService {
         }
     }
 
+    public void borrarCiudad(Long id) {
+        ciudadRepository.deleteById(id);
+    }
+    
     public Optional<CiudadRutasDTO> getCiudadRutas(Long ciudadId) {
         Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
         if(ciudadOpt.isEmpty()){
@@ -84,21 +88,6 @@ public class CiudadService {
                             .toList();                                                    
         CiudadRutasDTO ciudadRutasDTO = new CiudadRutasDTO(ciudadId, idRutasOrigen, idRutasDestino);
         return Optional.of(ciudadRutasDTO);
-    }
-
-    public Optional<List<ServicioCompraDTO>> getCiudadCompras(Long ciudadId) {
-        Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
-        if(ciudadOpt.isEmpty()) {
-            return Optional.empty();
-        }
-        Ciudad ciudad = ciudadOpt.get();
-        List<ServicioCompraDTO> servicioCompras = ciudad.getCompras().stream().map(ServicioCompraMapper::toDTO).toList();
-        return Optional.of(servicioCompras);
-    }    
-    
-
-    public void borrarCiudad(Long id) {
-        ciudadRepository.deleteById(id);
     }
     
     public void borrarAllCiudadServicio(Long idCiudad) {
