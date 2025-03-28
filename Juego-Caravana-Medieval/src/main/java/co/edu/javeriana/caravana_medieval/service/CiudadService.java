@@ -85,17 +85,6 @@ public class CiudadService {
         CiudadRutasDTO ciudadRutasDTO = new CiudadRutasDTO(ciudadId, idRutasOrigen, idRutasDestino);
         return Optional.of(ciudadRutasDTO);
     }
-    public Optional<List<CiudadServicioDTO>> getCiudadService(Long ciudadId) {
-        Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
-        if(ciudadOpt.isEmpty()) {
-            return Optional.empty();
-        }
-        Ciudad ciudad = ciudadOpt.get();
-        List<CiudadServicioDTO> ciudadServiciosDTO = ciudad.getServicios().stream()
-                .map(CiudadServicioMapper::toDTO)
-                .toList();
-        return Optional.of(ciudadServiciosDTO);
-    }
 
     public Optional<List<ServicioCompraDTO>> getCiudadCompras(Long ciudadId) {
         Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
@@ -105,32 +94,8 @@ public class CiudadService {
         Ciudad ciudad = ciudadOpt.get();
         List<ServicioCompraDTO> servicioCompras = ciudad.getCompras().stream().map(ServicioCompraMapper::toDTO).toList();
         return Optional.of(servicioCompras);
-    }
-
-
-    public CiudadServicioDTO getCiudadServicioTupla(List<CiudadServicioDTO> ciudadServiciosDTO, Long idCiudadServicio) {
-        return ciudadServiciosDTO.stream()
-        .filter(x -> x.getId() == idCiudadServicio).
-                findFirst()
-                .stream()
-                .findFirst()
-                .orElse(null);
-    }
+    }    
     
-    public CiudadServicio createCiudadServicio(CiudadServicioDTO ciudadServicioDTO) {
-        ciudadServicioDTO.setId(null);
-        CiudadServicio ciudadServicio = CiudadServicioMapper.toEntity(ciudadServicioDTO);
-        ciudadServicio.setCiudad(ciudadRepository.findById(ciudadServicioDTO.getIdCiudad()).get());
-        ciudadServicio.setServicio(servicioRepository.findById(ciudadServicioDTO.getIdServicio()).get());
-        return ciudadServicioRepository.save(ciudadServicio);
-    }
-
-    public CiudadServicio updateCiudadServicio(CiudadServicioDTO ciudadServicioDTO) {
-        CiudadServicio ciudadServicio = CiudadServicioMapper.toEntity(ciudadServicioDTO);
-        ciudadServicio.setCiudad(ciudadRepository.findById(ciudadServicioDTO.getIdCiudad()).get());
-        ciudadServicio.setServicio(servicioRepository.findById(ciudadServicioDTO.getIdServicio()).get());
-        return ciudadServicioRepository.save(ciudadServicio);
-    }
 
     public void borrarCiudad(Long id) {
         ciudadRepository.deleteById(id);
@@ -139,13 +104,6 @@ public class CiudadService {
     public void borrarAllCiudadServicio(Long idCiudad) {
         ciudadRepository.deleteCiudadCascada(idCiudad);
     }
-
-
-    public void deleteCiudadServicio(Long idCiudadServicio) {
-        ciudadServicioRepository.deleteById(idCiudadServicio);       
-    }
-
- 
 
 /*
 
