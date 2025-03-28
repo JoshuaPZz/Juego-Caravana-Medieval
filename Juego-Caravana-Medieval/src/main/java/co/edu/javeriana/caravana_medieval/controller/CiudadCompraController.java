@@ -18,14 +18,18 @@ import org.slf4j.Logger;
 public class CiudadCompraController {
     private Logger log = LoggerFactory.getLogger(getClass().getName());
     @Autowired
+    private CiudadCompraService ciudadCompraService;
+
+    @Autowired
     private CiudadService ciudadService;
+
     @Autowired
     private ServicioService servicioService;
 
     @GetMapping("/compras")
     public ModelAndView getProductosCiudad(@PathVariable("id") Long id) {
         CiudadDTO ciudad = ciudadService.getCiudadById(id).get();
-        List<ServicioCompraDTO> compras = ciudadService.getCiudadCompras(id).get();
+        List<ServicioCompraDTO> compras = ciudadCompraService.getCiudadCompras(id).get();
         ModelAndView modelAndView = new ModelAndView("compras-ciudad-view");
         modelAndView.addObject("ciudad", ciudad);
         modelAndView.addObject("compras", compras);
