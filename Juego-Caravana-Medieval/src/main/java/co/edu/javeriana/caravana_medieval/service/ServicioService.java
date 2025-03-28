@@ -2,9 +2,7 @@ package co.edu.javeriana.caravana_medieval.service;
 
 import co.edu.javeriana.caravana_medieval.dto.ServicioDTO;
 import co.edu.javeriana.caravana_medieval.mapper.ServicioMapper;
-import co.edu.javeriana.caravana_medieval.model.Producto;
 import co.edu.javeriana.caravana_medieval.model.Servicio;
-import co.edu.javeriana.caravana_medieval.repository.ProductoRepository;
 import co.edu.javeriana.caravana_medieval.repository.ServicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
