@@ -17,6 +17,6 @@ export class ViajarService {
   viajar() {
     // Lógica para realizar la acción de viajar
     console.log(`Viajando a:`);
-    // Aquí podrías agregar lógica para, por ejemplo, navegar a otra vista o realizar alguna acción adicional
+    // Aquí se puede agregar lógica para, por ejemplo, navegar a otra vista o realizar alguna acción adicional
   }
 }

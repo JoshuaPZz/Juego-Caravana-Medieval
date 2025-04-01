@@ -11,6 +11,7 @@ import co.edu.javeriana.caravana_medieval.repository.CiudadProductoRepository;
 import co.edu.javeriana.caravana_medieval.repository.CiudadRepository;
 import co.edu.javeriana.caravana_medieval.repository.ProductoRepository;
 import co.edu.javeriana.caravana_medieval.repository.RutaRepository;
+import co.edu.javeriana.caravana_medieval.model.Caravana;
 
 @Service
 public class ViajeService {
@@ -21,8 +22,7 @@ public class ViajeService {
     @Autowired
     private RutaRepository rutaRepository;
 
-    @Autowired
-    private CaravanaRepository caravanaRepository;
+
 
 
     

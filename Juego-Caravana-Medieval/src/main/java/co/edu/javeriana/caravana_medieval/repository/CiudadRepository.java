@@ -12,6 +12,10 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface CiudadRepository extends JpaRepository<Ciudad, Long> {
 
+    @Query("SELECT ci.nombre FROM Ciudad ci WHERE ci.id = :ciudadId")
+String findCiudadNameById(@Param("ciudadId") Long ciudadId);
+
+
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "DELETE FROM CIUDAD_PRODUCTO WHERE ID_CIUDAD = :idCiudad")

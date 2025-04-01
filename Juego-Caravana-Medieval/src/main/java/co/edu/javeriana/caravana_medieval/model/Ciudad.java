@@ -20,6 +20,9 @@ public class Ciudad {
 
     @OneToMany(mappedBy = "ciudad")
     private List<ServicioCompra> compras = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "ciudadActual")
+    private List<Caravana> caravanas = new ArrayList<>();
 
     @OneToMany(mappedBy = "origen")
     private List<Ruta> rutasOrigen = new ArrayList<>();

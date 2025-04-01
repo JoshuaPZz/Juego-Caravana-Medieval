@@ -21,21 +21,25 @@ public class Caravana {
     @OneToMany(mappedBy = "caravana", cascade = CascadeType.ALL)
     private List<ServicioCompra> compras = new ArrayList<>();
 
+    @ManyToOne
+    private Ciudad ciudadActual;
+
     private String nombre;
     private int velocidad;
     private int capacidadMax;
     private int dineroDisponible;
-    private int puntosVida;
+    private int puntosVida; 
 
     public Caravana() {
     }
 
-    public Caravana(String nombre, int velocidad, int capacidadMax, int dineroDisponible, int puntosVida) {
+    public Caravana(String nombre, int velocidad, int capacidadMax, int dineroDisponible, int puntosVida, Ciudad ciudadActual) {
         this.nombre = nombre;
         this.velocidad = velocidad;
         this.capacidadMax = capacidadMax;
         this.dineroDisponible = dineroDisponible;
         this.puntosVida = puntosVida;
+        this.ciudadActual = ciudadActual;
     }
 
     public Long getId() {
@@ -108,5 +112,13 @@ public class Caravana {
 
     public void setPuntosVida(int puntosVida) {
         this.puntosVida = puntosVida;
+    }
+
+    public Ciudad getCiudadActual() {
+        return ciudadActual;
+    }
+
+    public void setCiudadActual(Ciudad ciudadActual) {
+        this.ciudadActual = ciudadActual;
     }
 }

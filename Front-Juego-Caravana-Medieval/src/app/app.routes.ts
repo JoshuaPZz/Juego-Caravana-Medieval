@@ -6,5 +6,5 @@ import { ViajarCiudadComponent } from './viaje/viajar-ciudad/viajar-ciudad.compo
 export const routes: Routes = [
   { path: 'ciudades/list', component: CiudadListComponent },
   { path: 'ciudades/view/:id', component: CiudadViewComponent },
-  { path: 'viaje/otro/ciudad', component: ViajarCiudadComponent },
+  { path: 'viaje/ciudad', component: ViajarCiudadComponent },
 ];
