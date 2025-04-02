@@ -7,6 +7,6 @@ import { CaravanaViewComponent } from './caravana/caravana-view/caravana-view.co
 export const routes: Routes = [
   { path: 'ciudades/list', component: CiudadListComponent },
   { path: 'ciudades/view/:id', component: CiudadViewComponent },
-  { path: 'viaje/ciudad', component: ViajarCiudadComponent },
-  { path: 'caravana', component: CaravanaViewComponent },
+  { path: 'viaje', component: ViajarCiudadComponent },
+  { path: 'caravana/:id', component: CaravanaViewComponent },
 ];
