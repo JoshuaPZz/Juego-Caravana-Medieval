@@ -1,5 +1,6 @@
 package co.edu.javeriana.caravana_medieval.model;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,17 +30,27 @@ public class Caravana {
     private int capacidadMax;
     private int dineroDisponible;
     private int puntosVida; 
+    private LocalTime horaViaje; 
 
     public Caravana() {
     }
 
-    public Caravana(String nombre, int velocidad, int capacidadMax, int dineroDisponible, int puntosVida, Ciudad ciudadActual) {
+    public Caravana(String nombre, int velocidad, int capacidadMax, int dineroDisponible, int puntosVida, Ciudad ciudadActual, LocalTime horaViaje) {
         this.nombre = nombre;
         this.velocidad = velocidad;
         this.capacidadMax = capacidadMax;
         this.dineroDisponible = dineroDisponible;
         this.puntosVida = puntosVida;
         this.ciudadActual = ciudadActual;
+        this.horaViaje = horaViaje;
+    }
+
+    public LocalTime getHoraViaje() {
+        return horaViaje;
+    }
+
+    public void setHoraViaje(LocalTime horaViaje) {
+        this.horaViaje = horaViaje;
     }
 
     public Long getId() {

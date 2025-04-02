@@ -114,7 +114,7 @@ public class DbInitializer implements CommandLineRunner {
         // Crear 3 caravanas
         List<Caravana> caravanas = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
-            caravanas.add(caravanaRepository.save(new Caravana("Caravana" + i, 10 + i, 100 + i * 10, 500 + i * 100, 100, ciudades.get(0))));
+            caravanas.add(caravanaRepository.save(new Caravana("Caravana" + i, 10 + i, 100 + i * 10, 500 + i * 100, 100, ciudades.get(0), java.time.LocalTime.of(8, 0))));
         }
 
         // Crear 10 jugadores

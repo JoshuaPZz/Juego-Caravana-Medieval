@@ -1,27 +1,33 @@
-// viajar-ciudad.component.ts
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CiudadService } from '../../ciudad/ciudad.service';
-import { ViajarService } from '../../viaje/viajar.service'; // Inyectamos el servicio
+import { ViajarService } from '../../viaje/viajar.service';
+import { CiudadDto } from '../../dto/ciudad-dto';
+import { CaravanaViewComponent } from '../../caravana/caravana-view/caravana-view.component';
 
 @Component({
   selector: 'app-viajar-ciudad',
+  imports: [CaravanaViewComponent],
   templateUrl: './viajar-ciudad.component.html',
   styleUrls: ['./viajar-ciudad.component.css'],
 })
 export class ViajarCiudadComponent implements OnInit {
-  ciudadActual: any;
-  parametroCiudad: any;
+  ciudadActual!: CiudadDto;
   rutas: any[] = [];
 
   constructor(
-    private ciudadService: CiudadService,
-    private viajarService: ViajarService // Inyectamos el servicio
+    private viajarService: ViajarService,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {
-    // Inicializamos los datos
-    this.ciudadActual = { nombre: 'Ciudad Ejemplo', impuesto: 10 };
-    this.parametroCiudad = { impuesto: 15 };
+  ngOnInit(): void {
+    const caravanaId = Number(this.route.snapshot.paramMap.get('id')) || 1;
+    //necesitamos tener el id de la caravana en algun lado ya, lo mejor seria instanciarlo en un DTO en todo el momento, pero hacer esto desde una pantalla principal
+    this.viajarService.ciudadActual(caravanaId).subscribe((ciudad) => {
+      this.ciudadActual = ciudad;
+      console.log('Ciudad actual:', this.ciudadActual);
+    });
+
     this.rutas = [
       { nombre: 'Ruta 1', ciudadDestino: 'Ciudad A' },
       { nombre: 'Ruta 2', ciudadDestino: 'Ciudad B' },
@@ -29,7 +35,6 @@ export class ViajarCiudadComponent implements OnInit {
   }
 
   viajar() {
-    // Usamos el método viajar del servicio
     this.viajarService.viajar();
   }
 }

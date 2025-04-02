@@ -13,7 +13,7 @@ import jakarta.transaction.Transactional;
 public interface CiudadRepository extends JpaRepository<Ciudad, Long> {
 
     @Query("SELECT ci.nombre FROM Ciudad ci WHERE ci.id = :ciudadId")
-String findCiudadNameById(@Param("ciudadId") Long ciudadId);
+    String findCiudadNameById(@Param("ciudadId") Long ciudadId);
 
 
     @Modifying
