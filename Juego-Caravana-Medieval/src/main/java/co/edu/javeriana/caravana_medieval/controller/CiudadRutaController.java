@@ -24,10 +24,16 @@ public class CiudadRutaController {
     @Autowired
     private CiudadRutaService ciudadRutaService;
 
-    @GetMapping("/rutaorigen")
-    public List<CiudadDTO> getRutasOrigen(@PathVariable("id") Long id) {
+    @GetMapping("/ciudadesorigen")
+    public List<CiudadDTO> getCiudadesRutaOrigen(@PathVariable("id") Long id) {
         CiudadRutasDTO ciudadRutasDTO = ciudadRutaService.getCiudadRutas(id).orElseThrow();
         return ciudadRutaService.getDestinosCiudad(ciudadRutasDTO).get();
+    }
+
+    @GetMapping("/rutasorigen")
+    public List<RutaDTO> getRutasOrigen(@PathVariable("id") Long id) {
+        CiudadRutasDTO ciudadRutasDTO = ciudadRutaService.getCiudadRutas(id).orElseThrow();
+        return ciudadRutaService.getRutasOrigenCiudad(ciudadRutasDTO).get();
     }
     
     @GetMapping("/rutadestino")

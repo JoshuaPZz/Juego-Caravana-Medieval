@@ -42,10 +42,15 @@ public class CiudadRutaService {
         return Optional.of(ciudadRutasDTO);
     }
 
-    public Optional<List<CiudadDTO>> getDestinosCiudad (CiudadRutasDTO ciudadRutasDTO){
-        List<RutaDTO> rutasOrigenDTO = rutaService.listaIdstoRuta(ciudadRutasDTO.getIdRutasOrigen())
+    public Optional<List<RutaDTO>> getRutasOrigenCiudad (CiudadRutasDTO ciudadRutasDTO){
+        return Optional.of(rutaService.listaIdstoRuta(ciudadRutasDTO.getIdRutasOrigen())
                 .stream()
-                .toList();
+                .toList());
+        
+    }
+
+    public Optional<List<CiudadDTO>> getDestinosCiudad (CiudadRutasDTO ciudadRutasDTO){
+        List<RutaDTO> rutasOrigenDTO = getRutasOrigenCiudad(ciudadRutasDTO).get();
         List<Long> idsRutas = rutasOrigenDTO.stream()
                 .map(RutaDTO::getId)
                 .toList();
