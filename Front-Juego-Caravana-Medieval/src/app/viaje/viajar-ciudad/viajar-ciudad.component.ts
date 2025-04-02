@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CiudadService } from '../../ciudad/ciudad.service';
 import { ViajarService } from '../../viaje/viajar.service';
 import { CiudadDto } from '../../dto/ciudad-dto';
@@ -16,6 +16,7 @@ export class ViajarCiudadComponent implements OnInit {
   rutas: any[] = [];
 
   constructor(
+    private router: Router,
     private viajarService: ViajarService,
     private route: ActivatedRoute
   ) {}
@@ -36,5 +37,9 @@ export class ViajarCiudadComponent implements OnInit {
 
   viajar() {
     this.viajarService.viajar();
+  }
+
+  back(): void {
+    //this.router.navigate(['/ciudades/list']);
   }
 }
