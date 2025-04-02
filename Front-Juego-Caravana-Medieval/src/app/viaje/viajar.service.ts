@@ -3,16 +3,18 @@ import { Injectable } from '@angular/core';
 import { CiudadDto } from '../dto/ciudad-dto';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { CiudadService } from '../ciudad/ciudad.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ViajarService {
-  constructor(
-    private httpClient: HttpClient,
-    private ciudadService: CiudadService
-  ) {}
+  constructor(private httpClient: HttpClient) {}
+
+  ciudadActual(id: number): Observable<CiudadDto> {
+    return this.httpClient.get<CiudadDto>(
+      `${environment.serverUrl}/viaje/ciudadActual/${id}`
+    );
+  }
 
   viajar() {
     // Lógica para realizar la acción de viajar
