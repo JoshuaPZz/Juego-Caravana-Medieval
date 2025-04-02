@@ -1,7 +1,4 @@
 <h1>Ciudades list</h1>
-<p>
-  <a class="create-button" th:href="@{/ciudades/create}">Create</a>
-</p>
 
 <table>
   <thead>
@@ -9,8 +6,6 @@
       <th>Nombre</th>
       <th>Impuesto</th>
       <th>View</th>
-      <th>Edit</th>
-      <th>Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -20,19 +15,6 @@
       <td>
         <a class="view-button" [routerLink]="['/ciudades/view', ciudad.id]"
           >View</a
-        >
-      </td>
-
-      <td>
-        <a class="edit-button" th:href="@{/ciudades/edit/{id}(id=${ciudad.id})}"
-          >Edit</a
-        >
-      </td>
-      <td>
-        <a
-          class="delete-button"
-          th:href="@{/ciudades/delete/{id}(id=${ciudad.id})}"
-          >Delete</a
         >
       </td>
     </tr>
