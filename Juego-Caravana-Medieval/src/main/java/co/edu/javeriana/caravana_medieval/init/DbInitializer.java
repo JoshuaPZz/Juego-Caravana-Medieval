@@ -51,7 +51,7 @@ public class DbInitializer implements CommandLineRunner {
     private static final int NUM_CIUDADES = 100;
     private static final int NUM_PRODUCTOS = 50;
     private static final String[] NOMBRES_SERVICIOS = { "Reparar", "Mejorar capacidad", "Mejorar velocidad", "Guardias" };
-    private static final String[] ROLES = { "Comerciante", "Caravanero", "Administrador" };
+    private static final String[] ROLES = { "Comerciante", "Caravanero" };
 
     @Override
     @Transactional
