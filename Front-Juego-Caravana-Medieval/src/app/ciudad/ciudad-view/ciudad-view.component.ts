@@ -21,10 +21,14 @@ export class CiudadViewComponent implements OnInit {
 
   ngOnInit(): void {
     const id = +this.route.snapshot.paramMap.get('id')!;
-
-    this.ciudadService.getCiudadById(id).subscribe((ciudad) => {
-      this.parametroCiudad = ciudad;
-      console.log('Ciudad loaded:', this.parametroCiudad);
+    this.ciudadService.getCiudadById(id).subscribe({
+      next: (ciudad) => {
+        this.parametroCiudad = ciudad;
+        console.log('Ciudad loaded:', this.parametroCiudad);
+      },
+      error: (error) => {
+        console.error('Error fetching ciudad:', error);
+      },
     });
   }
 

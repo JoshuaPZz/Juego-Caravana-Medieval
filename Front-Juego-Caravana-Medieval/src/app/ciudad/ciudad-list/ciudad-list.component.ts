@@ -16,9 +16,19 @@ export class CiudadListComponent {
   constructor(private ciudadService: CiudadService) {}
 
   ngOnInit(): void {
-    this.ciudadService
+    /* this.ciudadService
       .listarCiudades()
-      .subscribe((listaCiudades) => (this.ciudades = listaCiudades));
+      .subscribe((listaCiudades) => (this.ciudades = listaCiudades));*/
+
+    this.ciudadService.listarCiudades().subscribe({
+      next: (listaCiudades) => {
+        this.ciudades = listaCiudades;
+        console.log('Ciudades:', this.ciudades);
+      },
+      error: (error) => {
+        console.error('Error al obtener las ciudades:', error);
+      },
+    });
   }
 
   seleccionarCiudad(ciudadSeleccionada: CiudadDto) {

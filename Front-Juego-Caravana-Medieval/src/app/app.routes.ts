@@ -8,7 +8,7 @@ import { ProductosListComponent } from './productos/productos-list/productos-lis
 export const routes: Routes = [
   { path: 'ciudades/list', component: CiudadListComponent },
   { path: 'ciudades/view/:id', component: CiudadViewComponent },
-  { path: 'viaje/ciudad', component: ViajarCiudadComponent },
+  { path: 'viajar', component: ViajarCiudadComponent },
   { path: 'productos/list', component: ProductosListComponent },
   { path: 'caravana/:id', component: CaravanaViewComponent },
 ];

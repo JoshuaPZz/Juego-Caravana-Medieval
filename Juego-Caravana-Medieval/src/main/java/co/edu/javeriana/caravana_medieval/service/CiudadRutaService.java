@@ -71,5 +71,11 @@ public class CiudadRutaService {
                 .toList());
     }
 
+    public Ciudad getCiudadDestinoByid(Long ciudadId) {
+        return ciudadService.getCiudadById(ciudadId)
+                .map(CiudadMapper::toEntity)
+                .orElseThrow(() -> new IllegalArgumentException("Ciudad not found for id: " + ciudadId));
+    }
+
 
 }

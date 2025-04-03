@@ -7,19 +7,25 @@ import { ProductoService } from '../producto.service';
   selector: 'app-productos-list',
   imports: [CommonModule],
   templateUrl: './productos-list.component.html',
-  styleUrl: './productos-list.component.css'
+  styleUrl: './productos-list.component.css',
 })
 export class ProductosListComponent {
-
   productos: ProductoDto[] = [];
 
-  constructor(
-    private productoService : ProductoService
-  ) {}
+  constructor(private productoService: ProductoService) {}
 
-  ngOnInit() : void {
-    console.log("sigma")
-    this.productoService.listProducts()
-    .subscribe(listaProductos => this.productos = listaProductos);
+  ngOnInit(): void {
+    /*this.productoService.listProducts()
+    .subscribe(listaProductos => this.productos = listaProductos);*/
+
+    this.productoService.listProducts().subscribe({
+      next: (listaProductos) => {
+        this.productos = listaProductos;
+        console.log('Productos:', this.productos);
+      },
+      error: (error) => {
+        console.error('Error al obtener los productos:', error);
+      },
+    });
   }
 }

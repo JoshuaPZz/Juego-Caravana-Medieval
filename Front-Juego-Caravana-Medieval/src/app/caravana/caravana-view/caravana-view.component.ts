@@ -19,10 +19,15 @@ export class CaravanaViewComponent {
 
   ngOnInit(): void {
     const caravanaId = Number(this.route.snapshot.paramMap.get('id')) || 1;
-    //necesitamos tener el id de la caravana en algun lado ya, lo mejor seria instanciarlo en un DTO en todo el momento, pero hacer esto desde una pantalla principal
-    this.caravanaService.caravanaActual(caravanaId).subscribe((caravana) => {
-      this.caravana = caravana;
-      console.log('Caravana actual:', this.caravana);
+
+    this.caravanaService.caravanaActual(caravanaId).subscribe({
+      next: (caravana) => {
+        this.caravana = caravana;
+        console.log('Caravana actual:', this.caravana);
+      },
+      error: (error) => {
+        console.error('Error fetching caravana:', error);
+      },
     });
   }
 }

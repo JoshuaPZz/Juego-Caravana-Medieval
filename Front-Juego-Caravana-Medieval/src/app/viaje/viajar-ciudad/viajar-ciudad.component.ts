@@ -24,11 +24,18 @@ export class ViajarCiudadComponent implements OnInit {
   ngOnInit(): void {
     const caravanaId = Number(this.route.snapshot.paramMap.get('id')) || 1;
     //necesitamos tener el id de la caravana en algun lado ya, lo mejor seria instanciarlo en un DTO en todo el momento, pero hacer esto desde una pantalla principal
-    this.viajarService.ciudadActual(caravanaId).subscribe((ciudad) => {
-      this.ciudadActual = ciudad;
-      console.log('Ciudad actual:', this.ciudadActual);
+
+    this.viajarService.ciudadActual(caravanaId).subscribe({
+      next: (ciudad) => {
+        this.ciudadActual = ciudad;
+        console.log('Ciudad actual:', this.ciudadActual);
+      },
+      error: (error) => {
+        console.error('Error al obtener la ciudad actual:', error);
+      },
     });
 
+    // Simulación de rutas disponibles (esto debería venir del servicio de viaje)
     this.rutas = [
       { nombre: 'Ruta 1', ciudadDestino: 'Ciudad A' },
       { nombre: 'Ruta 2', ciudadDestino: 'Ciudad B' },

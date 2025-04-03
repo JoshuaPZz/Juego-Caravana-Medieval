@@ -3,6 +3,7 @@ package co.edu.javeriana.caravana_medieval.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +22,10 @@ public class ViajeController {
     public CiudadDTO getCiudadActual(@PathVariable Long id) {
         return viajeService.getCiudadActual(id);
     }
-    
+
+    @PutMapping("/{idCaravana}/{idCiudadDestino}/{idRuta}")
+    public void viajar(@PathVariable Long idCaravana, @PathVariable Long idCiudadDestino, @PathVariable Long idRuta) {
+        viajeService.viajar(idCaravana, idCiudadDestino, idRuta);
+        
+    }
 }
