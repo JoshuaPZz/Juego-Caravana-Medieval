@@ -9,6 +9,7 @@ import co.edu.javeriana.caravana_medieval.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import co.edu.javeriana.caravana_medieval.mapper.CiudadMapper;
 
 @Service
 public class CiudadRutaService {

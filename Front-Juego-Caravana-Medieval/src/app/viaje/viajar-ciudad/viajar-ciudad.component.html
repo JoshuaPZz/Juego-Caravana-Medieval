@@ -9,12 +9,8 @@
 
   <div class="routes">
     <h2>Ciudades a ir</h2>
-    <ul>
-      <li *ngFor="let ruta of rutas">
-        <p>Ruta: {{ ruta.nombre }}</p>
-        <p>Ciudad Destino: {{ ruta.ciudadDestino }}</p>
-        <button (click)="viajar()">VIAJAR</button>
-      </li>
-    </ul>
+    <ng-container *ngIf="ciudadActual?.id as ciudadId">
+      <app-ruta-destinos [id]="ciudadId"></app-ruta-destinos>
+    </ng-container>
   </div>
 </div>

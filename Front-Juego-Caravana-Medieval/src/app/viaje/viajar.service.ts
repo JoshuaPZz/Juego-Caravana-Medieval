@@ -16,9 +16,11 @@ export class ViajarService {
     );
   }
 
-  viajar() {
-    // Lógica para realizar la acción de viajar
-    console.log(`Viajando a:`);
-    // Aquí se puede agregar lógica para, por ejemplo, navegar a otra vista o realizar alguna acción adicional
+  viajar(ciudadDestinoId: number, rutaId: number, caravanaId: number) {
+    return this.httpClient.put<void>(
+      `${environment.serverUrl}/viaje/${caravanaId}/${ciudadDestinoId}/${rutaId}`,
+      null
+    );
+    console.log('TAMO VIAJANDO');
   }
 }

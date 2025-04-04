@@ -1,8 +1,9 @@
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Nombre</th>
       <th>Ruta</th>
+      <th>Acción</th>
     </tr>
   </thead>
   <tbody>
@@ -10,7 +11,29 @@
     <tr>
       <td>{{ ciudad.nombre }}</td>
       <td>
-        <app-ruta-hacia [idO]="ciudadActual.id" [idD]="ciudad.id"></app-ruta-hacia>
+        <select
+          class="form-select"
+          [(ngModel)]="rutasSeleccionadas[ciudad.id]"
+          (change)="
+            setRutaSeleccionada(ciudad.id, rutasSeleccionadas[ciudad.id])
+          "
+        >
+          <option [value]="null" disabled selected>Ver rutas</option>
+          @for (ruta of rutasPorCiudad[ciudad.id] || []; track ruta.id) {
+          <option [value]="ruta.id">
+            Daño: {{ ruta.dano }} / Longitud: {{ ruta.longitud }}
+          </option>
+          }
+        </select>
+      </td>
+      <td>
+        <button
+          class="btn btn-primary"
+          [disabled]="!rutasSeleccionadas[ciudad.id]"
+          (click)="viajar(ciudad.id)"
+        >
+          Viajar
+        </button>
       </td>
     </tr>
     }

@@ -4,15 +4,18 @@ import { CiudadService } from '../../ciudad/ciudad.service';
 import { ViajarService } from '../../viaje/viajar.service';
 import { CiudadDto } from '../../dto/ciudad-dto';
 import { CaravanaViewComponent } from '../../caravana/caravana-view/caravana-view.component';
+import { RutaDestinosComponent } from '../../ruta/ruta-destinos/ruta-destinos.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-viajar-ciudad',
-  imports: [CaravanaViewComponent],
+  imports: [CaravanaViewComponent, RutaDestinosComponent, CommonModule],
   templateUrl: './viajar-ciudad.component.html',
   styleUrls: ['./viajar-ciudad.component.css'],
 })
 export class ViajarCiudadComponent implements OnInit {
   ciudadActual!: CiudadDto;
+  ciudadesDestino: any[] = [];
   rutas: any[] = [];
 
   constructor(
@@ -23,6 +26,7 @@ export class ViajarCiudadComponent implements OnInit {
 
   ngOnInit(): void {
     const caravanaId = Number(this.route.snapshot.paramMap.get('id')) || 1;
+
     //necesitamos tener el id de la caravana en algun lado ya, lo mejor seria instanciarlo en un DTO en todo el momento, pero hacer esto desde una pantalla principal
 
     this.viajarService.ciudadActual(caravanaId).subscribe({
@@ -34,16 +38,6 @@ export class ViajarCiudadComponent implements OnInit {
         console.error('Error al obtener la ciudad actual:', error);
       },
     });
-
-    // Simulación de rutas disponibles (esto debería venir del servicio de viaje)
-    this.rutas = [
-      { nombre: 'Ruta 1', ciudadDestino: 'Ciudad A' },
-      { nombre: 'Ruta 2', ciudadDestino: 'Ciudad B' },
-    ];
-  }
-
-  viajar() {
-    this.viajarService.viajar();
   }
 
   back(): void {
