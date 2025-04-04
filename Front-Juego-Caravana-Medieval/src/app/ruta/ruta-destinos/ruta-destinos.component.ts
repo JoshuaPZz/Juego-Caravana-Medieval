@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { RutaService } from '../../ruta/ruta.service';
 import { CiudadDto } from '../../dto/ciudad-dto';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,7 @@ import { RutaHaciaComponent } from '../ruta-hacia/ruta-hacia.component';
 import { ViajarService } from '../../viaje/viajar.service';
 import { FormsModule } from '@angular/forms';
 import { RutaDTO } from '../../dto/ruta-dto';
+import { CaravanaDto } from '../../dto/caravana-dto';
 
 @Component({
   selector: 'app-ruta-destinos',
@@ -20,11 +21,13 @@ export class RutaDestinosComponent {
   ciudadActual!: CiudadDto;
   rutasSeleccionadas: { [ciudadId: number]: number } = {}; // ruta seleccionada para cada ciudad
   rutasPorCiudad: { [ciudadId: number]: RutaDTO[] } = {}; // Para almacenar las rutas disponibles por ciudad
+  caravanaAux!: CaravanaDto;
 
   constructor(
     private rutaService: RutaService,
     private ciudadService: CiudadService,
-    private viajarService: ViajarService
+    private viajarService: ViajarService,
+    private router: Router
   ) {}
 
   @Input()
@@ -70,8 +73,14 @@ export class RutaDestinosComponent {
   viajar(ciudadDestinoId: number) {
     const rutaId = this.rutasSeleccionadas[ciudadDestinoId];
     if (rutaId) {
-      //console.log(`Viajando a ciudad ${ciudadDestinoId} por ruta ${rutaId}`);
-      this.viajarService.viajar(ciudadDestinoId, rutaId, 1);
+      console.log(`Viajando a ciudad ${ciudadDestinoId} por ruta ${rutaId}`);
+      this.viajarService.viajar(ciudadDestinoId, rutaId, 1).subscribe({
+        next: (caravana) =>{
+          this.caravanaAux = caravana;  
+          window.location.reload();
+        },
+        error: (err) => console.error('Hubo un error: ', err),
+      });
     } else {
       console.error('Por favor selecciona una ruta primero');
     }

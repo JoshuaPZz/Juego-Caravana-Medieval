@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.edu.javeriana.caravana_medieval.dto.CaravanaDTO;
 import co.edu.javeriana.caravana_medieval.dto.CiudadDTO;
 import co.edu.javeriana.caravana_medieval.service.ViajeService;
 
@@ -24,8 +25,9 @@ public class ViajeController {
     }
 
     @PutMapping("/{idCaravana}/{idCiudadDestino}/{idRuta}")
-    public void viajar(@PathVariable Long idCaravana, @PathVariable Long idCiudadDestino, @PathVariable Long idRuta) {
-        viajeService.viajar(idCaravana, idCiudadDestino, idRuta);
-        
+    public CaravanaDTO viajar(@PathVariable Long idCaravana, @PathVariable Long idCiudadDestino, @PathVariable Long idRuta) {
+        CaravanaDTO caravanaDTO = viajeService.viajar(idCaravana, idCiudadDestino, idRuta);
+        System.out.println("Viajando a..."+idCiudadDestino);
+        return caravanaDTO;
     }
 }
