@@ -1,12 +1,9 @@
 package co.edu.javeriana.caravana_medieval.service;
 
-import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Optional;
 
 import co.edu.javeriana.caravana_medieval.dto.*;
-import co.edu.javeriana.caravana_medieval.mapper.CiudadMapper;
-import co.edu.javeriana.caravana_medieval.mapper.RutaMapper;
 import co.edu.javeriana.caravana_medieval.model.*;
 import co.edu.javeriana.caravana_medieval.repository.*;
 
@@ -71,5 +68,19 @@ public class CiudadRutaService {
                 .toList());
     }
 
-
+    public Optional<List<RutaDTO>> getRutasCiudadAOtra (Long ciudadId, Long ciudadDestinoId) {
+        CiudadRutasDTO ciudadRutasDTO = getCiudadRutas(ciudadId).get();
+        List<RutaCiudadDTO> rutaCiudadDTOs = ciudadRutasDTO.getIdRutasOrigen()
+            .stream()
+            .map(rutaService::getRutaCiudad)
+            .toList()
+            .stream()
+            .map(Optional::get)
+            .toList();
+        List<RutaCiudadDTO> rutaCiudadDTOsFiltrado = rutaCiudadDTOs.stream()
+            .filter(x -> x.getCiudadOrigenId() == ciudadId && x.getCiudadDestinoId() == ciudadDestinoId)
+            .toList();
+        List<Long> idRutasFiltradas = rutaCiudadDTOsFiltrado.stream().map(RutaCiudadDTO::getRutaId).toList();
+        return Optional.of(rutaService.listaIdstoRuta(idRutasFiltradas));
+    }
 }

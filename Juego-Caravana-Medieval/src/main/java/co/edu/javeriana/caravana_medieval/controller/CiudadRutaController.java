@@ -16,7 +16,7 @@ import co.edu.javeriana.caravana_medieval.service.CiudadRutaService;
 import co.edu.javeriana.caravana_medieval.service.RutaService;
 
 @RestController
-@RequestMapping("/ciudad/view/{id}")
+@RequestMapping("/ciudad")
 public class CiudadRutaController {
     
     @Autowired
@@ -24,22 +24,27 @@ public class CiudadRutaController {
     @Autowired
     private CiudadRutaService ciudadRutaService;
 
-    @GetMapping("/ciudadesorigen")
+    @GetMapping("/{id}/ciudadesorigen")
     public List<CiudadDTO> getCiudadesRutaOrigen(@PathVariable("id") Long id) {
         CiudadRutasDTO ciudadRutasDTO = ciudadRutaService.getCiudadRutas(id).orElseThrow();
         return ciudadRutaService.getDestinosCiudad(ciudadRutasDTO).get();
     }
 
-    @GetMapping("/rutasorigen")
+    @GetMapping("/{id}/rutasorigen")
     public List<RutaDTO> getRutasOrigen(@PathVariable("id") Long id) {
         CiudadRutasDTO ciudadRutasDTO = ciudadRutaService.getCiudadRutas(id).orElseThrow();
         return ciudadRutaService.getRutasOrigenCiudad(ciudadRutasDTO).get();
     }
     
-    @GetMapping("/rutadestino")
+    @GetMapping("/{id}/rutadestino")
     public List<RutaDTO> getRutasDestino(@PathVariable("id") Long id) {
         CiudadRutasDTO ciudadRutasDTO = ciudadRutaService.getCiudadRutas(id).orElseThrow();
         return rutaService.listaIdstoRuta(ciudadRutasDTO.getIdRutasDestino());
+    }
+
+    @GetMapping("/{id}/rutashacia/{idDestino}")
+    public List<RutaDTO> getRutasCiudadAOtra(@PathVariable("id") Long id, @PathVariable("idDestino") Long idDestino) {
+        return ciudadRutaService.getRutasCiudadAOtra(id, idDestino).get();
     }
     
 }

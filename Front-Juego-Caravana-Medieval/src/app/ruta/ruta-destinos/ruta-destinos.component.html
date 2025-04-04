@@ -1,1 +1,18 @@
-<p>ruta-destinos works!</p>
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Ruta</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (ciudad of ciudadesDestinos; track $index) {
+    <tr>
+      <td>{{ ciudad.nombre }}</td>
+      <td>
+        <app-ruta-hacia [idO]="ciudadActual.id" [idD]="ciudad.id"></app-ruta-hacia>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
