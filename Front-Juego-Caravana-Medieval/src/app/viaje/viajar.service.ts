@@ -22,6 +22,5 @@ export class ViajarService {
       `${environment.serverUrl}/viaje/${caravanaId}/${ciudadDestinoId}/${rutaId}`,
       null
     );
-    
   }
 }
