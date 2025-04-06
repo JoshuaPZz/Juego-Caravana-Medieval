@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RutaService } from '../../ruta/ruta.service';
 import { CiudadDto } from '../../dto/ciudad-dto';
 import { CommonModule } from '@angular/common';
@@ -9,12 +9,14 @@ import { ViajarService } from '../../viaje/viajar.service';
 import { FormsModule } from '@angular/forms';
 import { RutaDTO } from '../../dto/ruta-dto';
 import { CaravanaDto } from '../../dto/caravana-dto';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupComponent } from '../../popup/popup.component';
 
 @Component({
   selector: 'app-ruta-destinos',
   imports: [CommonModule, RutaHaciaComponent, FormsModule],
   templateUrl: './ruta-destinos.component.html',
-  styleUrl: './ruta-destinos.component.css',
+  styleUrls: ['./ruta-destinos.component.css'],
 })
 export class RutaDestinosComponent {
   ciudadesDestinos: CiudadDto[] = [];
@@ -27,7 +29,8 @@ export class RutaDestinosComponent {
     private rutaService: RutaService,
     private ciudadService: CiudadService,
     private viajarService: ViajarService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog // pa lo de abrir el popup
   ) {}
 
   @Input()
@@ -75,14 +78,21 @@ export class RutaDestinosComponent {
     if (rutaId) {
       console.log(`Viajando a ciudad ${ciudadDestinoId} por ruta ${rutaId}`);
       this.viajarService.viajar(ciudadDestinoId, rutaId, 1).subscribe({
-        next: (caravana) =>{
-          this.caravanaAux = caravana;  
+        next: (caravana) => {
+          this.caravanaAux = caravana;
           window.location.reload();
         },
-        error: (err) => console.error('Hubo un error: ', err),
+        error: (err) => {
+          console.error('Hubo un error: ', err);
+          // Abre el popup mostrando el mensaje de error
+          this.dialog.open(PopupComponent, {
+            width: '400px',
+            data: {
+              message: err.error?.errorString ?? 'Ocurrió un error inesperado.',
+            },
+          });
+        },
       });
-    } else {
-      console.error('Por favor selecciona una ruta primero');
     }
   }
 }
