@@ -1,0 +1,40 @@
+:host {
+  display: block;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  font-family: "Roboto", sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+h2[mat-dialog-title] {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #e53935; /* Un rojo suave para indicar error */
+  text-align: center;
+}
+
+mat-dialog-content {
+  font-size: 16px;
+  color: #424242;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button[mat-button] {
+  background-color: #e53935;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+button[mat-button]:hover {
+  background-color: #d32f2f;
+}
