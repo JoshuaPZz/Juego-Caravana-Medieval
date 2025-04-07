@@ -6,6 +6,7 @@
         <th>id</th>
         <th>nombre</th>
         <th>descripcion</th>
+        <th>comprar</th>
       </tr>
     </thead>
     <tbody>
@@ -14,6 +15,7 @@
         <td>{{ servicios.id }}</td>
         <td>{{ servicios.nombre }}</td>
         <td>{{ servicios.descripcion }}</td>
+        <td><button (click)="comprar(servicios.id)">Comprar</button></td>
       </tr>
       }
     </tbody>

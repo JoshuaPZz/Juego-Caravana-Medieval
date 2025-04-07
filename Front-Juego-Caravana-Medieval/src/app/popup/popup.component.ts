@@ -20,6 +20,7 @@ export class PopupComponent {
   ) {}
 
   close(): void {
+    window.location.reload();
     this.dialogRef.close();
   }
 }

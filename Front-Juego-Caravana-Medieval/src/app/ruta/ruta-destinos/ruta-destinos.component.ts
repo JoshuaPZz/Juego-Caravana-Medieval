@@ -80,7 +80,12 @@ export class RutaDestinosComponent {
       this.viajarService.viajar(ciudadDestinoId, rutaId, 1).subscribe({
         next: (caravana) => {
           this.caravanaAux = caravana;
-          window.location.reload();
+          this.dialog.open(PopupComponent, {
+            width: '400px',
+            data: {
+              message: 'Viaje exitoso.',
+            },
+          });
         },
         error: (err) => {
           console.error('Hubo un error: ', err);

@@ -15,4 +15,11 @@ export class ServiciosService {
       `${environment.serverUrl}/ciudad/${id}/servicios/list`
     );
   }
+
+  comprar(idServicio: number, idCaravana: number): Observable<any> {
+    return this.httpClient.put<any>(
+      `${environment.serverUrl}/comprar/servicios/${idServicio}/${idCaravana}`,
+      null
+    );
+  }
 }

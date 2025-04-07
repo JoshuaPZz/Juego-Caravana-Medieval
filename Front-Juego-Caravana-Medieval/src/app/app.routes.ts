@@ -7,7 +7,7 @@ import { ProductosListComponent } from './productos/productos-list/productos-lis
 import { RutaDestinosComponent } from './ruta/ruta-destinos/ruta-destinos.component';
 import { RutaHaciaComponent } from './ruta/ruta-hacia/ruta-hacia.component';
 import { ServicioListComponent } from './servicios/servicio-list/servicio-list.component';
-
+import { ServicioComprarComponent } from './servicios/servicio-comprar/servicio-comprar.component';
 export const routes: Routes = [
   { path: 'ciudades/list', component: CiudadListComponent }, // Listado de ciudades
   { path: 'ciudades/view/:id', component: CiudadViewComponent }, // Vista de una ciudad
@@ -23,5 +23,5 @@ export const routes: Routes = [
 
   { path: 'ciudad/:id/servicios', component: ServicioListComponent }, // Servicios de una ciudad
 
-  //{ path: 'comprar/servicio', component: ServicioComprarComponent },
+  { path: 'comprar/servicio', component: ServicioComprarComponent },
 ];

@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CiudadDto } from '../../dto/ciudad-dto';
 import { ServiciosDTO } from '../../dto/servicios-dto';
 import { ServiciosService } from '../servicios.service';
+import { ViajarService } from '../../viaje/viajar.service';
+import { PopupComponent } from '../../popup/popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-servicio-list',
@@ -11,18 +14,20 @@ import { ServiciosService } from '../servicios.service';
   templateUrl: './servicio-list.component.html',
   styleUrl: './servicio-list.component.css',
 })
-export class ServicioListComponent implements OnInit {
+export class ServicioListComponent {
   parametroCiudad: CiudadDto | undefined;
   servicio: ServiciosDTO[] = [];
 
   constructor(
     private servicioService: ServiciosService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private viajarService: ViajarService,
+    private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {
-    const id = +this.route.snapshot.paramMap.get('id')!;
+  @Input()
+  set id(id: number) {
     this.servicioService.listarServicios(id).subscribe({
       next: (servicios) => {
         this.servicio = servicios;
@@ -30,6 +35,30 @@ export class ServicioListComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching ciudad:', error);
+      },
+    });
+  }
+
+  comprar(id: number): void {
+    const caravanaId = Number(this.route.snapshot.paramMap.get('id')) || 1;
+    this.servicioService.comprar(id, caravanaId).subscribe({
+      next: (response) => {
+        console.log('Servicio comprado:', response);
+        this.dialog.open(PopupComponent, {
+          width: '400px',
+          data: {
+            message: 'Servicio comprado con éxito.',
+          },
+        });
+      },
+      error: (error) => {
+        console.error('Error al comprar el servicio:', error);
+        this.dialog.open(PopupComponent, {
+          width: '400px',
+          data: {
+            message: error.error?.errorString ?? 'Ocurrió un error inesperado.',
+          },
+        });
       },
     });
   }
