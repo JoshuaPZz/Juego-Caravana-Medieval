@@ -1,0 +1,21 @@
+<div>
+  <h1>Products list</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>nombre</th>
+        <th>descripcion</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (servicios of servicio; track servicios.nombre) {
+      <tr>
+        <td>{{ servicios.id }}</td>
+        <td>{{ servicios.nombre }}</td>
+        <td>{{ servicios.descripcion }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
