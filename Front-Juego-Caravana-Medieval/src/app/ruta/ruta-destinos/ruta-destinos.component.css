@@ -31,3 +31,26 @@ select.form-select option {
   color: #333333;
   padding: 10px;
 }
+
+button.btn.btn-primary {
+    background-color: #00a24f;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 162, 79, 0.2);
+  }
+  
+  button.btn.btn-primary:hover {
+    background-color: #009140;
+    transform: translateY(-2px);
+  }
+  
+  button.btn.btn-primary:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none;
+  }

@@ -16,7 +16,7 @@ public class ComprarController {
 
     @PutMapping("/servicios/{idServicio}/{idCaravana}")
     public void  comprarServicio(@PathVariable Long idServicio, @PathVariable Long idCaravana) {
-         comprarService.comprarServicio(idServicio, idCaravana);
+        comprarService.comprarServicio(idCaravana, idServicio);
         // return "Servicio comprado exitosamente";
     }
 }

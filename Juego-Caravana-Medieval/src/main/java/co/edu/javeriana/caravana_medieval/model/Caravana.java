@@ -28,14 +28,14 @@ public class Caravana {
     private String nombre;
     private int velocidad;
     private int capacidadMax;
-    private int dineroDisponible;
+    private double dineroDisponible;
     private int puntosVida; 
     private LocalTime horaViaje; 
 
     public Caravana() {
     }
 
-    public Caravana(String nombre, int velocidad, int capacidadMax, int dineroDisponible, int puntosVida, Ciudad ciudadActual, LocalTime horaViaje) {
+    public Caravana(String nombre, int velocidad, int capacidadMax, double dineroDisponible, int puntosVida, Ciudad ciudadActual, LocalTime horaViaje) {
         this.nombre = nombre;
         this.velocidad = velocidad;
         this.capacidadMax = capacidadMax;
@@ -109,11 +109,11 @@ public class Caravana {
         this.capacidadMax = capacidadMax;
     }
 
-    public int getDineroDisponible() {
+    public double getDineroDisponible() {
         return dineroDisponible;
     }
 
-    public void setDineroDisponible(int dineroDisponible) {
+    public void setDineroDisponible(double dineroDisponible) {
         this.dineroDisponible = dineroDisponible;
     }
 

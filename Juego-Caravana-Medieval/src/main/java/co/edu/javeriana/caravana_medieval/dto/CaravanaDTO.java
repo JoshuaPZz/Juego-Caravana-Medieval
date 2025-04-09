@@ -7,14 +7,14 @@ public class CaravanaDTO {
     private String nombre;
     private int velocidad;
     private int capacidadMax;
-    private int dineroDisponible;
+    private double dineroDisponible;
     private int puntosVida; 
     private LocalTime horaViaje; 
 
     public CaravanaDTO() {
     }
 
-    public CaravanaDTO(Long id,String nombre, int velocidad, int capacidadMax, int dineroDisponible, int puntosVida, LocalTime horaViaje) {
+    public CaravanaDTO(Long id,String nombre, int velocidad, int capacidadMax, double dineroDisponible, int puntosVida, LocalTime horaViaje) {
         this.id = id;
         this.nombre = nombre;
         this.velocidad = velocidad;
@@ -64,11 +64,11 @@ public class CaravanaDTO {
         this.capacidadMax = capacidadMax;
     }
 
-    public int getDineroDisponible() {
+    public double getDineroDisponible() {
         return dineroDisponible;
     }
 
-    public void setDineroDisponible(int dineroDisponible) {
+    public void setDineroDisponible(double dineroDisponible) {
         this.dineroDisponible = dineroDisponible;
     }
 

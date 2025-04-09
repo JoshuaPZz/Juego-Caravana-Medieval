@@ -19,37 +19,46 @@ import jakarta.transaction.Transactional;
 @Component
 public class DbInitializer implements CommandLineRunner {
 
-    @Autowired private CiudadRepository ciudadRepository;
-    @Autowired private ProductoRepository productoRepository;
-    @Autowired private CiudadProductoRepository ciudadProductoRepository;
-    @Autowired private ServicioRepository servicioRepository;
-    @Autowired private CiudadServicioRepository ciudadServicioRepository;
-    @Autowired private CaravanaRepository caravanaRepository;
-    @Autowired private JugadorRepository jugadorRepository;
-    @Autowired private RutaRepository rutaRepository;
-    @Autowired private ServicioCompraRepository servicioCompraRepository;
+    @Autowired
+    private CiudadRepository ciudadRepository;
+    @Autowired
+    private ProductoRepository productoRepository;
+    @Autowired
+    private CiudadProductoRepository ciudadProductoRepository;
+    @Autowired
+    private ServicioRepository servicioRepository;
+    @Autowired
+    private CiudadServicioRepository ciudadServicioRepository;
+    @Autowired
+    private CaravanaRepository caravanaRepository;
+    @Autowired
+    private JugadorRepository jugadorRepository;
+    @Autowired
+    private RutaRepository rutaRepository;
+    @Autowired
+    private ServicioCompraRepository servicioCompraRepository;
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
     private static final int NUM_CIUDADES = 100;
     private static final int NUM_PRODUCTOS = 50;
-    
+
     private static final String[] NOMBRES_SERVICIOS = {
-        "Reparar", "Mejorar capacidad", "Mejorar velocidad", "Guardias"
+            "Reparar", "Mejorar capacidad", "Mejorar velocidad", "Guardias"
     };
-    
+
     private static final String[] DESCRIPCIONES_SERVICIOS = {
-        "Repara el daño sufrido por la caravana.",
-        "Aumenta la capacidad máxima de carga de la caravana.",
-        "Mejora la velocidad de desplazamiento de la caravana.",
-        "Reduce el daño recibido en rutas inseguras en un 25%."
+            "Repara el daño sufrido por la caravana.",
+            "Aumenta la capacidad máxima de carga de la caravana.",
+            "Mejora la velocidad de desplazamiento de la caravana.",
+            "Reduce el daño recibido en rutas inseguras en un 25%."
     };
-    
+
     private static final String[] ROLES = { "Comerciante", "Caravanero" };
-    
+
     private static final String[] NOMBRES_PRODUCTOS = {
-        "Especias", "Telas", "Armas", "Metales preciosos", "Ganado",
-        "Piedras preciosas", "Hierbas medicinales", "Cerámica", "Vino", "Granos"
+            "Especias", "Telas", "Armas", "Metales preciosos", "Ganado",
+            "Piedras preciosas", "Hierbas medicinales", "Cerámica", "Vino", "Granos"
     };
 
     @Override
@@ -62,9 +71,10 @@ public class DbInitializer implements CommandLineRunner {
             List<Producto> productos = new ArrayList<>();
             for (int i = 0; i < NUM_PRODUCTOS; i++) {
                 String baseNombre = NOMBRES_PRODUCTOS[i % NOMBRES_PRODUCTOS.length];
-                String nombre = baseNombre + " #" + (i+1);
-                String descripcion = "Producto valioso de tipo " + baseNombre.toLowerCase() + " para comercio regional #" + (i+1);
-                Producto producto = productoRepository.save(new Producto(nombre, i+1, descripcion));
+                String nombre = baseNombre + " #" + (i + 1);
+                String descripcion = "Producto valioso de tipo " + baseNombre.toLowerCase()
+                        + " para comercio regional #" + (i + 1);
+                Producto producto = productoRepository.save(new Producto(nombre, i + 1, descripcion));
                 productos.add(producto);
             }
 
@@ -75,7 +85,8 @@ public class DbInitializer implements CommandLineRunner {
                 ciudades.add(ciudad);
             }
 
-            // Asociar productos a ciudades con factores de oferta/demanda y stock más realistas
+            // Asociar productos a ciudades con factores de oferta/demanda y stock más
+            // realistas
             for (Ciudad ciudad : ciudades) {
                 int numProductosPorCiudad = 5 + random.nextInt(11); // Entre 5 y 15 productos por ciudad
                 Set<Producto> productosSeleccionados = new HashSet<>();
@@ -89,7 +100,8 @@ public class DbInitializer implements CommandLineRunner {
                     double factorOferta = 0.5 + (random.nextDouble() * 2.0); // Entre 0.5 y 2.5
                     int stock = random.nextInt(100) + 1;
 
-                    CiudadProducto ciudadProducto = new CiudadProducto(ciudad, producto, factorDemanda, factorOferta, stock);
+                    CiudadProducto ciudadProducto = new CiudadProducto(ciudad, producto, factorDemanda, factorOferta,
+                            stock);
                     ciudadProductoRepository.save(ciudadProducto);
                 }
             }
@@ -104,16 +116,17 @@ public class DbInitializer implements CommandLineRunner {
             // MODIFICACIÓN: Cada ciudad solo tendrá algunos servicios aleatorios, no todos
             for (Ciudad ciudad : ciudades) {
                 List<CiudadServicio> serviciosDeLaCiudad = new ArrayList<>();
-                
-                // Determinar cuántos servicios tendrá esta ciudad (entre 1 y el total disponible)
+
+                // Determinar cuántos servicios tendrá esta ciudad (entre 1 y el total
+                // disponible)
                 int numServiciosParaCiudad = 1 + random.nextInt(servicios.size());
-                
+
                 // Seleccionar servicios aleatorios para esta ciudad
                 Set<Integer> indicesServiciosSeleccionados = new HashSet<>();
                 while (indicesServiciosSeleccionados.size() < numServiciosParaCiudad) {
                     indicesServiciosSeleccionados.add(random.nextInt(servicios.size()));
                 }
-                
+
                 // Agregar solo los servicios seleccionados
                 for (Integer indice : indicesServiciosSeleccionados) {
                     Servicio servicio = servicios.get(indice);
@@ -122,14 +135,16 @@ public class DbInitializer implements CommandLineRunner {
                     serviciosDeLaCiudad.add(ciudadServicio);
                     ciudadServicioRepository.save(ciudadServicio);
                 }
-                
+
                 ciudad.setServicios(serviciosDeLaCiudad);
             }
 
             // Crear 3 caravanas
             List<Caravana> caravanas = new ArrayList<>();
             for (int i = 1; i <= 3; i++) {
-                caravanas.add(caravanaRepository.save(new Caravana("Caravana" + i, 10 + i, 100 + i * 10, 500 + i * 100, 100, ciudades.get(0), java.time.LocalTime.of(8, 0))));
+                double dineroDisponible = 500 + i * 100;
+                caravanas.add(caravanaRepository.save(new Caravana("Caravana" + i, 10, 100,
+                        dineroDisponible, 100, ciudades.get(0), java.time.LocalTime.of(8, 0))));
             }
 
             // Crear 10 jugadores
@@ -137,21 +152,8 @@ public class DbInitializer implements CommandLineRunner {
             for (Caravana caravana : caravanas) {
                 int jugadoresPorCaravana = (caravana.getNombre().equals("Caravana1")) ? 4 : 3;
                 for (int j = 0; j < jugadoresPorCaravana; j++) {
-                    jugadorRepository.save(new Jugador(ROLES[j % ROLES.length], "Jugador_" + (++jugadoresCreados), caravana));
-                }
-            }
-
-            // Crear las compras de servicios
-            // MODIFICACIÓN: Verificar que el servicio exista en la ciudad antes de intentar comprarlo
-            for (Caravana caravana : caravanas) {
-                for (Ciudad ciudad : ciudades) {
-                    List<CiudadServicio> serviciosCiudad = ciudad.getServicios();
-                    if (serviciosCiudad != null && !serviciosCiudad.isEmpty()) {
-                        int indexRandom = random.nextInt(serviciosCiudad.size());
-                        ServicioCompra servicioCompra = new ServicioCompra(caravana, ciudad, serviciosCiudad.get(indexRandom).getServicio());
-                        ciudad.getCompras().add(servicioCompra);
-                        servicioCompraRepository.save(servicioCompra);
-                    }                
+                    jugadorRepository
+                            .save(new Jugador(ROLES[j % ROLES.length], "Jugador_" + (++jugadoresCreados), caravana));
                 }
             }
 
@@ -207,8 +209,8 @@ public class DbInitializer implements CommandLineRunner {
                 }
             }
 
-            log.info("Base de datos inicializada con {} ciudades, {} productos, {} servicios y 100 rutas.", 
-                     NUM_CIUDADES, productos.size(), servicios.size());
+            log.info("Base de datos inicializada con {} ciudades, {} productos, {} servicios y 100 rutas.",
+                    NUM_CIUDADES, productos.size(), servicios.size());
         } else {
             log.info("La base de datos ya contiene información - omitiendo inicialización");
         }
