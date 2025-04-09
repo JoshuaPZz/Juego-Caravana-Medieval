@@ -1,0 +1,25 @@
+<div>
+  <h1>Servicio list</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>nombre</th>
+        <th>descripcion</th>
+        <th>precio</th>
+        <th>comprar</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (servicios of servicio; track $index) {
+      <tr>
+        <td>{{ servicios.id }}</td>
+        <td>{{ servicios.nombre }}</td>
+        <td>{{ servicios.descripcion }}</td>
+        <td>{{ ciudadServicio[$index].precio }}</td>
+        <td><button (click)="comprar(servicios.id)">Comprar</button></td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

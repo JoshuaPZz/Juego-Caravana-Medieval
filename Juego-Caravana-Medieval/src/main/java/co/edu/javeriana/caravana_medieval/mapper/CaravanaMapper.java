@@ -13,6 +13,7 @@ public class CaravanaMapper {
         caravanaDTO.setDineroDisponible(caravana.getDineroDisponible());
         caravanaDTO.setPuntosVida(caravana.getPuntosVida());
         caravanaDTO.setHoraViaje(caravana.getHoraViaje());
+        caravanaDTO.setTieneGuardias(caravana.isTieneGuardias());
         return caravanaDTO;
     }
     public static Caravana toEntity(CaravanaDTO caravanaDTO) {
@@ -24,6 +25,7 @@ public class CaravanaMapper {
         caravana.setDineroDisponible(caravanaDTO.getDineroDisponible());
         caravana.setPuntosVida(caravanaDTO.getPuntosVida());
         caravana.setHoraViaje(caravanaDTO.getHoraViaje());
+        caravana.setTieneGuardias(caravanaDTO.isTieneGuardias());
         return caravana;
     }
 }

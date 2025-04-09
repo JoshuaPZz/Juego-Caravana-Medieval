@@ -91,7 +91,13 @@ public class ViajeService {
          */
 
         // Actualizar los datos de la caravana
-        caravana.setPuntosVida(caravana.getPuntosVida() - ruta.getDano());
+        int dano = 0;
+        if(caravana.isTieneGuardias()){
+            dano = (int) Math.round(ruta.getDano() * 0.75);
+        } else {
+            dano = ruta.getDano();
+        }     
+        caravana.setPuntosVida(caravana.getPuntosVida() - dano);
         caravana.setHoraViaje(caravana.getHoraViaje().plusHours(ruta.getLongitud() / caravana.getVelocidad()));
         caravana.setCiudadActual(ciudadDestino);
 

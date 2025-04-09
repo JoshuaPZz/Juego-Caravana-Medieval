@@ -1,7 +1,5 @@
 package co.edu.javeriana.caravana_medieval.dto;
 
-import java.util.List;
-
 public class CiudadServicioDTO {
     private Long id;
     private Long idCiudad;

@@ -28,14 +28,15 @@ public class Caravana {
     private String nombre;
     private int velocidad;
     private int capacidadMax;
-    private int dineroDisponible;
+    private double dineroDisponible;
     private int puntosVida; 
-    private LocalTime horaViaje; 
+    private LocalTime horaViaje;
+    private boolean tieneGuardias; 
 
     public Caravana() {
     }
 
-    public Caravana(String nombre, int velocidad, int capacidadMax, int dineroDisponible, int puntosVida, Ciudad ciudadActual, LocalTime horaViaje) {
+    public Caravana(String nombre, int velocidad, int capacidadMax, double dineroDisponible, int puntosVida, Ciudad ciudadActual, LocalTime horaViaje, boolean tieneGuardias) {
         this.nombre = nombre;
         this.velocidad = velocidad;
         this.capacidadMax = capacidadMax;
@@ -43,6 +44,7 @@ public class Caravana {
         this.puntosVida = puntosVida;
         this.ciudadActual = ciudadActual;
         this.horaViaje = horaViaje;
+        this.tieneGuardias = tieneGuardias;
     }
 
     public LocalTime getHoraViaje() {
@@ -109,11 +111,11 @@ public class Caravana {
         this.capacidadMax = capacidadMax;
     }
 
-    public int getDineroDisponible() {
+    public double getDineroDisponible() {
         return dineroDisponible;
     }
 
-    public void setDineroDisponible(int dineroDisponible) {
+    public void setDineroDisponible(double dineroDisponible) {
         this.dineroDisponible = dineroDisponible;
     }
 
@@ -131,5 +133,13 @@ public class Caravana {
 
     public void setCiudadActual(Ciudad ciudadActual) {
         this.ciudadActual = ciudadActual;
+    }
+
+    public boolean isTieneGuardias() {
+        return tieneGuardias;
+    }
+
+    public void setTieneGuardias(boolean tieneGuardias) {
+        this.tieneGuardias = tieneGuardias;
     }
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RutaHaciaComponent } from './ruta-hacia.component';
+import { ServicioListComponent } from './servicio-list.component';
 
-describe('RutaHaciaComponent', () => {
-  let component: RutaHaciaComponent;
-  let fixture: ComponentFixture<RutaHaciaComponent>;
+describe('ServicioListComponent', () => {
+  let component: ServicioListComponent;
+  let fixture: ComponentFixture<ServicioListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RutaHaciaComponent]
+      imports: [ServicioListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RutaHaciaComponent);
+    fixture = TestBed.createComponent(ServicioListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { RutaService } from '../../ruta/ruta.service';
 import { CiudadDto } from '../../dto/ciudad-dto';
 import { CommonModule } from '@angular/common';
 import { CiudadService } from '../../ciudad/ciudad.service';
-import { RutaHaciaComponent } from '../ruta-hacia/ruta-hacia.component';
 import { ViajarService } from '../../viaje/viajar.service';
 import { FormsModule } from '@angular/forms';
 import { RutaDTO } from '../../dto/ruta-dto';
@@ -14,9 +13,9 @@ import { PopupComponent } from '../../popup/popup.component';
 
 @Component({
   selector: 'app-ruta-destinos',
-  imports: [CommonModule, RutaHaciaComponent, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './ruta-destinos.component.html',
-  styleUrls: ['./ruta-destinos.component.css'],
+  styleUrl: './ruta-destinos.component.css',
 })
 export class RutaDestinosComponent {
   ciudadesDestinos: CiudadDto[] = [];
@@ -80,7 +79,12 @@ export class RutaDestinosComponent {
       this.viajarService.viajar(ciudadDestinoId, rutaId, 1).subscribe({
         next: (caravana) => {
           this.caravanaAux = caravana;
-          window.location.reload();
+          this.dialog.open(PopupComponent, {
+            width: '400px',
+            data: {
+              message: 'Viaje exitoso.',
+            },
+          });
         },
         error: (err) => {
           console.error('Hubo un error: ', err);
