@@ -8,6 +8,7 @@
                 <th>nombre</th>
                 <th>tipo</th>
                 <th>descripcion</th>
+                <th>comprar</th>
             </tr>
         </thead>
         <tbody>
@@ -17,9 +18,9 @@
                 <td>{{producto.nombre}}</td>
                 <td>{{producto.tipo}}</td>
                 <td>{{producto.descripcion}}</td>
+                <td><button (click)="comprarProducto(producto.id)">Comprar</button></td>
             </tr>
             }
-
         </tbody>
     </table>
 </div>

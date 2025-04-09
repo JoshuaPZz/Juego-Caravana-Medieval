@@ -42,6 +42,26 @@ body {
   tr:hover {
     background-color: #e9ecef;
   }
+
+  button {
+    background-color: #00a24f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #007a3a;
+  }
+  
+  button:active {
+    background-color: #005f2b;
+  }
+  
   
   /* Responsive adjustments */
   @media (max-width: 768px) {

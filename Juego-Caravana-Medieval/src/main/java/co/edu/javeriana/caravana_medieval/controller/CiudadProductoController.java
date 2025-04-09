@@ -17,6 +17,7 @@ public class CiudadProductoController {
     
     @Autowired  
     private ProductoService productoService;
+
     @GetMapping("/list/{idCiudad}")
     public List<ProductoDTO> getProductosCiudad(@PathVariable Long idCiudad) {
         List<CiudadProductoDTO> ciudadProductosDTO = ciudadProductoService.getCiudadProducto(idCiudad).orElseThrow();

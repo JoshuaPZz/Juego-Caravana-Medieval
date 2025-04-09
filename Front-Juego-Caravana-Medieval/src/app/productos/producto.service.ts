@@ -18,4 +18,16 @@ export class ProductoService {
       `${environment.serverUrl}/productos/list`
     );
   }
+  listProductsCiudad(idCiudad : number) : Observable<ProductoDto[]> {
+    return this.http.get<ProductoDto[]>(
+      `${environment.serverUrl}/productoCiudad/list/${idCiudad}`
+    )
+  }
+
+  comprarProducto(idProducto : number) : Observable<any>{
+    console.log(`${environment.serverUrl}/comprar/productos/${idProducto}/1`)
+    return this.http.put<any>(
+      `${environment.serverUrl}/comprar/productos/${idProducto}/1`,null
+    )
+  } 
 }

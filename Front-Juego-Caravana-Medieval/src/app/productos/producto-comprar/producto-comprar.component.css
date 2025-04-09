@@ -1,0 +1,93 @@
+.container {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 2rem;
+    background-color: #f5f5f5;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .current-city {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .current-city h2 {
+    color: #178833;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .current-city p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  .routes {
+    margin-top: 2rem;
+  }
+  
+  .routes h2 {
+    color: #00a24f;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  li:hover {
+    transform: translateY(-3px);
+  }
+  
+  li p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  button {
+    padding: 0.8rem 1.5rem;
+    background-color: #178833;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #00ff40;
+    transform: translateY(-3px);
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      margin: 1rem;
+      padding: 1rem;
+    }
+  
+    .current-city h2,
+    .routes h2 {
+      font-size: 1.2rem;
+    }
+  
+    button {
+      padding: 0.6rem 1rem;
+    }
+  }
+  

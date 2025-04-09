@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductoDto } from '../../dto/producto-dto';
 import { ProductoService } from '../producto.service';
 
@@ -11,14 +11,11 @@ import { ProductoService } from '../producto.service';
 })
 export class ProductosListComponent {
   productos: ProductoDto[] = [];
-
   constructor(private productoService: ProductoService) {}
 
-  ngOnInit(): void {
-    /*this.productoService.listProducts()
-    .subscribe(listaProductos => this.productos = listaProductos);*/
-
-    this.productoService.listProducts().subscribe({
+  @Input()
+  set id(id : number) {
+    this.productoService.listProductsCiudad(id).subscribe({
       next: (listaProductos) => {
         this.productos = listaProductos;
         console.log('Productos:', this.productos);
@@ -27,5 +24,10 @@ export class ProductosListComponent {
         console.error('Error al obtener los productos:', error);
       },
     });
+  }
+  
+  comprarProducto(idProducto : number) {
+    console.log("hola");
+    this.productoService.comprarProducto(idProducto)
   }
 }
