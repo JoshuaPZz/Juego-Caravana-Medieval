@@ -7,6 +7,7 @@ import { ServiciosService } from '../servicios.service';
 import { ViajarService } from '../../viaje/viajar.service';
 import { PopupComponent } from '../../popup/popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CiudadServicioDto } from '../../dto/ciudad-servicio-dto';
 
 @Component({
   selector: 'app-servicio-list',
@@ -17,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class ServicioListComponent {
   parametroCiudad: CiudadDto | undefined;
   servicio: ServiciosDTO[] = [];
+  ciudadServicio: CiudadServicioDto[] = [];
 
   constructor(
     private servicioService: ServiciosService,
@@ -37,6 +39,16 @@ export class ServicioListComponent {
         console.error('Error fetching ciudad:', error);
       },
     });
+
+    this.servicioService.ciudadServicios(id).subscribe({
+      next: (ciudadServicio) => {
+        this.ciudadServicio = ciudadServicio;
+        console.log('CiudadServicios de la ciudad loaded: ', this.ciudadServicio);
+      },
+      error: (error) => {
+        console.error('Error: ', error)
+      }
+    })
   }
 
   comprar(id: number): void {

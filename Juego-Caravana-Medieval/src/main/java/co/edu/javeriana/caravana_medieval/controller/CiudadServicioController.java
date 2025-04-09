@@ -9,20 +9,25 @@ import co.edu.javeriana.caravana_medieval.dto.*;
 import co.edu.javeriana.caravana_medieval.mapper.CiudadServicioMapper;
 
 @RestController
-@RequestMapping("/ciudad/{id}/servicios")
+@RequestMapping("/ciudad")
 public class CiudadServicioController {
     @Autowired
     private ServicioService servicioService;
     @Autowired
     private CiudadServicioService ciudadServicioService;
 
-    @GetMapping("/list")
+    @GetMapping("/{id}/servicios/list")
     public List<ServicioDTO> getServiciosCiudad(@PathVariable("id") Long id) {
         List<CiudadServicioDTO> ciudadServiciosDTO = ciudadServicioService.getCiudadService(id).orElseThrow();
         return servicioService.listaIdsToServicio(ciudadServiciosDTO.stream().map(CiudadServicioDTO::getIdServicio).toList());
     }
 
-    @GetMapping("view/{idCiudadServicio}")
+    @GetMapping("/{id}/ciudadservicios")
+    public List<CiudadServicioDTO> getCiudadServicios(@PathVariable("id") Long id) {
+        return ciudadServicioService.getCiudadService(id).orElseThrow();
+    }
+
+    @GetMapping("/{id}/serviciosview/{idCiudadServicio}")
     public CiudadServicioDTO getServicioCiudadTupla(@PathVariable("id") Long id, @PathVariable("idCiudadServicio") Long idCiudadServicio) {
         List<CiudadServicioDTO> ciudadServiciosDTO = ciudadServicioService.getCiudadService(id).get();
         return ciudadServicioService.getCiudadServicioTupla(ciudadServiciosDTO, idCiudadServicio);

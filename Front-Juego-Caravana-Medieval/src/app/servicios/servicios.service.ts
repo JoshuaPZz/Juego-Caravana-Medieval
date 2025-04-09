@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ServiciosDTO } from '../dto/servicios-dto';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
+import { CiudadServicioDto } from '../dto/ciudad-servicio-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -22,4 +23,12 @@ export class ServiciosService {
       null
     );
   }
+
+  ciudadServicios(id: number): Observable<CiudadServicioDto[]> {
+    return this.httpClient.get<CiudadServicioDto[]>(
+      `${environment.serverUrl}/ciudad/${id}/ciudadservicios`
+    )
+  }
+
+  
 }
