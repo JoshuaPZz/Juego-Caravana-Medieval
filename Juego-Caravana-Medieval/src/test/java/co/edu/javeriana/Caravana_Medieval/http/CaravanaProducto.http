@@ -2,3 +2,7 @@
 
 ###
 PUT {{base_url}}/comprar/productos/1/2
+
+###
+
+GET {{base_url}}/caravana/1/productos
