@@ -1,1 +1,24 @@
-<p>caravana-productos-list works!</p>
+<div>
+  <app-caravana-view></app-caravana-view>
+  <h1>Products list</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>nombre</th>
+        <th>tipo</th>
+        <th>descripcion</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (producto of productos; track producto.nombre) {
+      <tr>
+        <td>{{ producto.id }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.tipo }}</td>
+        <td>{{ producto.descripcion }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
