@@ -6,6 +6,7 @@ export class CaravanaDto {
     public capacidadMax: number,
     public dineroDisponible: number,
     public puntosVida: number,
-    public horaViaje: string // Changed to string to represent time similar to Java's LocalTime
+    public horaViaje: string,
+    public tieneGuardias: boolean
   ) {}
 }

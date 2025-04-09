@@ -10,11 +10,12 @@ public class CaravanaDTO {
     private double dineroDisponible;
     private int puntosVida; 
     private LocalTime horaViaje; 
+    private boolean tieneGuardias;
 
     public CaravanaDTO() {
     }
 
-    public CaravanaDTO(Long id,String nombre, int velocidad, int capacidadMax, double dineroDisponible, int puntosVida, LocalTime horaViaje) {
+    public CaravanaDTO(Long id,String nombre, int velocidad, int capacidadMax, double dineroDisponible, int puntosVida, LocalTime horaViaje, boolean tieneGuardias) {
         this.id = id;
         this.nombre = nombre;
         this.velocidad = velocidad;
@@ -22,10 +23,19 @@ public class CaravanaDTO {
         this.dineroDisponible = dineroDisponible;
         this.puntosVida = puntosVida;
         this.horaViaje = horaViaje;
+        this.tieneGuardias = tieneGuardias;
     }
 
     public LocalTime getHoraViaje() {
         return horaViaje;
+    }
+
+    public boolean isTieneGuardias() {
+        return tieneGuardias;
+    }
+
+    public void setTieneGuardias(boolean tieneGuardias) {
+        this.tieneGuardias = tieneGuardias;
     }
 
     public void setHoraViaje(LocalTime horaViaje) {

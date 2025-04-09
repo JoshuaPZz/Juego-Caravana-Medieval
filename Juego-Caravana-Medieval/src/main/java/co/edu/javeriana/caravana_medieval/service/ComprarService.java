@@ -55,11 +55,6 @@ public class ComprarService {
                 .findFirst()
                 .orElse(null);
         System.out.println("/////");
-        if (servicioCompraAux != null) {
-            System.out.println(servicioCompraAux.getServicio().getNombre()+" /// "+servicioCompraAux.getCiudad().getId());
-            throw new IllegalArgumentException(
-                    "La caravana ya compró este servicio en esta ciudad.");
-        }
 
         // 3. Realizar la compra y actualizar el estado de la caravana y el servicio
 
@@ -91,7 +86,19 @@ public class ComprarService {
                 );
             }
         } else if (servicio.getNombre() == "Guardias"){
-            System.out.println("Agregados guardias");
+            if(caravana.isTieneGuardias()){
+                throw new IllegalArgumentException(
+                    "La caravana ya tiene guardias, este servicio no es acumulable."
+                );
+            } else {
+                caravana.setTieneGuardias(true);
+            }
+        }
+
+        if (servicioCompraAux != null) {
+            System.out.println(servicioCompraAux.getServicio().getNombre()+" /// "+servicioCompraAux.getCiudad().getId());
+            throw new IllegalArgumentException(
+                    "La caravana ya compró este servicio en esta ciudad.");
         }
 
         caravana.setDineroDisponible(caravana.getDineroDisponible() - ciudadServicioComprar.getPrecio());
