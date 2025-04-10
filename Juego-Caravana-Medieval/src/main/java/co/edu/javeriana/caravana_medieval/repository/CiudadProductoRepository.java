@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import co.edu.javeriana.caravana_medieval.model.CiudadProducto;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface CiudadProductoRepository extends JpaRepository<CiudadProducto, Long> {
 
@@ -17,7 +20,10 @@ public interface CiudadProductoRepository extends JpaRepository<CiudadProducto, 
     @Query("DELETE FROM CiudadProducto cp WHERE cp.ciudad.id = :ciudadId")
     void deleteByCiudadId(@Param("ciudadId") Long ciudadId);
 
-   
+    @Query("SELECT cp FROM CiudadProducto cp WHERE cp.ciudad.id = :ciudadId")
+    List<CiudadProducto> findByCiudadId(@Param("ciudadId") Long ciudadId);
 
+    @Query("SELECT cp FROM CiudadProducto cp WHERE cp.ciudad.id = :ciudadId AND cp.producto.id = :productoId")
+    Optional<CiudadProducto> findByCiudadIdAndProductoId(@Param("ciudadId") Long ciudadId, @Param("productoId") Long productoId);
 
 }
