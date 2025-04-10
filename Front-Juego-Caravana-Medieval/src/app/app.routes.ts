@@ -25,9 +25,12 @@ export const routes: Routes = [
 
   { path: 'ciudad/:id/servicios', component: ServicioListComponent }, // Servicios de una ciudad
 
-  { path: 'comprar/servicio', component: ServicioComprarComponent },
+  { path: 'comprar/servicio', component: ServicioComprarComponent }, // Comprar un servicio
 
-  { path: 'comprar/producto', component: ProductoComprarComponent },
+  { path: 'comprar/producto', component: ProductoComprarComponent }, // Comprar un producto
 
-  { path: 'hijueputa', component: CaravanaProductosListComponent },
+  {
+    path: 'list/caravana/productos',
+    component: CaravanaProductosListComponent,
+  }, // Listado de productos de la caravana
 ];
