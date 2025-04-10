@@ -25,7 +25,7 @@ public class VenderService {
     private CiudadProductoRepository ciudadProductoRepository;
     @Autowired
     private ProductoRepository productoRepository;
-    @Autowired
+    //@Autowired
     //private CaravanaProductoRepository caravanaProductoRepository;
 
     public void vender(Long idCaravana, Long idProducto, Long cantidad) {
@@ -50,6 +50,11 @@ public class VenderService {
         CiudadProducto ciudadProducto = ciudadProductoRepository
             .findByCiudadIdAndProductoId(ciudad.getId(), idProducto)
             .orElse(null);
+
+        // if(cantidad>caravanaProducto.getCantidad()){
+         //   throw new RuntimeException("No hay suficiente cantidad del producto en la ciudad para vender");
+        //}
+
 
         double precioCompra;
 
@@ -83,7 +88,7 @@ public class VenderService {
       //  } else {
             //caravanaProductoRepository.save(caravanaProducto);
         //}
-        
+
         double dineroGanado = precioCompra * cantidad;
         caravana.setDineroDisponible(caravana.getDineroDisponible() + dineroGanado);
         
