@@ -157,55 +157,57 @@ public class DbInitializer implements CommandLineRunner {
                 }
             }
 
-            // Asegurar que cada ciudad tenga al menos 6 rutas de origen y 6 de destino
-            for (Ciudad ciudad : ciudades) {
-                Set<Ciudad> destinos = new HashSet<>();
-                Set<Ciudad> origenes = new HashSet<>();
+            // Asegurar al menos una ruta desde cada ciudad (todas actúan como origen al
+            // menos una vez)
+            int minRutasPorCiudad = 5;
+            int maxRutasTotales = 100;
+            int rutasGeneradas = 0;
 
-                while (destinos.size() < 6) {
-                    Ciudad destino = ciudades.get(random.nextInt(NUM_CIUDADES));
-                    if (!ciudad.equals(destino) && !destinos.contains(destino)) {
-                        int longitud = 10 + random.nextInt(131); // Rutas entre 10 y 140
-                        int dano = calcularDanoRuta(longitud, caravanas);
-                        Ruta ruta = new Ruta(longitud, dano);
-                        ruta.setDestino(destino);
-                        ruta.setOrigen(ciudad);
-                        rutaRepository.save(ruta);
-                        destinos.add(destino);
-                    }
-                }
+            // Asegurar que cada ciudad tenga al menos 5 rutas de salida (a diferentes
+            // destinos)
+            // y que entre cada par de ciudades haya 1 o 2 rutas aleatorias
+            for (Ciudad origen : ciudades) {
+                Set<Ciudad> destinosUnicos = new HashSet<>();
 
-                while (origenes.size() < 6) {
-                    Ciudad origen = ciudades.get(random.nextInt(NUM_CIUDADES));
-                    if (!ciudad.equals(origen) && !origenes.contains(origen)) {
+                // Primero asegurar al menos 5 destinos diferentes
+                while (destinosUnicos.size() < Math.min(5, ciudades.size() - 1)) {
+                    Ciudad destino;
+                    do {
+                        destino = ciudades.get(random.nextInt(NUM_CIUDADES));
+                    } while (origen.equals(destino) || destinosUnicos.contains(destino));
+
+                    destinosUnicos.add(destino);
+
+                    // Crear entre 1 y 2 rutas para este par
+                    int numRutas = 1 + random.nextInt(2); // 1 o 2
+                    for (int i = 0; i < numRutas; i++) {
                         int longitud = 10 + random.nextInt(131);
                         int dano = calcularDanoRuta(longitud, caravanas);
+
                         Ruta ruta = new Ruta(longitud, dano);
-                        ruta.setDestino(ciudad);
                         ruta.setOrigen(origen);
+                        ruta.setDestino(destino);
                         rutaRepository.save(ruta);
-                        origenes.add(origen);
+                        rutasGeneradas++;
                     }
                 }
-            }
 
-            // Generar rutas adicionales hasta completar 100
-            Set<String> rutasExistentes = new HashSet<>();
-            long rutasCreadas = rutaRepository.count(); // Contar las rutas ya creadas
+                // Opcional: agregar rutas adicionales para algunas ciudades
+                if (random.nextDouble() < 0.3) { // 30% de probabilidad de tener más rutas
+                    int rutasExtra = random.nextInt(3); // 0, 1 o 2 rutas extra
+                    for (int i = 0; i < rutasExtra; i++) {
+                        Ciudad destino = ciudades.get(random.nextInt(NUM_CIUDADES));
+                        if (!origen.equals(destino)) {
+                            int longitud = 10 + random.nextInt(131);
+                            int dano = calcularDanoRuta(longitud, caravanas);
 
-            while (rutasCreadas < 100) {
-                Ciudad origen = ciudades.get(random.nextInt(NUM_CIUDADES));
-                Ciudad destino = ciudades.get(random.nextInt(NUM_CIUDADES));
-
-                if (!origen.equals(destino) && !rutasExistentes.contains(origen.getId() + "-" + destino.getId())) {
-                    int longitud = 10 + random.nextInt(131);
-                    int dano = calcularDanoRuta(longitud, caravanas);
-                    Ruta ruta = new Ruta(longitud, dano);
-                    ruta.setOrigen(origen);
-                    ruta.setDestino(destino);
-                    rutaRepository.save(ruta);
-                    rutasExistentes.add(origen.getId() + "-" + destino.getId());
-                    rutasCreadas++;
+                            Ruta ruta = new Ruta(longitud, dano);
+                            ruta.setOrigen(origen);
+                            ruta.setDestino(destino);
+                            rutaRepository.save(ruta);
+                            rutasGeneradas++;
+                        }
+                    }
                 }
             }
 
