@@ -5,17 +5,21 @@ import { ProductoDto } from '../dto/producto-dto';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductoService {
+  constructor(private http: HttpClient) {}
 
-  constructor(
-    private http : HttpClient
-  ) { }
-
-  listProducts() : Observable<ProductoDto[]> {
+  listProducts(): Observable<ProductoDto[]> {
     return this.http.get<ProductoDto[]>(
       `${environment.serverUrl}/productos/list`
+    );
+  }
+
+  venderProducto(idCaravana: number, idProducto: number, cantidad: number) {
+    return this.http.put<any>(
+      `${environment.serverUrl}/vender/productos/${idCaravana}/${idProducto}/${cantidad}`,
+      null
     );
   }
 }
