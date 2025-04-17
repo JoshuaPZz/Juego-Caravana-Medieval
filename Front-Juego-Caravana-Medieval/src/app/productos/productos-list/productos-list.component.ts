@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ProductoDto } from '../../dto/producto-dto';
 import { ProductoService } from '../producto.service';
+import { CiudadProductoDto } from '../../dto/ciudad-producto-dto';
 
 @Component({
   selector: 'app-productos-list',
@@ -10,11 +11,21 @@ import { ProductoService } from '../producto.service';
   styleUrl: './productos-list.component.css',
 })
 export class ProductosListComponent {
-  productos: ProductoDto[] = [];
+  ciudadProducto: CiudadProductoDto[] = [];
+  productos : ProductoDto[] =[];
   constructor(private productoService: ProductoService) {}
 
   @Input()
   set id(id : number) {
+    this.productoService.listCiudadProducto(id).subscribe({
+      next: (listaProductos) => {
+        this.ciudadProducto = listaProductos;
+        console.log('Productos:', this.ciudadProducto);
+      },
+      error: (error) => {
+        console.error('Error al obtener los productos:', error);
+      },
+    });
     this.productoService.listProductsCiudad(id).subscribe({
       next: (listaProductos) => {
         this.productos = listaProductos;
@@ -25,9 +36,15 @@ export class ProductosListComponent {
       },
     });
   }
+
   
   comprarProducto(idProducto : number) {
-    console.log("hola");
-    this.productoService.comprarProducto(idProducto)
+    this.productoService.comprarProducto(idProducto).subscribe({
+      next: (productoComprado) => {
+      },
+      error: (error) => {
+        console.error('Error al procesar compra de producto', error);
+      }
+    })
   }
 }

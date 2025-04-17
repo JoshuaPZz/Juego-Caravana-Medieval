@@ -1,10 +1,14 @@
 package co.edu.javeriana.caravana_medieval.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.edu.javeriana.caravana_medieval.dto.CiudadProductoDTO;
 import co.edu.javeriana.caravana_medieval.dto.ProductoDTO;
 import co.edu.javeriana.caravana_medieval.mapper.ProductoMapper;
 import co.edu.javeriana.caravana_medieval.model.Caravana;
@@ -36,6 +40,8 @@ public class ComprarService {
     @Autowired
     private CiudadRepository ciudadRepository;
 
+    private Logger log = LoggerFactory.getLogger(getClass());
+
     public void comprarServicio(Long idCarvana, Long idServicio) {
 
     Caravana caravana = caravanaService.getCaravanaById(idCarvana);
@@ -49,9 +55,10 @@ public class ComprarService {
         caravana = caravanaRepository.saveAndFlush(caravana);
     }
 
-    public CaravanaProducto comprarProducto(Long idCaravana, Long idProducto) {
+    public CaravanaProducto comprarProducto(Long idProducto, Long idCaravana) {
         Caravana caravana = caravanaService.getCaravanaById(idCaravana);
         Ciudad ciudad = caravanaService.getCiudadActual(idCaravana);
+        log.info(productoService.getProductoById(idProducto).get().getId().toString());
         Producto producto = ProductoMapper.toEntity(productoService.getProductoById(idProducto).get());
         if(caravana.getDineroDisponible() < 0) {
             throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
@@ -59,15 +66,16 @@ public class ComprarService {
         if(caravana.getDineroDisponible() < ciudad.getProductos().get(idProducto.intValue()).getPrecioVenta()) {
             throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
         }
+        log.info("este es caravana" + idCaravana.toString());
+        log.info("este es producto" + idProducto.toString());
         CaravanaProducto caravanaProducto = new CaravanaProducto();
         caravanaProducto.setProducto(producto);
         caravanaProducto.setCaravana(caravana);
         caravanaProducto.setCantidad(69);
         caravana.getProductos().add(caravanaProducto);
-        caravana.setDineroDisponible((int) (caravana.getDineroDisponible() - ciudad.getProductos().get(idProducto.intValue()).getPrecioVenta()));
-        ciudad.getProductos().removeIf(p -> p.getProducto().getId().equals(idProducto));
-        caravana = caravanaRepository.saveAndFlush(caravana);
-        ciudad= ciudadRepository.saveAndFlush(ciudad);
-        return caravanaProductoRepository.saveAndFlush(caravanaProducto);
+        List<CiudadProductoDTO> ciudadProductoList = ciudadProductoService.getCiudadProducto(idCaravana).get();
+        CiudadProductoDTO ciudadProductoDTO = ciudadProductoService.getCiudadProductoTupla(ciudadProductoList, idCaravana, idProducto);
+        caravana.setDineroDisponible((int) (caravana.getDineroDisponible() - ciudadProductoDTO.getPrecioCompra()));
+        return caravanaProductoRepository.save(caravanaProducto);
     }
 }

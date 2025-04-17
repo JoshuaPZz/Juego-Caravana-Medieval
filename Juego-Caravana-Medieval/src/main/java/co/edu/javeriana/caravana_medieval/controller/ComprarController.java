@@ -22,7 +22,7 @@ public class ComprarController {
         // return "Servicio comprado exitosamente";
     }
 
-    @PutMapping("productos/{idProducto}/{idCaravana}")
+    @PutMapping("productos/{idCaravana}/{idProducto}")
     public void comprarProducto(@PathVariable Long idProducto, @PathVariable Long idCaravana) {
         comprarService.comprarProducto(idProducto, idCaravana); 
     }
