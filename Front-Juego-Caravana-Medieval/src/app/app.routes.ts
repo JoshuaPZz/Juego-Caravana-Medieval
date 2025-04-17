@@ -9,6 +9,7 @@ import { RutaHaciaComponent } from './ruta/ruta-hacia/ruta-hacia.component';
 import { ServicioListComponent } from './servicios/servicio-list/servicio-list.component';
 import { ServicioComprarComponent } from './servicios/servicio-comprar/servicio-comprar.component';
 import { ProductoComprarComponent } from './productos/producto-comprar/producto-comprar.component';
+import { CaravanaProductosListComponent } from './caravana/caravana-productos-list/caravana-productos-list.component';
 export const routes: Routes = [
   { path: 'ciudades/list', component: CiudadListComponent }, // Listado de ciudades
   { path: 'ciudades/view/:id', component: CiudadViewComponent }, // Vista de una ciudad
@@ -24,7 +25,12 @@ export const routes: Routes = [
 
   { path: 'ciudad/:id/servicios', component: ServicioListComponent }, // Servicios de una ciudad
 
-  { path: 'comprar/servicio', component: ServicioComprarComponent },
+  { path: 'comprar/servicio', component: ServicioComprarComponent }, // Comprar un servicio
 
-  { path : 'comprar/producto', component : ProductoComprarComponent},
+  { path: 'comprar/producto', component: ProductoComprarComponent }, // Comprar un producto
+
+  {
+    path: 'list/caravana/productos',
+    component: CaravanaProductosListComponent,
+  }, // Listado de productos de la caravana
 ];

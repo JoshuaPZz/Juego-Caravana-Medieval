@@ -7,3 +7,10 @@ http://localhost:8088/comprar/productos/1/1
 
 ###
 PUT http://localhost:8088/comprar/productos/1/17
+
+###
+PUT {{base_url}}/comprar/productos/1/2
+
+###
+
+GET {{base_url}}/caravana/1/productos
