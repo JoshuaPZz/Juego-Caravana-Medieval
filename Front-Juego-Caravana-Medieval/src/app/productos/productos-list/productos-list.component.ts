@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { ProductoDto } from '../../dto/producto-dto';
 import { ProductoService } from '../producto.service';
 import { CiudadProductoDto } from '../../dto/ciudad-producto-dto';
+import { CaravanaProductoDto } from '../../dto/caravana-producto-dto';
 
 @Component({
   selector: 'app-productos-list',
@@ -13,6 +14,7 @@ import { CiudadProductoDto } from '../../dto/ciudad-producto-dto';
 export class ProductosListComponent {
   ciudadProducto: CiudadProductoDto[] = [];
   productos : ProductoDto[] =[];
+  caravanaProducto : CaravanaProductoDto | undefined;
   constructor(private productoService: ProductoService) {}
 
   @Input()
@@ -38,8 +40,12 @@ export class ProductosListComponent {
   }
 
   
-  comprarProducto(idProducto : number) {
-    this.productoService.comprarProducto(idProducto).subscribe({
+  comprarProducto(index : number, cantidad : string) {
+    const caravanaProducto : CaravanaProductoDto = {
+      idProducto: this.productos[index].id,
+      cantidad : Number(cantidad)
+    }
+    this.productoService.comprarProducto(caravanaProducto).subscribe({
       next: (productoComprado) => {
       },
       error: (error) => {

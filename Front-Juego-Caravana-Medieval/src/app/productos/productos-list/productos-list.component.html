@@ -10,6 +10,7 @@
                 <th>descripcion</th>
                 <th>stock</th>
                 <th>precio</th>
+                <th>cantidad</th>
                 <th>comprar</th>
             </tr>
         </thead>
@@ -22,7 +23,8 @@
                 <td>{{producto.descripcion}}</td>
                 <td>{{ciudadProducto[$index].stock}}</td>
                 <td>{{ciudadProducto[$index].precioCompra}}</td>
-                <td><button (click)="comprarProducto(producto.id)">Comprar</button></td>
+                <td><input type="text" #cantidad></td>
+                <td><button (click)="comprarProducto($index, cantidad.value)">Comprar</button></td>
             </tr>
             }
         </tbody>

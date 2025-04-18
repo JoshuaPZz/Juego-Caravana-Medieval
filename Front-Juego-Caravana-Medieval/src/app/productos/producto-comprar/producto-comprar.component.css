@@ -1,9 +1,11 @@
 .container {
-  font-family: "Press Start 2P", cursive;
-  background-color: #faf3e0;
-  color: #5c473a;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-height: 100vh;
   padding: 20px;
-  text-align: center;
+  background-color: #faf3e0; /* Match your theme */
+  font-family: "Press Start 2P", cursive;
 }
 
 .current-city,
@@ -12,7 +14,6 @@
   border-radius: 8px;
   margin: 20px auto;
   padding: 20px;
-  max-width: 800px;
   box-shadow: 0 0 10px #8b5e3c;
 }
 

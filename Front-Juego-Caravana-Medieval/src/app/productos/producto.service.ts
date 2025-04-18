@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ProductoDto } from '../dto/producto-dto';
 import { environment } from '../../environments/environment.development';
 import { CiudadProductoDto } from '../dto/ciudad-producto-dto';
+import { CaravanaProductoDto } from '../dto/caravana-producto-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class ProductoService {
       `${environment.serverUrl}/productoCiudad/list/ciudadProducto/${idCiudad}`
     )
   }
-  comprarProducto(idProducto : number) : Observable<any>{
-    return this.http.put<any>(`${environment.serverUrl}/comprar/productos/1/${idProducto}`, {})
+  comprarProducto(caravanaProducto : CaravanaProductoDto) : Observable<any>{
+    return this.http.put<any>(`${environment.serverUrl}/comprar/productos/1`, caravanaProducto)
   } 
 }

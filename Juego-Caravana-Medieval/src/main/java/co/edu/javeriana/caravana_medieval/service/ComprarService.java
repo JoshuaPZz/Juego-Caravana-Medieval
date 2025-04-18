@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.edu.javeriana.caravana_medieval.dto.CaravanaProductoDTO;
 import co.edu.javeriana.caravana_medieval.dto.CiudadProductoDTO;
 import co.edu.javeriana.caravana_medieval.dto.ProductoDTO;
+import co.edu.javeriana.caravana_medieval.mapper.CiudadProductoMapper;
 import co.edu.javeriana.caravana_medieval.mapper.ProductoMapper;
 import co.edu.javeriana.caravana_medieval.model.Caravana;
 import co.edu.javeriana.caravana_medieval.model.CaravanaProducto;
@@ -54,28 +56,28 @@ public class ComprarService {
 
         caravana = caravanaRepository.saveAndFlush(caravana);
     }
-
-    public CaravanaProducto comprarProducto(Long idProducto, Long idCaravana) {
+    public CaravanaProducto comprarProducto(CaravanaProductoDTO caravanaProductoDTO, Long idCaravana) {
         Caravana caravana = caravanaService.getCaravanaById(idCaravana);
         Ciudad ciudad = caravanaService.getCiudadActual(idCaravana);
-        log.info(productoService.getProductoById(idProducto).get().getId().toString());
-        Producto producto = ProductoMapper.toEntity(productoService.getProductoById(idProducto).get());
+        Producto producto = ProductoMapper.toEntity(productoService.getProductoById(caravanaProductoDTO.getIdProducto()).get());
+        
         if(caravana.getDineroDisponible() < 0) {
             throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
         }
-        if(caravana.getDineroDisponible() < ciudad.getProductos().get(idProducto.intValue()).getPrecioVenta()) {
-            throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
-        }
-        log.info("este es caravana" + idCaravana.toString());
-        log.info("este es producto" + idProducto.toString());
         CaravanaProducto caravanaProducto = new CaravanaProducto();
         caravanaProducto.setProducto(producto);
         caravanaProducto.setCaravana(caravana);
-        caravanaProducto.setCantidad(69);
+        caravanaProducto.setCantidad(caravanaProductoDTO.getCantidad());
+
+        List<CiudadProductoDTO> ciudadProductoList = ciudadProductoService.getCiudadProducto(ciudad.getId()).get();
+        CiudadProductoDTO ciudadProductoDTO = ciudadProductoService.getCiudadProductoTupla(ciudadProductoList, ciudad.getId(), producto.getId());
+        if(caravana.getDineroDisponible() < ciudadProductoDTO.getPrecioCompra()) {
+            throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
+        }       
         caravana.getProductos().add(caravanaProducto);
-        List<CiudadProductoDTO> ciudadProductoList = ciudadProductoService.getCiudadProducto(idCaravana).get();
-        CiudadProductoDTO ciudadProductoDTO = ciudadProductoService.getCiudadProductoTupla(ciudadProductoList, idCaravana, idProducto);
         caravana.setDineroDisponible((int) (caravana.getDineroDisponible() - ciudadProductoDTO.getPrecioCompra()));
+        ciudadProductoDTO.setStock(ciudadProductoDTO.getStock() - caravanaProductoDTO.getCantidad());
+        ciudadProductoService.updateCiudadProducto(ciudadProductoDTO);
         return caravanaProductoRepository.save(caravanaProducto);
     }
 }
