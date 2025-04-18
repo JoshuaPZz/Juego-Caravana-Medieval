@@ -68,9 +68,14 @@ public class ComprarService {
         if(caravana.getDineroDisponible() < ciudadProductoDTO.getPrecioCompra()) {
             throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
         }
-        if(caravana.getProductos().size() + caravanaProductoDTO.getCantidad() > caravana.getCapacidadMax()) {
+        int capacidadAct = caravana.getProductos()
+            .stream()
+            .mapToInt(CaravanaProducto::getCantidad)
+            .sum();
+        if(capacidadAct + caravanaProductoDTO.getCantidad() > caravana.getCapacidadMax()) {
             throw new IllegalArgumentException("No tienes suficiente capacidad para comprar el producto");
         }
+
         Optional<CaravanaProducto> optCaravanaProducto = caravanaProductoRepository.findByIdProducto(producto.getId());
         CaravanaProducto caravanaProducto = optCaravanaProducto.orElseGet(() -> {
             CaravanaProducto nuevo = new CaravanaProducto();
