@@ -1,19 +1,18 @@
-/*
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProductosListComponent } from './productos-list.component';
+import { ProductoComprarComponent } from './producto-comprar.component';
 
-describe('ProductosViewComponent', () => {
-  let component: ProductosViewComponent;
-  let fixture: ComponentFixture<ProductosViewComponent>;
+describe('ProductoComprarComponent', () => {
+  let component: ProductoComprarComponent;
+  let fixture: ComponentFixture<ProductoComprarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductosListComponent]
+      imports: [ProductoComprarComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ProductosViewComponent);
+    fixture = TestBed.createComponent(ProductoComprarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -22,4 +21,3 @@ describe('ProductosViewComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-*/

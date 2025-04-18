@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="current-city">
+    <h1>Comprar Productos</h1>
+    <app-caravana-view></app-caravana-view>
+    <h2>Ciudad Actual</h2>
+    <p>Nombre: {{ ciudadActual?.nombre }}</p>
+    <p>Impuesto: {{ ciudadActual?.impuesto }}</p>
+  </div>
+
+  <div class="routes">
+    <h2>Productos que Comprar</h2>
+    <ng-container *ngIf="ciudadActual?.id as ciudadId">
+      <app-productos-list [id]="ciudadId"></app-productos-list>
+    </ng-container>
+  </div>
+</div>

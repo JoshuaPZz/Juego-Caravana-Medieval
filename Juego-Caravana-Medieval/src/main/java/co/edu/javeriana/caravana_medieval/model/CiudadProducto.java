@@ -99,11 +99,13 @@ public class CiudadProducto {
         this.stock = stock;
     }
 
-    public double calcularPrecioVenta(){
-        return factorDemanda / (1 + stock);
+    public double calcularPrecioVenta() {
+        double precio = factorDemanda / (1 + stock);
+        return Math.round(precio * 100.0) / 100.0;
     }
-
-    public double calcularPrecioCompra(){
-        return factorOferta / (1 + stock);
+    
+    public double calcularPrecioCompra() {
+        double precio = factorOferta / (1 + stock);
+        return Math.round(precio * 100.0) / 100.0; 
     }
 }

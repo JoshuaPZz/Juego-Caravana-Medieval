@@ -9,3 +9,4 @@ public class CaravanaMedievalApplication {
 		SpringApplication.run(CaravanaMedievalApplication.class, args);
 	}
 }
+ 
