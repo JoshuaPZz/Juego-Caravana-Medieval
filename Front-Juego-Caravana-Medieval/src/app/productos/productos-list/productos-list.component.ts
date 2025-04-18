@@ -39,7 +39,7 @@ export class ProductosListComponent {
     });
   }
 
-  
+   
   comprarProducto(index : number, cantidad : string) {
     const caravanaProducto : CaravanaProductoDto = {
       idProducto: this.productos[index].id,

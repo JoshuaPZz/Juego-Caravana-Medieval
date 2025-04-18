@@ -17,6 +17,9 @@ public interface CaravanaProductoRepository extends JpaRepository<CaravanaProduc
     @Query("SELECT cp FROM CaravanaProducto cp WHERE cp.caravana.id = :idCaravana")
     List<CaravanaProducto> findByIdCaravana(@Param("idCaravana") Long idCaravana);
 
+    @Query("SELECT cp FROM CaravanaProducto cp WHERE cp.producto.id = :idProducto")
+    Optional<CaravanaProducto> findByIdProducto(@Param("idProducto") Long idProducto);
+
     @Query("SELECT cp FROM CaravanaProducto cp WHERE cp.caravana.id = :caravanaId AND cp.producto.id = :productoId")
     Optional<CaravanaProducto> findByCaravanaIdAndProductoId(
             @Param("caravanaId") Long caravanaId, 

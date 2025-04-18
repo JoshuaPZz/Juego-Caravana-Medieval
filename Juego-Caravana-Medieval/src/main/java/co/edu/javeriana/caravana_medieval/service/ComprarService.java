@@ -58,22 +58,27 @@ public class ComprarService {
     }
     public CaravanaProducto comprarProducto(CaravanaProductoDTO caravanaProductoDTO, Long idCaravana) {
         Caravana caravana = caravanaService.getCaravanaById(idCaravana);
-        Ciudad ciudad = caravanaService.getCiudadActual(idCaravana);
-        Producto producto = ProductoMapper.toEntity(productoService.getProductoById(caravanaProductoDTO.getIdProducto()).get());
-        
         if(caravana.getDineroDisponible() < 0) {
             throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
         }
-        CaravanaProducto caravanaProducto = new CaravanaProducto();
-        caravanaProducto.setProducto(producto);
-        caravanaProducto.setCaravana(caravana);
-        caravanaProducto.setCantidad(caravanaProductoDTO.getCantidad());
-
+        Ciudad ciudad = caravanaService.getCiudadActual(idCaravana);
+        Producto producto = ProductoMapper.toEntity(productoService.getProductoById(caravanaProductoDTO.getIdProducto()).get());
         List<CiudadProductoDTO> ciudadProductoList = ciudadProductoService.getCiudadProducto(ciudad.getId()).get();
         CiudadProductoDTO ciudadProductoDTO = ciudadProductoService.getCiudadProductoTupla(ciudadProductoList, ciudad.getId(), producto.getId());
         if(caravana.getDineroDisponible() < ciudadProductoDTO.getPrecioCompra()) {
             throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
-        }       
+        }
+        if(caravana.getProductos().size() + caravanaProductoDTO.getCantidad() > caravana.getCapacidadMax()) {
+            throw new IllegalArgumentException("No tienes suficiente capacidad para comprar el producto");
+        }
+        Optional<CaravanaProducto> optCaravanaProducto = caravanaProductoRepository.findByIdProducto(producto.getId());
+        CaravanaProducto caravanaProducto = optCaravanaProducto.orElseGet(() -> {
+            CaravanaProducto nuevo = new CaravanaProducto();
+            nuevo.setProducto(producto);
+            nuevo.setCaravana(caravana);
+            return nuevo;
+        });
+        caravanaProducto.setCantidad(caravanaProducto.getCantidad() + caravanaProductoDTO.getCantidad());
         caravana.getProductos().add(caravanaProducto);
         caravana.setDineroDisponible((int) (caravana.getDineroDisponible() - ciudadProductoDTO.getPrecioCompra()));
         ciudadProductoDTO.setStock(ciudadProductoDTO.getStock() - caravanaProductoDTO.getCantidad());
