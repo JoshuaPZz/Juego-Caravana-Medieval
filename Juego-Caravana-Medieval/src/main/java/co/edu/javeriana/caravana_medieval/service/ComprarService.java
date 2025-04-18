@@ -20,6 +20,7 @@ import co.edu.javeriana.caravana_medieval.model.CiudadProducto;
 import co.edu.javeriana.caravana_medieval.model.Producto;
 import co.edu.javeriana.caravana_medieval.repository.CaravanaProductoRepository;
 import co.edu.javeriana.caravana_medieval.repository.CaravanaRepository;
+import co.edu.javeriana.caravana_medieval.repository.CiudadProductoRepository;
 import co.edu.javeriana.caravana_medieval.repository.CiudadRepository;
 
 @Service
@@ -36,9 +37,13 @@ public class ComprarService {
     
     @Autowired
     private CiudadProductoService ciudadProductoService;
+    
+    @Autowired
+    private CiudadProductoRepository ciudadProductoRepository;
 
     @Autowired
     private ProductoService productoService;
+
     @Autowired
     private CiudadRepository ciudadRepository;
 
@@ -68,6 +73,9 @@ public class ComprarService {
         if(caravana.getDineroDisponible() < ciudadProductoDTO.getPrecioCompra()) {
             throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
         }
+        if(caravanaProductoDTO.getCantidad() > ciudadProductoDTO.getStock()) {
+            throw new IllegalArgumentException("No puedes comprar mas cantidad del stock disponible");
+        }
         int capacidadAct = caravana.getProductos()
             .stream()
             .mapToInt(CaravanaProducto::getCantidad)
@@ -87,6 +95,9 @@ public class ComprarService {
         caravana.getProductos().add(caravanaProducto);
         caravana.setDineroDisponible((int) (caravana.getDineroDisponible() - ciudadProductoDTO.getPrecioCompra()));
         ciudadProductoDTO.setStock(ciudadProductoDTO.getStock() - caravanaProductoDTO.getCantidad());
+        if(ciudadProductoDTO.getStock() == 0) {
+            ciudadProductoRepository.delete(CiudadProductoMapper.toEntity(ciudadProductoDTO));
+        }
         ciudadProductoService.updateCiudadProducto(ciudadProductoDTO);
         return caravanaProductoRepository.save(caravanaProducto);
     }
