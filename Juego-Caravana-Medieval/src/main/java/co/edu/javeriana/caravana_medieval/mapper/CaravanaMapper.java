@@ -1,5 +1,7 @@
 package co.edu.javeriana.caravana_medieval.mapper;
 
+import java.time.Duration;
+
 import co.edu.javeriana.caravana_medieval.dto.CaravanaDTO;
 import co.edu.javeriana.caravana_medieval.model.Caravana;
 
@@ -14,6 +16,7 @@ public class CaravanaMapper {
         caravanaDTO.setPuntosVida(caravana.getPuntosVida());
         caravanaDTO.setHoraViaje(caravana.getHoraViaje());
         caravanaDTO.setTieneGuardias(caravana.isTieneGuardias());
+        caravanaDTO.setTiempoTranscurrido(caravana.getTiempoTranscurrido().toSeconds());
         return caravanaDTO;
     }
     public static Caravana toEntity(CaravanaDTO caravanaDTO) {
@@ -26,6 +29,7 @@ public class CaravanaMapper {
         caravana.setPuntosVida(caravanaDTO.getPuntosVida());
         caravana.setHoraViaje(caravanaDTO.getHoraViaje());
         caravana.setTieneGuardias(caravanaDTO.isTieneGuardias());
+        caravana.setTiempoTranscurrido(Duration.ofSeconds(caravana.getTiempoTranscurrido().toSeconds()));
         return caravana;
     }
 }

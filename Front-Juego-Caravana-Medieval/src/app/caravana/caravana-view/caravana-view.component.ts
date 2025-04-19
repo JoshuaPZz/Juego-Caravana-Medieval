@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CaravanaDto } from '../../dto/caravana-dto';
 import { CaravanaService } from '../caravana.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-caravana-view',
@@ -14,7 +14,8 @@ export class CaravanaViewComponent {
 
   constructor(
     private caravanaService: CaravanaService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -29,5 +30,13 @@ export class CaravanaViewComponent {
         console.error('Error fetching caravana:', error);
       },
     });
+  }
+  getTiempoFormateado(segundos: number): string {
+    const horas = Math.floor(segundos / 3600);
+    const minutos = Math.floor((segundos % 3600) / 60);
+    const dias = Math.floor(horas / 24);
+    const horasRestantes = horas % 24;
+  
+    return `${dias}d ${horasRestantes}h ${minutos}m`;
   }
 }

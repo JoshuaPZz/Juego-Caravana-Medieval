@@ -1,5 +1,6 @@
 package co.edu.javeriana.caravana_medieval.dto;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
 public class CaravanaDTO {
@@ -11,11 +12,13 @@ public class CaravanaDTO {
     private int puntosVida; 
     private LocalTime horaViaje; 
     private boolean tieneGuardias;
+    private long tiempoTranscurrido;
 
     public CaravanaDTO() {
     }
 
-    public CaravanaDTO(Long id,String nombre, int velocidad, int capacidadMax, double dineroDisponible, int puntosVida, LocalTime horaViaje, boolean tieneGuardias) {
+    public CaravanaDTO(Long id, String nombre, int velocidad, int capacidadMax, double dineroDisponible,
+                       int puntosVida, LocalTime horaViaje, boolean tieneGuardias, long tiempoTranscurrido) {
         this.id = id;
         this.nombre = nombre;
         this.velocidad = velocidad;
@@ -24,10 +27,23 @@ public class CaravanaDTO {
         this.puntosVida = puntosVida;
         this.horaViaje = horaViaje;
         this.tieneGuardias = tieneGuardias;
+        this.tiempoTranscurrido = tiempoTranscurrido;
+    }
+
+    public long getTiempoTranscurrido() {
+        return tiempoTranscurrido;
+    }
+
+    public void setTiempoTranscurrido(long tiempoTranscurrido) {
+        this.tiempoTranscurrido = tiempoTranscurrido;
     }
 
     public LocalTime getHoraViaje() {
         return horaViaje;
+    }
+
+    public void setHoraViaje(LocalTime horaViaje) {
+        this.horaViaje = horaViaje;
     }
 
     public boolean isTieneGuardias() {
@@ -38,10 +54,6 @@ public class CaravanaDTO {
         this.tieneGuardias = tieneGuardias;
     }
 
-    public void setHoraViaje(LocalTime horaViaje) {
-        this.horaViaje = horaViaje;
-    }
-    
     public Long getId() {
         return id;
     }
@@ -89,6 +101,4 @@ public class CaravanaDTO {
     public void setPuntosVida(int puntosVida) {
         this.puntosVida = puntosVida;
     }
-
-
 }

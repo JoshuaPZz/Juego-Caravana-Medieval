@@ -88,15 +88,20 @@ export class RutaDestinosComponent {
         },
         error: (err) => {
           console.error('Hubo un error: ', err);
-          // Abre el popup mostrando el mensaje de error
+  
+          const mensaje = err.error?.message || err.error?.errorString || 'Ocurrió un error inesperado.';
+  
           this.dialog.open(PopupComponent, {
             width: '400px',
-            data: {
-              message: err.error?.errorString ?? 'Ocurrió un error inesperado.',
-            },
+            data: { message: mensaje },
           });
+          
+          if (err.status === 400 && mensaje.toLowerCase().includes('tiempo se acabó')) {
+            this.router.navigate(['/inicio']);
+          }
         },
       });
     }
   }
+  
 }
