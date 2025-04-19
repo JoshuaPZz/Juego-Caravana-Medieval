@@ -1,5 +1,6 @@
 package co.edu.javeriana.caravana_medieval.service;
 
+import java.time.Duration;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,29 +67,12 @@ public class ViajeService {
             throw new IllegalArgumentException("La ciudad actual no es la misma que la ciudad de la caravana.");
         }
 
-        // Verificar que la ruta conecta las ciudades (más seguro comparar por ID que
-        // por referencia)
+        // Verificar que la ruta conecta las ciudades
         boolean rutaOrigenValida = ciudadActual.getRutasOrigen().stream()
                 .anyMatch(r -> r.getId().equals(ruta.getId()));
 
         boolean rutaDestinoValida = ciudadDestino.getRutasDestino().stream()
                 .anyMatch(r -> r.getId().equals(ruta.getId()));
-
-        /*
-         * if (!rutaOrigenValida) {
-         * throw new
-         * IllegalArgumentException("La ruta seleccionada no es válida desde la ciudad actual: "
-         * +
-         * ciudadActual.getNombre());
-         * }
-         * 
-         * if (!rutaDestinoValida) {
-         * throw new
-         * IllegalArgumentException("La ruta seleccionada no llega a la ciudad destino: "
-         * +
-         * ciudadDestino.getNombre());
-         * }
-         */
 
         // Actualizar los datos de la caravana
         int dano = 0;
@@ -97,8 +81,15 @@ public class ViajeService {
         } else {
             dano = ruta.getDano();
         }     
+        // Calcular la duración del viaje
+        Duration tiempoViaje = Duration.ofHours(ruta.getLongitud() / caravana.getVelocidad());
         caravana.setPuntosVida(caravana.getPuntosVida() - dano);
-        caravana.setHoraViaje(caravana.getHoraViaje().plusHours(ruta.getLongitud() / caravana.getVelocidad()));
+        caravana.setHoraViaje(caravana.getHoraViaje().plusHours(tiempoViaje.toHours()));
+        caravana.setTiempoTranscurrido(caravana.getTiempoTranscurrido().plus(tiempoViaje));
+        if(caravana.getTiempoTranscurrido().compareTo(Duration.ofDays(14)) > 0){
+            throw new IllegalArgumentException("El tiempo se acabó.");
+
+        }
         caravana.setCiudadActual(ciudadDestino);
 
         caravana = caravanaRepository.saveAndFlush(caravana);

@@ -1,5 +1,6 @@
 package co.edu.javeriana.caravana_medieval.model;
 
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +32,16 @@ public class Caravana {
     private double dineroDisponible;
     private int puntosVida; 
     private LocalTime horaViaje;
-    private boolean tieneGuardias; 
+    private boolean tieneGuardias;
+
+    @Convert(converter = co.edu.javeriana.caravana_medieval.converter.DurationConverter.class)
+    private Duration tiempoTranscurrido;
 
     public Caravana() {
     }
 
-    public Caravana(String nombre, int velocidad, int capacidadMax, double dineroDisponible, int puntosVida, Ciudad ciudadActual, LocalTime horaViaje, boolean tieneGuardias) {
+    public Caravana(String nombre, int velocidad, int capacidadMax, double dineroDisponible, int puntosVida,
+                    Ciudad ciudadActual, LocalTime horaViaje, boolean tieneGuardias) {
         this.nombre = nombre;
         this.velocidad = velocidad;
         this.capacidadMax = capacidadMax;
@@ -45,14 +50,7 @@ public class Caravana {
         this.ciudadActual = ciudadActual;
         this.horaViaje = horaViaje;
         this.tieneGuardias = tieneGuardias;
-    }
-
-    public LocalTime getHoraViaje() {
-        return horaViaje;
-    }
-
-    public void setHoraViaje(LocalTime horaViaje) {
-        this.horaViaje = horaViaje;
+        this.tiempoTranscurrido = Duration.ZERO;
     }
 
     public Long getId() {
@@ -135,11 +133,27 @@ public class Caravana {
         this.ciudadActual = ciudadActual;
     }
 
+    public LocalTime getHoraViaje() {
+        return horaViaje;
+    }
+
+    public void setHoraViaje(LocalTime horaViaje) {
+        this.horaViaje = horaViaje;
+    }
+
     public boolean isTieneGuardias() {
         return tieneGuardias;
     }
 
     public void setTieneGuardias(boolean tieneGuardias) {
         this.tieneGuardias = tieneGuardias;
+    }
+
+    public Duration getTiempoTranscurrido() {
+        return tiempoTranscurrido;
+    }
+
+    public void setTiempoTranscurrido(Duration tiempoTranscurrido) {
+        this.tiempoTranscurrido = tiempoTranscurrido;
     }
 }
