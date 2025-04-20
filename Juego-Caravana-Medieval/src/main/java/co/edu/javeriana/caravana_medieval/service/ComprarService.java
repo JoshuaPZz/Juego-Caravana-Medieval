@@ -150,10 +150,14 @@ public class ComprarService {
         if (caravanaProductoDTO.getCantidad() > ciudadProductoDTO.getStock()) {
             throw new IllegalArgumentException("No puedes comprar mas cantidad del stock disponible");
         }
-        if (caravanaProductoDTO.getCantidad() > caravana.getCapacidadMax()) {
+        int capacidadAct = caravana.getProductos()
+                .stream()
+                .mapToInt(CaravanaProducto::getCantidad)
+                .sum();
+        if (capacidadAct + caravanaProductoDTO.getCantidad() > caravana.getCapacidadMax()) {
             throw new IllegalArgumentException("No tienes suficiente capacidad para comprar el producto");
         }
-        if(caravanaProductoDTO.getCantidad()<0) {
+        if (caravanaProductoDTO.getCantidad() < 0) {
             throw new IllegalArgumentException("No puedes comprar cantidades negativas");
         }
 
@@ -167,7 +171,6 @@ public class ComprarService {
         caravanaProducto.setCantidad(caravanaProducto.getCantidad() + caravanaProductoDTO.getCantidad());
         caravana.getProductos().add(caravanaProducto);
         caravana.setDineroDisponible((int) (caravana.getDineroDisponible() - ciudadProductoDTO.getPrecioCompra()));
-        caravana.setCapacidadMax(caravana.getCapacidadMax() - caravanaProductoDTO.getCantidad());
         ciudadProductoDTO.setStock(ciudadProductoDTO.getStock() - caravanaProductoDTO.getCantidad());
         if (ciudadProductoDTO.getStock() == 0) {
             ciudadProductoRepository.delete(ciudadProductoRepository.getReferenceById(ciudadProductoDTO.getId()));
