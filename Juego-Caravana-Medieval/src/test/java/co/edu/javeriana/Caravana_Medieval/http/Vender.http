@@ -1,0 +1,10 @@
+@base_url = http://localhost:8088
+
+PUT {{base_url}}/vender/productos/1
+Content-Type: application/json
+
+{
+    "idCiudad": 41,
+    "idProducto": 25,
+    "stock": 3
+}

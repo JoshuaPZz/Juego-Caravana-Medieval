@@ -1,5 +1,4 @@
 <div>
-  <app-caravana-view></app-caravana-view>
   <h1>Products list</h1>
   <table>
     <thead>
@@ -8,15 +7,21 @@
         <th>nombre</th>
         <th>tipo</th>
         <th>descripcion</th>
+        <th>stock en caravana</th>
+        <th>cantidad</th>
+        <th>vender</th>
       </tr>
     </thead>
     <tbody>
-      @for (producto of productos; track producto.nombre) {
+      @for (producto of productos; track $index) {
       <tr>
         <td>{{ producto.id }}</td>
         <td>{{ producto.nombre }}</td>
         <td>{{ producto.tipo }}</td>
         <td>{{ producto.descripcion }}</td>
+        <td>{{ caravanaProductos[$index].cantidad}}</td>
+        <td><input type="text" #cantidad></td>
+        <td><button (click)="venderProducto($index, cantidad.value)">Vender</button></td>
       </tr>
       }
     </tbody>

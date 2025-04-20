@@ -11,6 +11,7 @@ import { HomeInicioComponent } from './home/home-inicio/home-inicio.component';
 import { HomePrincipalComponent } from './home/home-principal/home-principal.component';
 import { ProductoComprarComponent } from './productos/producto-comprar/producto-comprar.component';
 import { CaravanaProductosListComponent } from './caravana/caravana-productos-list/caravana-productos-list.component';
+import { ProductosVenderComponent } from './productos/productos-vender/productos-vender.component';
 export const routes: Routes = [
   { path: 'ciudades/list', component: CiudadListComponent }, // Listado de ciudades
   { path: 'ciudades/view/:id', component: CiudadViewComponent }, // Vista de una ciudad
@@ -27,5 +28,6 @@ export const routes: Routes = [
   {
     path: 'list/caravana/productos',
     component: CaravanaProductosListComponent,
-  }, 
+  },
+  { path: 'vender/producto', component: ProductosVenderComponent},
 ];

@@ -18,11 +18,9 @@ export class ProductoService {
     );
   }
 
-  venderProducto(idCaravana: number, idProducto: number, cantidad: number) {
+  venderProducto(ciudadProducto : CiudadProductoDto) : Observable<any> {
     return this.http.put<any>(
-      `${environment.serverUrl}/vender/productos/${idCaravana}/${idProducto}/${cantidad}`,
-      null
-    );
+      `${environment.serverUrl}/vender/productos/1`, ciudadProducto);
   }
   listProductsCiudad(idCiudad : number) : Observable<ProductoDto[]> {
     return this.http.get<ProductoDto[]>(
