@@ -8,6 +8,7 @@ import co.edu.javeriana.caravana_medieval.model.CiudadProducto;
 import co.edu.javeriana.caravana_medieval.model.Caravana;
 import co.edu.javeriana.caravana_medieval.model.CaravanaProducto;
 import co.edu.javeriana.caravana_medieval.model.Ciudad;
+import co.edu.javeriana.caravana_medieval.repository.CaravanaProductoRepository;
 import co.edu.javeriana.caravana_medieval.repository.CaravanaRepository;
 import co.edu.javeriana.caravana_medieval.repository.CiudadProductoRepository;
 import co.edu.javeriana.caravana_medieval.repository.CiudadRepository;
@@ -25,73 +26,70 @@ public class VenderService {
     private CiudadProductoRepository ciudadProductoRepository;
     @Autowired
     private ProductoRepository productoRepository;
-    //@Autowired
-    //private CaravanaProductoRepository caravanaProductoRepository;
+    @Autowired
+    private CaravanaProductoRepository caravanaProductoRepository;
 
-    public void vender(Long idCaravana, Long idProducto, Long cantidad) {
+    public void vender(Long idCaravana, Long idProducto, int cantidad) {
         Caravana caravana = caravanaRepository.findById(idCaravana)
-            .orElseThrow(() -> new RuntimeException("Caravana no encontrada"));
+                .orElseThrow(() -> new RuntimeException("Caravana no encontrada"));
 
         Ciudad ciudad = ciudadRepository.findById(caravana.getCiudadActual().getId())
-            .orElseThrow(() -> new RuntimeException("Ciudad no encontrada"));
+                .orElseThrow(() -> new RuntimeException("Ciudad no encontrada"));
 
         Producto producto = productoRepository.findById(idProducto)
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-        
-        // CaravanaProducto caravanaProducto = caravanaProductoRepository
-          //  .findByCaravanaIdAndProductoId(idCaravana, idProducto)
-         //   .orElseThrow(() -> new RuntimeException("La caravana no tiene este producto"));
+        CaravanaProducto caravanaProducto = caravanaProductoRepository
+                .findByCaravanaIdAndProductoId(idCaravana, idProducto)
+                .orElseThrow(() -> new RuntimeException("La caravana no tiene este producto"));
 
-       // if (caravanaProducto.getCantidad() < cantidad) {
-        //    throw new RuntimeException("La caravana no tiene suficiente cantidad del producto para vender");
-        //}
+        if (caravanaProducto.getCantidad() < cantidad) {
+            throw new RuntimeException("La caravana no tiene suficiente cantidad del producto para vender");
+        }
 
         CiudadProducto ciudadProducto = ciudadProductoRepository
-            .findByCiudadIdAndProductoId(ciudad.getId(), idProducto)
-            .orElse(null);
+                .findByCiudadIdAndProductoId(ciudad.getId(), idProducto)
+                .orElse(null);
 
-        // if(cantidad>caravanaProducto.getCantidad()){
-         //   throw new RuntimeException("No hay suficiente cantidad del producto en la ciudad para vender");
-        //}
+        if (cantidad < 0){
+            throw new RuntimeException("No se pueden vender cantidades negativas");
+        }
 
-
-        double precioCompra;
+        double precioVenta;
 
         if (ciudadProducto != null) {
             // El producto ya existe en la ciudad
-            ciudadProducto.setStock(ciudadProducto.getStock() + cantidad.intValue());
-            precioCompra = ciudadProducto.calcularPrecioCompra();
-            ciudadProducto.setPrecioCompra(precioCompra);
-            ciudadProducto.setPrecioVenta(ciudadProducto.calcularPrecioVenta());
+            ciudadProducto.setStock(ciudadProducto.getStock() + cantidad);
+            ciudadProducto.setPrecioCompra(ciudadProducto.calcularPrecioCompra());
+            precioVenta = ciudadProducto.calcularPrecioVenta();
+            ciudadProducto.setPrecioVenta(precioVenta);
             ciudadProductoRepository.save(ciudadProducto);
         } else {
             // El producto no existe en la ciudad
             ciudadProducto = new CiudadProducto();
             ciudadProducto.setCiudad(ciudad);
             ciudadProducto.setProducto(producto);
-            ciudadProducto.setStock(cantidad.intValue());
-            ciudadProducto.setFactorDemanda(1.0); 
+            ciudadProducto.setStock(cantidad);
+            ciudadProducto.setFactorDemanda(1.0);
             ciudadProducto.setFactorOferta(0.8);
-            precioCompra = ciudadProducto.calcularPrecioCompra();
-            ciudadProducto.setPrecioCompra(precioCompra);
-            ciudadProducto.setPrecioVenta(ciudadProducto.calcularPrecioVenta());
+            ciudadProducto.setPrecioCompra(ciudadProducto.calcularPrecioCompra());
+            precioVenta = ciudadProducto.calcularPrecioVenta();
+            ciudadProducto.setPrecioVenta(precioVenta);
             ciudadProductoRepository.save(ciudadProducto);
         }
 
-       // int nuevaCantidad = caravanaProducto.getCantidad() - cantidad.intValue();
-       // caravanaProducto.setCantidad(nuevaCantidad);
-        
-       // if (nuevaCantidad <= 0) {
-          //  caravana.getProductos().remove(caravanaProducto);
-           // caravanaProductoRepository.delete(caravanaProducto);
-      //  } else {
-            //caravanaProductoRepository.save(caravanaProducto);
-        //}
+        caravanaProducto.setCantidad(caravanaProducto.getCantidad() - cantidad);
 
-        double dineroGanado = precioCompra * cantidad;
+        if (caravanaProducto.getCantidad() == 0) {
+            caravana.getProductos().remove(caravanaProducto);
+            caravanaProductoRepository.delete(caravanaProducto);
+        } else {
+            caravanaProductoRepository.save(caravanaProducto);
+        }
+
+        double dineroGanado = precioVenta * cantidad;
         caravana.setDineroDisponible(caravana.getDineroDisponible() + dineroGanado);
-        
+
         // Guardar los cambios en la caravana
         caravanaRepository.save(caravana);
     }
