@@ -6,6 +6,5 @@ Content-Type: application/json
 {
     "idCiudad": 41,
     "idProducto": 25,
-    "nombreProducto": "Ganado #25",
     "stock": 3
 }

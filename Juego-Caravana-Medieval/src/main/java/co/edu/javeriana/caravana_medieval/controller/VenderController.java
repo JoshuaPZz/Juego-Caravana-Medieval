@@ -17,12 +17,6 @@ public class VenderController {
     @Autowired
     private VenderService venderService;
 
-    @PutMapping("/productos/{idCaravana}/{idProducto}/{cantidad}")
-    public String vender(@PathVariable Long idCaravana, @PathVariable Long idProducto, @PathVariable int cantidad) {
-        venderService.vender(idCaravana, idProducto, cantidad);
-        return "Producto vendido exitosamente";
-    }
-
     @PutMapping("/productos/{idCaravana}")
     public void venderProducto (@PathVariable Long idCaravana,  @RequestBody CiudadProductoDTO ciudadProductoDTO) {
         venderService.venderProducto(ciudadProductoDTO, idCaravana);

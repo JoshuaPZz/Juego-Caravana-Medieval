@@ -7,17 +7,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViajarService } from '../../viaje/viajar.service';
 import { PopupComponent } from '../../popup/popup.component';
 import { CiudadDto } from '../../dto/ciudad-dto';
+import { CaravanaService } from '../../caravana/caravana.service';
+import { CaravanaDto } from '../../dto/caravana-dto';
+import { CaravanaProductosListComponent } from '../../caravana/caravana-productos-list/caravana-productos-list.component';
 
 @Component({
   selector: 'app-vender-productos',
-  imports: [CaravanaViewComponent, CommonModule, ViajarService],
-  templateUrl: './vender-productos.component.html',
-  styleUrl: './vender-productos.component.css',
+  imports: [CaravanaViewComponent, CommonModule, CaravanaProductosListComponent],
+  templateUrl: './productos-vender.component.html',
+  styleUrl: './productos-vender.component.css',
 })
 export class ProductosVenderComponent implements OnInit {
   ciudadActual!: CiudadDto;
+  caravanaActual!: CaravanaDto;
   constructor(
     private productoService: ProductoService,
+    private caravanaService: CaravanaService,
     private viajarService: ViajarService,
     private route: ActivatedRoute,
     private dialog: MatDialog
@@ -41,7 +46,23 @@ export class ProductosVenderComponent implements OnInit {
             message: error.error?.errorString ?? 'Ocurrió un error inesperado.',
           },
         });
-      },
+      }
     });
+    this.caravanaService.caravanaActual(idCaravana).subscribe({
+      next: (caravana) => {
+        this.caravanaActual = caravana;
+        console.log('Caravana actual:', this.caravanaActual);
+      },
+      error: (error) => {
+        console.error('Error al obtener la caravana actual:', error);
+        // Abrir el pop-up con el mensaje de error
+        this.dialog.open(PopupComponent, {
+          width: '400px',
+          data: {
+            message: error.error?.errorString ?? 'Ocurrió un error inesperado.',
+          },
+        });
+      }
+    })
   }
 }

@@ -1,7 +1,6 @@
 export class CiudadProductoDto {
 
     constructor(
-        public id : number,
         public idCiudad : number,
         public idProducto : number,
         public nombreProducto : string,

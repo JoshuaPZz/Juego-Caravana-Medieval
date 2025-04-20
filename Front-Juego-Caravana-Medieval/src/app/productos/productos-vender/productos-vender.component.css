@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #faf3e0; /* Match your theme */
+  font-family: "Press Start 2P", cursive;
+}
+
+.current-city,
+.routes {
+  border: 2px solid #8b5e3c;
+  border-radius: 8px;
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: 0 0 10px #8b5e3c;
+}
+
+h1,
+h2 {
+  color: #8b5e3c;
+  text-shadow: 1px 1px 1px #f2e8d5;
+  margin-bottom: 15px;
+}
+
+p {
+  font-family: "Press Start 2P", cursive;
+  color: #5c473a;
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+app-caravana-view,
+app-productos-list {
+  display: block;
+  margin: 15px 0;
+}

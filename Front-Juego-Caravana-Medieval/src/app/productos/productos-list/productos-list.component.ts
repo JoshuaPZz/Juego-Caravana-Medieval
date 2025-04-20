@@ -4,6 +4,8 @@ import { ProductoDto } from '../../dto/producto-dto';
 import { ProductoService } from '../producto.service';
 import { CiudadProductoDto } from '../../dto/ciudad-producto-dto';
 import { CaravanaProductoDto } from '../../dto/caravana-producto-dto';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupComponent } from '../../popup/popup.component';
 
 @Component({
   selector: 'app-productos-list',
@@ -15,7 +17,10 @@ export class ProductosListComponent {
   ciudadProducto: CiudadProductoDto[] = [];
   productos : ProductoDto[] =[];
   caravanaProducto : CaravanaProductoDto | undefined;
-  constructor(private productoService: ProductoService) {}
+  constructor(
+    private productoService: ProductoService,
+    private dialog : MatDialog
+  ) {}
 
   @Input()
   set id(id : number) {
@@ -47,9 +52,23 @@ export class ProductosListComponent {
     }
     this.productoService.comprarProducto(caravanaProducto).subscribe({
       next: (productoComprado) => {
+        console.log('Producto comprado:', productoComprado);
+                this.dialog.open(PopupComponent, {
+                  width: '400px',
+                  data: {
+                    message: 'Producto comprado con éxito.',
+                  },
+                });
       },
       error: (error) => {
-        console.error('Error al procesar compra de producto', error);
+        console.error('Error al comprar el producto:', error);
+        // Abrir el pop-up con el mensaje de error
+        this.dialog.open(PopupComponent, {
+          width: '400px',
+          data: {
+            message: error.error?.errorString ?? 'Ocurrió un error inesperado.',
+          },
+        });
       }
     })
   }
