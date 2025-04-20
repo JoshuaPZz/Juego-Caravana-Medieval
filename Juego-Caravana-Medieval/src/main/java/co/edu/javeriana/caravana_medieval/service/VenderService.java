@@ -90,6 +90,7 @@ public class VenderService {
 
         double dineroGanado = precioVenta * ciudadProductoDTO.getStock();
         caravana.setDineroDisponible(caravana.getDineroDisponible() + dineroGanado);
+        caravana.setCapacidadMax(caravana.getCapacidadMax() + ciudadProductoDTO.getStock());
 
         // Guardar los cambios en la caravana
         caravanaRepository.save(caravana);
