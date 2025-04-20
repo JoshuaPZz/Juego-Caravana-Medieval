@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.javeriana.caravana_medieval.model.CiudadProducto;
+import co.edu.javeriana.caravana_medieval.dto.CiudadProductoDTO;
 import co.edu.javeriana.caravana_medieval.model.Caravana;
 import co.edu.javeriana.caravana_medieval.model.CaravanaProducto;
 import co.edu.javeriana.caravana_medieval.model.Ciudad;
@@ -28,6 +29,10 @@ public class VenderService {
     private ProductoRepository productoRepository;
     @Autowired
     private CaravanaProductoRepository caravanaProductoRepository;
+    @Autowired
+    private CaravanaService caravanaService;
+    @Autowired
+    private CiudadService ciudadService;
 
     public void vender(Long idCaravana, Long idProducto, int cantidad) {
         Caravana caravana = caravanaRepository.findById(idCaravana)
@@ -92,5 +97,69 @@ public class VenderService {
 
         // Guardar los cambios en la caravana
         caravanaRepository.save(caravana);
+    }
+
+    public CiudadProducto venderProducto(CiudadProductoDTO ciudadProductoDTO, Long idCaravana) {
+        Caravana caravana = caravanaService.getCaravanaById(idCaravana);
+
+        Producto producto = productoRepository.findById(ciudadProductoDTO.getIdProducto())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        
+        CaravanaProducto caravanaProducto = caravanaProductoRepository
+                .findByCaravanaIdAndProductoId(idCaravana, ciudadProductoDTO.getIdProducto())
+                .orElseThrow(() -> new RuntimeException("La caravana no tiene este producto"));
+
+        Ciudad ciudad = caravana.getCiudadActual();
+        
+        CiudadProducto ciudadProducto = ciudadProductoRepository
+                .findByCiudadIdAndProductoId(ciudad.getId(), ciudadProductoDTO.getIdProducto())
+                .orElse(null);
+
+        if(caravanaProducto.getCantidad() < ciudadProductoDTO.getStock()){
+            throw new IllegalArgumentException("La caravana no tiene la cantidad suficiente de productos para vender.");
+        }
+
+        if (ciudadProductoDTO.getStock() < 0){
+            throw new RuntimeException("No se pueden vender cantidades negativas");
+        }
+
+        double precioVenta;
+
+        if (ciudadProducto != null) {
+            // El producto ya existe en la ciudad
+            ciudadProducto.setStock(ciudadProducto.getStock() + ciudadProductoDTO.getStock());
+            ciudadProducto.setPrecioCompra(ciudadProducto.calcularPrecioCompra());
+            precioVenta = ciudadProducto.calcularPrecioVenta();
+            ciudadProducto.setPrecioVenta(precioVenta);            
+        } else {
+            // El producto no existe en la ciudad
+            ciudadProducto = new CiudadProducto();
+            ciudadProducto.setCiudad(ciudad);
+            ciudadProducto.setProducto(producto);
+            ciudadProducto.setStock(ciudadProductoDTO.getStock());
+            ciudadProducto.setFactorDemanda(1.0);
+            ciudadProducto.setFactorOferta(0.8);
+            ciudadProducto.setPrecioCompra(ciudadProducto.calcularPrecioCompra());
+            precioVenta = ciudadProducto.calcularPrecioVenta();
+            ciudadProducto.setPrecioVenta(precioVenta);
+        }
+
+        caravanaProducto.setCantidad(caravanaProducto.getCantidad() - ciudadProductoDTO.getStock());
+
+        if (caravanaProducto.getCantidad() == 0) {
+            caravana.getProductos().remove(caravanaProducto);
+            caravanaProductoRepository.delete(caravanaProducto);
+        } else {
+            caravanaProductoRepository.save(caravanaProducto);
+        }
+
+        double dineroGanado = precioVenta * ciudadProductoDTO.getStock();
+        caravana.setDineroDisponible(caravana.getDineroDisponible() + dineroGanado);
+
+        // Guardar los cambios en la caravana
+        caravanaRepository.save(caravana);
+
+        // TO DO
+        return ciudadProductoRepository.save(ciudadProducto);
     }
 }
