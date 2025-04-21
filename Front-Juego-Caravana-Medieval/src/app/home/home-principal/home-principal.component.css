@@ -60,3 +60,11 @@ button {
 button:hover {
   background-color: #5c473a;
 }
+
+.ciudad-imagen {
+  max-width: 40%;
+  height: auto;
+  margin-top: 10px;
+  border: 2px solid #8b5e3c;
+  border-radius: 8px;
+}

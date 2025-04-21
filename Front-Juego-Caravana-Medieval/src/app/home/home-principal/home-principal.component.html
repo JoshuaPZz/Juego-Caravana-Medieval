@@ -2,8 +2,14 @@
   <div>
     <app-caravana-view></app-caravana-view>
     <h1>Ciudad Actual</h1>
+
     <p>Nombre: {{ ciudadActual?.nombre }}</p>
     <p>Impuesto: {{ ciudadActual?.impuesto }}</p>
+    <img
+      [src]="getCiudadImagen()"
+      alt="Imagen de la ciudad"
+      class="ciudad-imagen"
+    />
     <h1>Fin del juego: 14d 0h 0m</h1>
   </div>
 
