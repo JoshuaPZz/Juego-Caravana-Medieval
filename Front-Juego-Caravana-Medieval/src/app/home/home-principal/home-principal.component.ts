@@ -51,9 +51,9 @@ export class HomePrincipalComponent {
     this.router.navigate(['/comprar/servicio']);
   }
   venderProducto(): void {
-    this.router.navigate(['']);
+    this.router.navigate(['/vender/producto']);
   }
   verInventario(): void {
-    this.router.navigate(['']);
+    this.router.navigate(['/list/caravana/productos']);
   }
 }
