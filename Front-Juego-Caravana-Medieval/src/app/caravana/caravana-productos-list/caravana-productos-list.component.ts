@@ -101,7 +101,7 @@ export class CaravanaProductosListComponent {
           },
         });
       },
-    });
+    }); 
   }
 
   navigateToInicio(): void {

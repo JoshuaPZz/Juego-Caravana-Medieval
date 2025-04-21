@@ -97,7 +97,7 @@ export class RutaDestinosComponent {
           });
           
           if (err.status === 400 && mensaje.toLowerCase().includes('tiempo se acabó')) {
-            this.router.navigate(['/inicio']);
+            this.router.navigate(['']);
           }
         },
       });

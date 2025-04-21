@@ -31,4 +31,10 @@ export class CaravanaService {
       `${environment.serverUrl}/caravana/${id}/caravanaproductos`
     );
   }
+
+  nuevoJuego(): Observable<any>{
+    return this.httpClient.put<any>(
+      `${environment.serverUrl}/caravana/nuevojuego`, null
+    );
+  }
 }

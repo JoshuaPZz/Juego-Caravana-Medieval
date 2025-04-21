@@ -4,7 +4,8 @@
 
 <div class="home-container">
   <h1 class="home-title">Welcome to Dark Souls: Caravana Edition</h1>
-  <button class="play-button" [routerLink]="['/inicio']">PLAY</button>
+  <button class="play-button" (click)="startGame()">NUEVO JUEGO</button>
+  <button class="play-button" (click)="continuar()">JUGAR</button>
   <p class="game-description">
     Un juego multijugador. Es un juego de estrategia y comercio ambientado en la
     edad media. El jugador es parte de una caravana de comercio que viaja por
