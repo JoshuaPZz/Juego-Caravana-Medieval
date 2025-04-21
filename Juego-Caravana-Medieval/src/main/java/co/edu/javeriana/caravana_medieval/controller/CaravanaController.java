@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +25,7 @@ public class CaravanaController {
     @GetMapping("/{id}")
     public CaravanaDTO getCaravanaById(@PathVariable Long id) {
         Caravana caravana = caravanaService.getCaravanaById(id);
-        CaravanaMapper caravanaMapper = new CaravanaMapper();
-        CaravanaDTO caravanaDTO = caravanaMapper.toDTO(caravana);
+        CaravanaDTO caravanaDTO = CaravanaMapper.toDTO(caravana);
         return caravanaDTO;
     }
 
@@ -38,6 +38,11 @@ public class CaravanaController {
     @GetMapping("/{id}/caravanaproductos")
     public List<CaravanaProductoDTO> getCaravanaProductoDTOs(@PathVariable Long id){
         return caravanaService.getCaravanaProductoDTOs(id);
+    }
+
+    @PutMapping("/nuevojuego")
+    public CaravanaDTO nuevoJuego(){
+        return caravanaService.reiniciarCaravana();
     }
 
 }

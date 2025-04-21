@@ -1,5 +1,6 @@
 package co.edu.javeriana.caravana_medieval.service;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Service;
 import co.edu.javeriana.caravana_medieval.repository.CaravanaProductoRepository;
 import co.edu.javeriana.caravana_medieval.repository.CaravanaRepository;
 import co.edu.javeriana.caravana_medieval.repository.CiudadRepository;
+import co.edu.javeriana.caravana_medieval.dto.CaravanaDTO;
 import co.edu.javeriana.caravana_medieval.dto.CaravanaProductoDTO;
 import co.edu.javeriana.caravana_medieval.dto.ProductoDTO;
+import co.edu.javeriana.caravana_medieval.mapper.CaravanaMapper;
 import co.edu.javeriana.caravana_medieval.mapper.CaravanaProductoMapper;
 import co.edu.javeriana.caravana_medieval.mapper.ProductoMapper;
 import co.edu.javeriana.caravana_medieval.model.Caravana;
@@ -56,5 +59,20 @@ public class CaravanaService {
                 .stream()
                 .map(CaravanaProductoMapper::toDTO)
                 .toList();
+    }
+
+    public CaravanaDTO reiniciarCaravana(){
+        // ESTA FUNCION ES PROVICIONAL MIENTRAS NO TENEMOS AUTENTICACION DE USUARIOS
+        // POR ESO SOLO JUGAMOS EN LA CARAVANA 
+        Caravana caravana = getCaravanaById(Long.valueOf(1));
+        caravana.setCapacidadMax(100);
+        caravana.setDineroDisponible(600);
+        caravana.setHoraViaje(java.time.LocalTime.of(8, 0));
+        caravana.setPuntosVida(100);
+        caravana.setTieneGuardias(false);
+        caravana.setVelocidad(10);
+        caravana.setTiempoTranscurrido(Duration.ofSeconds(0));
+        CaravanaDTO caravanaDTO = CaravanaMapper.toDTO(caravanaRepository.save(caravana));
+        return caravanaDTO;
     }
 }
