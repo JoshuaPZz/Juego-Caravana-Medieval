@@ -48,7 +48,7 @@ export class ViajarCiudadComponent implements OnInit {
     });
   }
 
-  back(): void {
-    //this.router.navigate(['/ciudades/list']);
+  navigateToInicio(): void {
+    this.router.navigate(['/inicio']);
   }
 }

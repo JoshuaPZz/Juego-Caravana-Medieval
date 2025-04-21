@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CaravanaViewComponent } from '../../caravana/caravana-view/caravana-view.component';
 import { CommonModule } from '@angular/common';
 import { ProductoService } from '../producto.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ViajarService } from '../../viaje/viajar.service';
 import { PopupComponent } from '../../popup/popup.component';
@@ -13,7 +13,11 @@ import { CaravanaProductosListComponent } from '../../caravana/caravana-producto
 
 @Component({
   selector: 'app-vender-productos',
-  imports: [CaravanaViewComponent, CommonModule, CaravanaProductosListComponent],
+  imports: [
+    CaravanaViewComponent,
+    CommonModule,
+    CaravanaProductosListComponent,
+  ],
   templateUrl: './productos-vender.component.html',
   styleUrl: './productos-vender.component.css',
 })
@@ -21,7 +25,7 @@ export class ProductosVenderComponent implements OnInit {
   ciudadActual!: CiudadDto;
   caravanaActual!: CaravanaDto;
   constructor(
-    private productoService: ProductoService,
+    private router: Router,
     private caravanaService: CaravanaService,
     private viajarService: ViajarService,
     private route: ActivatedRoute,
@@ -46,7 +50,7 @@ export class ProductosVenderComponent implements OnInit {
             message: error.error?.errorString ?? 'Ocurrió un error inesperado.',
           },
         });
-      }
+      },
     });
     this.caravanaService.caravanaActual(idCaravana).subscribe({
       next: (caravana) => {
@@ -62,7 +66,11 @@ export class ProductosVenderComponent implements OnInit {
             message: error.error?.errorString ?? 'Ocurrió un error inesperado.',
           },
         });
-      }
-    })
+      },
+    });
+  }
+
+  navigateToInicio(): void {
+    this.router.navigate(['/inicio']);
   }
 }

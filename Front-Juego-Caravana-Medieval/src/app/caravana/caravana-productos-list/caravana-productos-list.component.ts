@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ProductoDto } from '../../dto/producto-dto';
 import { CaravanaService } from '../caravana.service';
@@ -24,6 +24,7 @@ export class CaravanaProductosListComponent {
   ciudadActual!: CiudadDto;
   caravanaProductos: CaravanaProductoDto[] = [];
   constructor(
+    private router: Router,
     private caravanaService: CaravanaService,
     private route: ActivatedRoute,
     private viajarService: ViajarService,
@@ -49,8 +50,8 @@ export class CaravanaProductosListComponent {
       },
       error: (error) => {
         console.error('Error al obtener los caravana productos: ', error);
-      }
-    })
+      },
+    });
     this.viajarService.ciudadActual(caravanaId).subscribe({
       next: (ciudad) => {
         this.ciudadActual = ciudad;
@@ -101,5 +102,9 @@ export class CaravanaProductosListComponent {
         });
       },
     });
+  }
+
+  navigateToInicio(): void {
+    this.router.navigate(['/inicio']);
   }
 }

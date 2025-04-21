@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CiudadDto } from '../../dto/ciudad-dto';
 import { ViajarService } from '../../viaje/viajar.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PopupComponent } from '../../popup/popup.component';
 import { ServicioListComponent } from '../servicio-list/servicio-list.component';
 
@@ -18,6 +18,7 @@ export class ServicioComprarComponent implements OnInit {
   ciudadActual!: CiudadDto;
 
   constructor(
+    private router: Router,
     private viajarService: ViajarService,
     private route: ActivatedRoute,
     private dialog: MatDialog
@@ -42,5 +43,9 @@ export class ServicioComprarComponent implements OnInit {
         });
       },
     });
+  }
+
+  navigateToInicio(): void {
+    this.router.navigate(['/inicio']);
   }
 }

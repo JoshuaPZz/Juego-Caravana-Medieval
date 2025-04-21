@@ -1,4 +1,9 @@
 <div class="container">
+  <div class="navigation">
+    <button (click)="navigateToInicio()" class="btn btn-primary">
+      Ir a Inicio
+    </button>
+  </div>
   <div class="current-city">
     <h1>Vender Producto</h1>
     <app-caravana-view></app-caravana-view>
@@ -10,7 +15,9 @@
   <div class="routes">
     <h2>Productos que vender</h2>
     <ng-container *ngIf="caravanaActual?.id as caravanaId">
-      <app-caravana-productos-list [id]="caravanaId"></app-caravana-productos-list>
+      <app-caravana-productos-list
+        [id]="caravanaId"
+      ></app-caravana-productos-list>
     </ng-container>
   </div>
 </div>

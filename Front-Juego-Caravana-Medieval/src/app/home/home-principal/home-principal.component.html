@@ -1,15 +1,17 @@
 <div class="container">
-    <div>
-        <app-caravana-view></app-caravana-view>
-    </div>
+  <div>
+    <app-caravana-view></app-caravana-view>
+    <h1>Ciudad Actual</h1>
+    <p>Nombre: {{ ciudadActual?.nombre }}</p>
+    <p>Impuesto: {{ ciudadActual?.impuesto }}</p>
+    <h1>Fin del juego: 14d 0h 0m</h1>
+  </div>
 
-    <div>
-
-        <button (click) = "viajar()">Viajar</button>
-        <button (click) = "comprarProductos()">Comprar Producto</button>
-        <button (click) = "comprarServicios()">Comprar Servicio</button>
-        <button (click) = "venderProducto()">Vender Producto</button>
-        <button (click) = "verInventario()">Ver Inventario de Productos</button>
-
-    </div>
+  <div>
+    <button (click)="viajar()">Viajar</button>
+    <button (click)="comprarProductos()">Comprar Producto</button>
+    <button (click)="comprarServicios()">Comprar Servicio</button>
+    <button (click)="venderProducto()">Vender Producto</button>
+    <button (click)="verInventario()">Ver Inventario de Productos</button>
+  </div>
 </div>

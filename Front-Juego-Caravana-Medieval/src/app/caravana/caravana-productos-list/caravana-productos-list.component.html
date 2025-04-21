@@ -1,4 +1,9 @@
 <div>
+  <div class="navigation">
+    <button (click)="navigateToInicio()" class="btn btn-primary">
+      Ir a Inicio
+    </button>
+  </div>
   <h1>Products list</h1>
   <table>
     <thead>
@@ -19,9 +24,13 @@
         <td>{{ producto.nombre }}</td>
         <td>{{ producto.tipo }}</td>
         <td>{{ producto.descripcion }}</td>
-        <td>{{ caravanaProductos[$index].cantidad}}</td>
-        <td><input type="text" #cantidad></td>
-        <td><button (click)="venderProducto($index, cantidad.value)">Vender</button></td>
+        <td>{{ caravanaProductos[$index].cantidad }}</td>
+        <td><input type="text" #cantidad /></td>
+        <td>
+          <button (click)="venderProducto($index, cantidad.value)">
+            Vender
+          </button>
+        </td>
       </tr>
       }
     </tbody>

@@ -36,3 +36,35 @@ app-productos-list {
   display: block;
   margin: 15px 0;
 }
+
+.navigation {
+  text-align: left;
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  background-color: #faf3e0;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.navigation .btn {
+  background-color: #8b5e3c;
+  color: #faf3e0;
+  border: 2px solid #5c473a;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-family: "Press Start 2P", cursive;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.navigation .btn:hover {
+  background-color: #5c473a;
+  transform: scale(1.05);
+}
+
+.navigation .btn:active {
+  background-color: #3e2c20;
+  transform: scale(0.95);
+}
