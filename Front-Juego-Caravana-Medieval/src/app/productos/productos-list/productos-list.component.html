@@ -1,0 +1,32 @@
+
+<div>
+    <h1>Products list</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>nombre</th>
+                <th>tipo</th>
+                <th>descripcion</th>
+                <th>stock</th>
+                <th>precio</th>
+                <th>cantidad</th>
+                <th>comprar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (producto of productos; track $index) {
+            <tr>
+                <td>{{producto.id}}</td>
+                <td>{{producto.nombre}}</td>
+                <td>{{producto.tipo}}</td>
+                <td>{{producto.descripcion}}</td>
+                <td>{{ciudadProducto[$index].stock}}</td>
+                <td>{{ciudadProducto[$index].precioCompra}}</td>
+                <td><input type="text" #cantidad></td>
+                <td><button (click)="comprarProducto($index, cantidad.value)">Comprar</button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

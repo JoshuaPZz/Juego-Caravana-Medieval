@@ -1,0 +1,13 @@
+@base_url = http://localhost:8088
+
+###
+PUT {{base_url}}/comprar/servicios/1/1
+
+###
+PUT {{base_url}}/comprar/servicios/2/1
+
+###
+PUT {{base_url}}/comprar/servicios/3/1
+
+###
+PUT {{base_url}}/comprar/servicios/4/1

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import co.edu.javeriana.caravana_medieval.mapper.CiudadProductoMapper;
 import co.edu.javeriana.caravana_medieval.mapper.ProductoMapper;
+import co.edu.javeriana.caravana_medieval.model.CiudadProducto;
 import co.edu.javeriana.caravana_medieval.model.Producto;
 import co.edu.javeriana.caravana_medieval.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +28,20 @@ public class ProductoService {
                 .map(ProductoMapper::toDTO);
     }
 
-    public void guardarProducto(ProductoDTO productoDTO) {
+    public Producto createProducto(ProductoDTO productoDTO) {
+        productoDTO.setId(null);
         Producto producto = ProductoMapper.toEntity(productoDTO);
-        productoRepository.save(producto);
-
+        return productoRepository.save(producto);
     }
+
+    public Producto updateProducto(ProductoDTO productoDTO) {
+        Producto producto = ProductoMapper.toEntity(productoDTO);
+        return productoRepository.save(producto);
+    }
+
+    public void deleteProducto(Long productoId) {
+        productoRepository.deleteById(productoId);
+    } 
     public List<ProductoDTO> listaIdsToProducto (List<Long> productosId) {
         List<ProductoDTO> productosDTO = new ArrayList<ProductoDTO>();
         for(Long id : productosId) {

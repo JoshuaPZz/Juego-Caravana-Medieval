@@ -1,5 +1,7 @@
 package co.edu.javeriana.caravana_medieval.model;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,21 +23,34 @@ public class Caravana {
     @OneToMany(mappedBy = "caravana", cascade = CascadeType.ALL)
     private List<ServicioCompra> compras = new ArrayList<>();
 
+    @ManyToOne
+    private Ciudad ciudadActual;
+
     private String nombre;
     private int velocidad;
     private int capacidadMax;
-    private int dineroDisponible;
-    private int puntosVida;
+    private double dineroDisponible;
+    private int puntosVida; 
+    private LocalTime horaViaje;
+    private boolean tieneGuardias;
+
+    @Convert(converter = co.edu.javeriana.caravana_medieval.converter.DurationConverter.class)
+    private Duration tiempoTranscurrido;
 
     public Caravana() {
     }
 
-    public Caravana(String nombre, int velocidad, int capacidadMax, int dineroDisponible, int puntosVida) {
+    public Caravana(String nombre, int velocidad, int capacidadMax, double dineroDisponible, int puntosVida,
+                    Ciudad ciudadActual, LocalTime horaViaje, boolean tieneGuardias) {
         this.nombre = nombre;
         this.velocidad = velocidad;
         this.capacidadMax = capacidadMax;
         this.dineroDisponible = dineroDisponible;
         this.puntosVida = puntosVida;
+        this.ciudadActual = ciudadActual;
+        this.horaViaje = horaViaje;
+        this.tieneGuardias = tieneGuardias;
+        this.tiempoTranscurrido = Duration.ZERO;
     }
 
     public Long getId() {
@@ -94,11 +109,11 @@ public class Caravana {
         this.capacidadMax = capacidadMax;
     }
 
-    public int getDineroDisponible() {
+    public double getDineroDisponible() {
         return dineroDisponible;
     }
 
-    public void setDineroDisponible(int dineroDisponible) {
+    public void setDineroDisponible(double dineroDisponible) {
         this.dineroDisponible = dineroDisponible;
     }
 
@@ -108,5 +123,37 @@ public class Caravana {
 
     public void setPuntosVida(int puntosVida) {
         this.puntosVida = puntosVida;
+    }
+
+    public Ciudad getCiudadActual() {
+        return ciudadActual;
+    }
+
+    public void setCiudadActual(Ciudad ciudadActual) {
+        this.ciudadActual = ciudadActual;
+    }
+
+    public LocalTime getHoraViaje() {
+        return horaViaje;
+    }
+
+    public void setHoraViaje(LocalTime horaViaje) {
+        this.horaViaje = horaViaje;
+    }
+
+    public boolean isTieneGuardias() {
+        return tieneGuardias;
+    }
+
+    public void setTieneGuardias(boolean tieneGuardias) {
+        this.tieneGuardias = tieneGuardias;
+    }
+
+    public Duration getTiempoTranscurrido() {
+        return tiempoTranscurrido;
+    }
+
+    public void setTiempoTranscurrido(Duration tiempoTranscurrido) {
+        this.tiempoTranscurrido = tiempoTranscurrido;
     }
 }

@@ -1,0 +1,28 @@
+@base_url = http://localhost:8088
+
+###
+GET {{base_url}}/productoCiudad/1/12
+
+###
+GET {{base_url}}/productoCiudad/list/3
+
+###
+POST {{base_url}}/productoCiudad
+Content-Type: application/json
+
+{
+  "idCiudad": 2,
+  "idProducto": 12,
+  "nombreProducto": "Vitafer #12",
+  "factorDemanda": 1.4170142744778582,
+  "factorOferta": 0.7549270904406014,
+  "precioCompra": 0.029035657324638513,
+  "precioVenta": 0.05450054901837916,
+  "stock": 25
+}
+
+###
+DELETE {{base_url}}/productoCiudad/2
+
+
+

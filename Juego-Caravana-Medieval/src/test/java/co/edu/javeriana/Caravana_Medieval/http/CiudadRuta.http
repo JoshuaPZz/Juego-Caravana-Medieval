@@ -1,0 +1,10 @@
+@base_url = http://localhost:8088/ciudad
+
+###
+GET {{base_url}}/1/ciudadesorigen
+
+###
+GET {{base_url}}/1/rutadestino
+
+
+

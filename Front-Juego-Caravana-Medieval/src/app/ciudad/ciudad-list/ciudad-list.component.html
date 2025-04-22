@@ -1,0 +1,22 @@
+<h1>Ciudades list</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Impuesto</th>
+      <th>View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ciudad of ciudades">
+      <td>{{ ciudad.nombre }}</td>
+      <td>{{ ciudad.impuesto }}</td>
+      <td>
+        <a class="view-button" [routerLink]="['/ciudades/view', ciudad.id]"
+          >View</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>

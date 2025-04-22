@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="navigation">
+    <button (click)="navigateToInicio()" class="btn btn-primary">
+      Ir a Inicio
+    </button>
+  </div>
+
+  <div class="current-city">
+    <h1>Viajar a Ciudad</h1>
+    <app-caravana-view></app-caravana-view>
+    <h2>Ciudad Actual</h2>
+    <p>Nombre: {{ ciudadActual?.nombre }}</p>
+    <p>Impuesto: {{ ciudadActual?.impuesto }}</p>
+    <h1>Fin del juego: 5d 0h 0m</h1>
+  </div>
+
+  <div class="routes">
+    <h2>Ciudades a ir</h2>
+    <ng-container *ngIf="ciudadActual?.id as ciudadId">
+      <app-ruta-destinos [id]="ciudadId"></app-ruta-destinos>
+    </ng-container>
+  </div>
+</div>

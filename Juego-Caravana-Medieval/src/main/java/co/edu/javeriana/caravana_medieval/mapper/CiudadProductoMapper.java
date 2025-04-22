@@ -24,7 +24,8 @@ public class CiudadProductoMapper {
     }
     public static CiudadProducto toEntity (CiudadProductoDTO ciudadProductoDTO) {
         CiudadProducto ciudadProducto = new CiudadProducto();
-        ciudadProducto.setId(ciudadProductoDTO.getId());
+        if(ciudadProductoDTO.getId() != null) 
+            ciudadProducto.setId(ciudadProductoDTO.getId());
         ciudadProducto.setFactorDemanda(ciudadProductoDTO.getFactorDemanda());
         ciudadProducto.setFactorOferta(ciudadProductoDTO.getFactorOferta());
         ciudadProducto.setPrecioCompra(ciudadProductoDTO.getPrecioCompra());

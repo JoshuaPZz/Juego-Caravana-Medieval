@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="navigation">
+    <button (click)="navigateToInicio()" class="btn btn-primary">
+      Ir a Inicio
+    </button>
+  </div>
+  <div class="current-city">
+    <h1>Comprar a Servicio</h1>
+    <app-caravana-view></app-caravana-view>
+    <h2>Ciudad Actual</h2>
+    <p>Nombre: {{ ciudadActual?.nombre }}</p>
+    <p>Impuesto: {{ ciudadActual?.impuesto }}</p>
+  </div>
+
+  <div class="routes">
+    <h2>Servicios que Comprar</h2>
+    <ng-container *ngIf="ciudadActual?.id as ciudadId">
+      <app-servicio-list [id]="ciudadId"></app-servicio-list>
+    </ng-container>
+  </div>
+</div>
