@@ -54,7 +54,7 @@ export class HomePrincipalComponent {
     this.router.navigate(['/vender/producto']);
   }
   verInventario(): void {
-    this.router.navigate(['/list/caravana/productos']);
+    this.router.navigate(['inventario']);
   }
 
   getCiudadImagen(): string {

@@ -10,14 +10,16 @@ import { CiudadDto } from '../../dto/ciudad-dto';
 import { CaravanaService } from '../../caravana/caravana.service';
 import { CaravanaDto } from '../../dto/caravana-dto';
 import { CaravanaProductosListComponent } from '../../caravana/caravana-productos-list/caravana-productos-list.component';
+import { CaravanaInventarioComponent } from "../../caravana/caravana-inventario/caravana-inventario.component";
 
 @Component({
   selector: 'app-vender-productos',
   imports: [
     CaravanaViewComponent,
     CommonModule,
-    CaravanaProductosListComponent,
-  ],
+    CaravanaInventarioComponent,
+    CaravanaProductosListComponent
+],
   templateUrl: './productos-vender.component.html',
   styleUrl: './productos-vender.component.css',
 })

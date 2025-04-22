@@ -15,7 +15,7 @@ import { CaravanaProductoDto } from '../../dto/caravana-producto-dto';
 
 @Component({
   selector: 'app-caravana-productos-list',
-  imports: [CommonModule, RouterModule, CaravanaViewComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './caravana-productos-list.component.html',
   styleUrl: './caravana-productos-list.component.css',
 })
@@ -104,7 +104,5 @@ export class CaravanaProductosListComponent {
     }); 
   }
 
-  navigateToInicio(): void {
-    this.router.navigate(['/inicio']);
-  }
+  
 }

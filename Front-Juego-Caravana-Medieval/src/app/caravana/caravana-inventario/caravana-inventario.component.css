@@ -1,0 +1,85 @@
+div {
+    font-family: "Press Start 2P", cursive;
+    color: #5c473a;
+    background-color: #faf3e0;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    color: #8b5e3c;
+    margin-bottom: 2rem;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem auto;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+  
+  th,
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid #d4c7b8;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #8b5e3c;
+    color: #faf3e0;
+    font-weight: 600;
+  }
+  
+  tr:hover {
+    background-color: #f2e8d5;
+  }
+  
+  button {
+    font-family: "Press Start 2P", cursive;
+    background-color: #8b5e3c;
+    color: #faf3e0;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #5c473a;
+  }
+  
+  .navigation {
+    text-align: left;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background-color: #faf3e0;
+    z-index: 1000;
+    padding: 10px;
+  }
+  
+  .navigation .btn {
+    background-color: #8b5e3c;
+    color: #faf3e0;
+    border: 2px solid #5c473a;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-family: "Press Start 2P", cursive;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .navigation .btn:hover {
+    background-color: #5c473a;
+    transform: scale(1.05);
+  }
+  
+  .navigation .btn:active {
+    background-color: #3e2c20;
+    transform: scale(0.95);
+  }
+  
