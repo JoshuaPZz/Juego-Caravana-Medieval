@@ -86,7 +86,7 @@ public class ViajeService {
         caravana.setPuntosVida(caravana.getPuntosVida() - dano);
         caravana.setHoraViaje(caravana.getHoraViaje().plusHours(tiempoViaje.toHours()));
         caravana.setTiempoTranscurrido(caravana.getTiempoTranscurrido().plus(tiempoViaje));
-        if(caravana.getTiempoTranscurrido().compareTo(Duration.ofDays(14)) > 0){
+        if(caravana.getTiempoTranscurrido().compareTo(Duration.ofDays(5)) > 0){
             throw new IllegalArgumentException("El tiempo se acabó.");
 
         }

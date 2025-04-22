@@ -168,8 +168,12 @@ public class ComprarService {
             nuevo.setCaravana(caravana);
             return nuevo;
         });
+        
         caravanaProducto.setCantidad(caravanaProducto.getCantidad() + caravanaProductoDTO.getCantidad());
         caravana.getProductos().add(caravanaProducto);
+        if((ciudadProductoDTO.getPrecioCompra())*caravanaProductoDTO.getCantidad() < 0){
+            throw new IllegalArgumentException("No te alcanza para comprar esta cantidad del producto");
+        }
         caravana.setDineroDisponible((int) (caravana.getDineroDisponible() - (ciudadProductoDTO.getPrecioCompra())*caravanaProductoDTO.getCantidad()));
         ciudadProductoDTO.setStock(ciudadProductoDTO.getStock() - caravanaProductoDTO.getCantidad());
         if (ciudadProductoDTO.getStock() == 0) {
