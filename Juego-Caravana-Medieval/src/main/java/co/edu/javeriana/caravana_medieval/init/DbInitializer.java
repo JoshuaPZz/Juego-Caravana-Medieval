@@ -96,12 +96,18 @@ public class DbInitializer implements CommandLineRunner {
                     productosSeleccionados.add(producto);
                 }
                 for (Producto producto : productosSeleccionados) {
-                    double factorDemanda = 0.5 + (random.nextDouble() * 2.0); // Entre 0.5 y 2.5
-                    double factorOferta = 0.5 + (random.nextDouble() * 2.0); // Entre 0.5 y 2.5
+                    double factorDemanda = 0.5 + (random.nextDouble() * 2.0); 
+                    double factorOferta = 0.5 + (random.nextDouble() * 2.0); 
                     int stock = random.nextInt(100) + 1;
+                    double precioBase = 5.0 + random.nextDouble() * 25.0; 
+                    double precioCompra = precioBase * factorOferta;
+                    double precioVenta = precioBase * factorDemanda;
+                    precioCompra = Math.max(5.0, precioCompra);
+                    precioVenta = Math.max(5.0, precioVenta);
 
-                    CiudadProducto ciudadProducto = new CiudadProducto(ciudad, producto, factorDemanda, factorOferta,
-                            stock);
+                    CiudadProducto ciudadProducto = new CiudadProducto(ciudad, producto, factorDemanda, factorOferta, stock);
+                    ciudadProducto.setPrecioCompra(precioCompra);
+                    ciudadProducto.setPrecioVenta(precioVenta);
                     ciudadProductoRepository.save(ciudadProducto);
                 }
             }
