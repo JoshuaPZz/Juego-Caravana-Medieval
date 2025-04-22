@@ -170,7 +170,7 @@ public class ComprarService {
         });
         caravanaProducto.setCantidad(caravanaProducto.getCantidad() + caravanaProductoDTO.getCantidad());
         caravana.getProductos().add(caravanaProducto);
-        caravana.setDineroDisponible((int) (caravana.getDineroDisponible() - ciudadProductoDTO.getPrecioCompra()));
+        caravana.setDineroDisponible((int) (caravana.getDineroDisponible() - (ciudadProductoDTO.getPrecioCompra())*caravanaProductoDTO.getCantidad()));
         ciudadProductoDTO.setStock(ciudadProductoDTO.getStock() - caravanaProductoDTO.getCantidad());
         if (ciudadProductoDTO.getStock() == 0) {
             ciudadProductoRepository.delete(ciudadProductoRepository.getReferenceById(ciudadProductoDTO.getId()));
