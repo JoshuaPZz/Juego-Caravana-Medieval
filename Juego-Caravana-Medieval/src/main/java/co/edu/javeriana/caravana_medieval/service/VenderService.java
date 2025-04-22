@@ -58,25 +58,48 @@ public class VenderService {
             throw new RuntimeException("No se pueden vender cantidades negativas");
         }
 
-        double precioVenta;
+        double precioVentaCalculado;
 
         if (ciudadProducto != null) {
             // El producto ya existe en la ciudad
             ciudadProducto.setStock(ciudadProducto.getStock() + ciudadProductoDTO.getStock());
-            ciudadProducto.setPrecioCompra(ciudadProducto.calcularPrecioCompra());
-            precioVenta = ciudadProducto.calcularPrecioVenta();
-            ciudadProducto.setPrecioVenta(precioVenta);            
+
+            double nuevoPrecioCompra = ciudadProducto.calcularPrecioCompra();
+            double nuevoPrecioVenta = ciudadProducto.calcularPrecioVenta();
+
+            nuevoPrecioCompra = Math.max(5.0, nuevoPrecioCompra);
+            nuevoPrecioVenta = Math.max(5.0, nuevoPrecioVenta);
+
+            nuevoPrecioCompra = (double) (long) nuevoPrecioCompra;
+            nuevoPrecioVenta = (double) (long) nuevoPrecioVenta;
+
+            ciudadProducto.setPrecioCompra(nuevoPrecioCompra);
+            ciudadProducto.setPrecioVenta(nuevoPrecioVenta);
+
+            precioVentaCalculado = nuevoPrecioVenta;        
         } else {
             // El producto no existe en la ciudad
             ciudadProducto = new CiudadProducto();
             ciudadProducto.setCiudad(ciudad);
             ciudadProducto.setProducto(producto);
             ciudadProducto.setStock(ciudadProductoDTO.getStock());
+
             ciudadProducto.setFactorDemanda(1.0);
             ciudadProducto.setFactorOferta(0.8);
-            ciudadProducto.setPrecioCompra(ciudadProducto.calcularPrecioCompra());
-            precioVenta = ciudadProducto.calcularPrecioVenta();
-            ciudadProducto.setPrecioVenta(precioVenta);
+
+            double precioCompraInicial = ciudadProducto.calcularPrecioCompra();
+            double precioVentaInicial = ciudadProducto.calcularPrecioVenta();
+
+            precioCompraInicial = Math.max(5.0, precioCompraInicial);
+            precioVentaInicial = Math.max(5.0, precioVentaInicial);
+
+            precioCompraInicial = (double) (long) precioCompraInicial;
+            precioVentaInicial = (double) (long) precioVentaInicial;
+
+            ciudadProducto.setPrecioCompra(precioCompraInicial);
+            ciudadProducto.setPrecioVenta(precioVentaInicial);
+
+            precioVentaCalculado = precioVentaInicial;
         }
 
         caravanaProducto.setCantidad(caravanaProducto.getCantidad() - ciudadProductoDTO.getStock());
@@ -88,7 +111,7 @@ public class VenderService {
             caravanaProductoRepository.save(caravanaProducto);
         }
 
-        double dineroGanado = precioVenta * ciudadProductoDTO.getStock();
+        double dineroGanado = precioVentaCalculado * ciudadProductoDTO.getStock();
         caravana.setDineroDisponible(caravana.getDineroDisponible() + dineroGanado);
         caravana.setCapacidadMax(caravana.getCapacidadMax() + ciudadProductoDTO.getStock());
 
