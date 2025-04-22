@@ -99,7 +99,7 @@ public class DbInitializer implements CommandLineRunner {
                     double factorDemanda = 0.5 + (random.nextDouble() * 2.0); 
                     double factorOferta = 0.5 + (random.nextDouble() * 2.0); 
                     int stock = random.nextInt(100) + 1;
-                    double precioBase = 5.0 + random.nextDouble() * 25.0; 
+                    double precioBase = 5.0 + random.nextDouble() * 10.0; 
                     double precioCompra = precioBase * factorOferta;
                     double precioVenta = precioBase * factorDemanda;
                     precioCompra = Math.max(5.0, precioCompra);
@@ -229,12 +229,13 @@ public class DbInitializer implements CommandLineRunner {
      * Cuanto más larga sea la ruta, más daño causará.
      */
     private int calcularDanoRuta(int longitud, List<Caravana> caravanas) {
-        int vidaMaximaCaravana = caravanas.stream().mapToInt(Caravana::getPuntosVida).max().orElse(100);
-        int longitudAjustada = Math.max(10, longitud);
-        double factorDano = 140.0 / longitudAjustada; 
-        factorDano = Math.min(5.0, factorDano);
-        return (int) (factorDano * vidaMaximaCaravana * 0.3);
-    }
+    int vidaMaximaCaravana = caravanas.stream().mapToInt(Caravana::getPuntosVida).max().orElse(100);
+    int danoMaximoPermitido = vidaMaximaCaravana / 2; 
+    int longitudAjustada = Math.max(10, longitud);
+    double factorLongitud = 140.0 / longitudAjustada;
+    factorLongitud = Math.min(1.0, factorLongitud / 5.0); 
+    return (int) (danoMaximoPermitido * factorLongitud);
+}
 }
 
 //Math.max es un método estático de la clase Math en Java. 
