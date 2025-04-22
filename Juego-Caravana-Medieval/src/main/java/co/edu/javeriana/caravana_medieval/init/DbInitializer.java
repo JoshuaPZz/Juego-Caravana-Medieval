@@ -185,7 +185,7 @@ public class DbInitializer implements CommandLineRunner {
                     destinosUnicos.add(destino);
 
                     // Crear entre 1 y 2 rutas para este par
-                    int numRutas = 1 + random.nextInt(2); // 1 o 2
+                    int numRutas = 1 + random.nextInt(3); // 1 o 3
                     for (int i = 0; i < numRutas; i++) {
                         int longitud = 10 + random.nextInt(131);
                         int dano = calcularDanoRuta(longitud, caravanas);
@@ -230,7 +230,12 @@ public class DbInitializer implements CommandLineRunner {
      */
     private int calcularDanoRuta(int longitud, List<Caravana> caravanas) {
         int vidaMaximaCaravana = caravanas.stream().mapToInt(Caravana::getPuntosVida).max().orElse(100);
-        double factorDano = (double) longitud / 140; // Escala el daño basado en la longitud (máximo 140)
-        return (int) (factorDano * vidaMaximaCaravana * 0.3); // Máximo 30% de la vida de la caravana
+        int longitudAjustada = Math.max(10, longitud);
+        double factorDano = 140.0 / longitudAjustada; 
+        factorDano = Math.min(5.0, factorDano);
+        return (int) (factorDano * vidaMaximaCaravana * 0.3);
     }
 }
+
+//Math.max es un método estático de la clase Math en Java. 
+//Este método toma dos valores como argumentos y devuelve el mayor de los dos.
