@@ -53,7 +53,7 @@ public class ComprarService {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    public void comprarServicio(Long idCarvana, Long idServicio) {
+    public ServicioCompra comprarServicio(Long idCarvana, Long idServicio) {
 
         Caravana caravana = caravanaService.getCaravanaById(idCarvana);
         Ciudad ciudad = caravanaService.getCiudadActual(idCarvana);
@@ -80,14 +80,14 @@ public class ComprarService {
 
         // 3. Realizar la compra y actualizar el estado de la caravana y el servicio
 
-        if (servicio.getNombre() == "Reparar") {
+        if (servicio.getId() == 1) {
             if (caravana.getPuntosVida() != 100) {
                 caravana.setPuntosVida(100);
             } else {
                 throw new IllegalArgumentException(
                         "La caravana ya tiene los puntos de vida al máximo.");
             }
-        } else if (servicio.getNombre() == "Mejorar capacidad") {
+        } else if (servicio.getId() == 2) {
             if (caravana.getCapacidadMax() < 400) {
                 if ((caravana.getCapacidadMax() + 20) <= 400) {
                     caravana.setCapacidadMax(caravana.getCapacidadMax() + 20);
@@ -98,14 +98,14 @@ public class ComprarService {
                 throw new IllegalArgumentException(
                         "La caravana ya tiene la capacidad al máximo (400).");
             }
-        } else if (servicio.getNombre() == "Mejorar velocidad") {
+        } else if (servicio.getId() == 3) {
             if (caravana.getVelocidad() < 15) {
                 caravana.setVelocidad(caravana.getVelocidad() + 1);
             } else {
                 throw new IllegalArgumentException(
                         "La caravana ya alcanzó su máximo de velocidad (15).");
             }
-        } else if (servicio.getNombre() == "Guardias") {
+        } else if (servicio.getId() == 4) {
             if (caravana.isTieneGuardias()) {
                 throw new IllegalArgumentException(
                         "La caravana ya tiene guardias, este servicio no es acumulable.");
@@ -130,7 +130,7 @@ public class ComprarService {
         // Guardar en los repositorios
         caravanaRepository.save(caravana);
         ciudadRepository.save(ciudad);
-        servicioCompraRepository.save(servicioCompra);
+        return servicioCompraRepository.save(servicioCompra);
     }
 
     public CaravanaProducto comprarProducto(CaravanaProductoDTO caravanaProductoDTO, Long idCaravana) {
