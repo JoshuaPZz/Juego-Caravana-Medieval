@@ -53,6 +53,7 @@ export class ServicioListComponent {
 
   comprar(id: number): void {
     const caravanaId = Number(this.route.snapshot.paramMap.get('id')) || 1;
+    console.log('id del servicio: ',id)
     this.servicioService.comprar(id, caravanaId).subscribe({
       next: (response) => {
         console.log('Servicio comprado:', response);
