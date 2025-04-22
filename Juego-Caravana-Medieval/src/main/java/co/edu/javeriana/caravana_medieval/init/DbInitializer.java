@@ -99,11 +99,14 @@ public class DbInitializer implements CommandLineRunner {
                     double factorDemanda = 0.5 + (random.nextDouble() * 2.0); 
                     double factorOferta = 0.5 + (random.nextDouble() * 2.0); 
                     int stock = random.nextInt(100) + 1;
-                    double precioBase = 5.0 + random.nextDouble() * 10.0; 
+                    double precioBase = 5.0 + random.nextDouble() * 25.0; 
                     double precioCompra = precioBase * factorOferta;
                     double precioVenta = precioBase * factorDemanda;
                     precioCompra = Math.max(5.0, precioCompra);
                     precioVenta = Math.max(5.0, precioVenta);
+
+                    precioCompra = Math.round(precioCompra * 100.0) / 100.0;
+                    precioVenta = Math.round(precioVenta * 100.0) / 100.0;
 
                     CiudadProducto ciudadProducto = new CiudadProducto(ciudad, producto, factorDemanda, factorOferta, stock);
                     ciudadProducto.setPrecioCompra(precioCompra);
