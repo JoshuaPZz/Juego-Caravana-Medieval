@@ -105,8 +105,9 @@ public class DbInitializer implements CommandLineRunner {
                     precioCompra = Math.max(5.0, precioCompra);
                     precioVenta = Math.max(5.0, precioVenta);
 
-                    precioCompra = Math.round(precioCompra * 100.0) / 100.0;
-                    precioVenta = Math.round(precioVenta * 100.0) / 100.0;
+                    precioCompra = (double) (long) precioCompra;
+                    precioVenta = (double) (long) precioVenta;
+
 
                     CiudadProducto ciudadProducto = new CiudadProducto(ciudad, producto, factorDemanda, factorOferta, stock);
                     ciudadProducto.setPrecioCompra(precioCompra);
