@@ -5,6 +5,8 @@ target/
 !**/src/test/**/target/
 triodeweb.mv.db
 triodeweb.trace.db
+triodeweb-testing.mv.db
+triodeweb-testing.trace.db
 
 ### STS ###
 .apt_generated
