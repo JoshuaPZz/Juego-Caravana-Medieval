@@ -30,20 +30,19 @@ public class ViajeController {
     }
 
     @PutMapping("/{idCaravana}/{idCiudadDestino}/{idRuta}")
-    public ResponseEntity<?> viajar(
-            @PathVariable Long idCaravana,
-            @PathVariable Long idCiudadDestino,
-            @PathVariable Long idRuta) {
+        public ResponseEntity<?> viajar(
+        @PathVariable Long idCaravana,
+        @PathVariable Long idCiudadDestino,
+        @PathVariable Long idRuta) {
         try {
+            System.out.println("Iniciando viaje: caravana=" + idCaravana + ", destino=" + idCiudadDestino + ", ruta=" + idRuta);
             CaravanaDTO caravanaDTO = viajeService.viajar(idCaravana, idCiudadDestino, idRuta);
-            System.out.println("Viajando a..." + idCiudadDestino);
+            System.out.println("Viaje completado con éxito");
             return ResponseEntity.ok(caravanaDTO);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new ErrorDTO(e.getMessage()));
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDTO(e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(new ErrorDTO("Error interno del servidor"));
+            System.err.println("Error durante el viaje: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(new ErrorDTO("Error interno del servidor: " + e.getMessage()));
         }
-    }
+}
 }
