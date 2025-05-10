@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import co.edu.javeriana.caravana_medieval.model.*;
@@ -18,7 +19,7 @@ import co.edu.javeriana.caravana_medieval.repository.*;
 import jakarta.transaction.Transactional;
 
 @Component
-@Profile("!integration-testing") 
+@Profile("!integration-testing")
 public class DbInitializer implements CommandLineRunner {
 
     @Autowired
@@ -39,6 +40,8 @@ public class DbInitializer implements CommandLineRunner {
     private RutaRepository rutaRepository;
     @Autowired
     private ServicioCompraRepository servicioCompraRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -56,7 +59,7 @@ public class DbInitializer implements CommandLineRunner {
             "Reduce el daño recibido en rutas inseguras en un 25%."
     };
 
-    private static final String[] ROLES = { "Comerciante", "Caravanero" };
+    private static final Role[] ROLES = { Role.COMERCIANTE, Role.CARAVANERO };
 
     private static final String[] NOMBRES_PRODUCTOS = {
             "Especias", "Telas", "Armas", "Metales preciosos", "Ganado",
@@ -98,10 +101,10 @@ public class DbInitializer implements CommandLineRunner {
                     productosSeleccionados.add(producto);
                 }
                 for (Producto producto : productosSeleccionados) {
-                    double factorDemanda = 0.5 + (random.nextDouble() * 2.0); 
-                    double factorOferta = 0.5 + (random.nextDouble() * 2.0); 
+                    double factorDemanda = 0.5 + (random.nextDouble() * 2.0);
+                    double factorOferta = 0.5 + (random.nextDouble() * 2.0);
                     int stock = random.nextInt(100) + 1;
-                    double precioBase = 5.0 + random.nextDouble() * 25.0; 
+                    double precioBase = 5.0 + random.nextDouble() * 25.0;
                     double precioCompra = precioBase * factorOferta;
                     double precioVenta = precioBase * factorDemanda;
                     precioCompra = Math.max(5.0, precioCompra);
@@ -110,8 +113,8 @@ public class DbInitializer implements CommandLineRunner {
                     precioCompra = (double) (long) precioCompra;
                     precioVenta = (double) (long) precioVenta;
 
-
-                    CiudadProducto ciudadProducto = new CiudadProducto(ciudad, producto, factorDemanda, factorOferta, stock);
+                    CiudadProducto ciudadProducto = new CiudadProducto(ciudad, producto, factorDemanda, factorOferta,
+                            stock);
                     ciudadProducto.setPrecioCompra(precioCompra);
                     ciudadProducto.setPrecioVenta(precioVenta);
                     ciudadProductoRepository.save(ciudadProducto);
@@ -164,8 +167,16 @@ public class DbInitializer implements CommandLineRunner {
             for (Caravana caravana : caravanas) {
                 int jugadoresPorCaravana = (caravana.getNombre().equals("Caravana1")) ? 4 : 3;
                 for (int j = 0; j < jugadoresPorCaravana; j++) {
-                    jugadorRepository
-                            .save(new Jugador(ROLES[j % ROLES.length], "Jugador_" + (++jugadoresCreados), caravana));
+                    String nombre = "Jugador_" + (++jugadoresCreados);
+                    String email = "jugador" + jugadoresCreados + "@ejemplo.com";
+                    String password = passwordEncoder.encode(nombre); // Contraseña simple para desarrollo
+
+                    jugadorRepository.save(new Jugador(
+                            nombre,
+                            email,
+                            password,
+                            ROLES[j % ROLES.length],
+                            caravana));
                 }
             }
 
@@ -235,14 +246,14 @@ public class DbInitializer implements CommandLineRunner {
      * Cuanto más larga sea la ruta, más daño causará.
      */
     private int calcularDanoRuta(int longitud, List<Caravana> caravanas) {
-    int vidaMaximaCaravana = caravanas.stream().mapToInt(Caravana::getPuntosVida).max().orElse(100);
-    int danoMaximoPermitido = vidaMaximaCaravana / 2; 
-    int longitudAjustada = Math.max(10, longitud);
-    double factorLongitud = 140.0 / longitudAjustada;
-    factorLongitud = Math.min(1.0, factorLongitud / 5.0); 
-    return (int) (danoMaximoPermitido * factorLongitud);
-}
+        int vidaMaximaCaravana = caravanas.stream().mapToInt(Caravana::getPuntosVida).max().orElse(100);
+        int danoMaximoPermitido = vidaMaximaCaravana / 2;
+        int longitudAjustada = Math.max(10, longitud);
+        double factorLongitud = 140.0 / longitudAjustada;
+        factorLongitud = Math.min(1.0, factorLongitud / 5.0);
+        return (int) (danoMaximoPermitido * factorLongitud);
+    }
 }
 
-//Math.max es un método estático de la clase Math en Java. 
-//Este método toma dos valores como argumentos y devuelve el mayor de los dos.
+// Math.max es un método estático de la clase Math en Java.
+// Este método toma dos valores como argumentos y devuelve el mayor de los dos.
