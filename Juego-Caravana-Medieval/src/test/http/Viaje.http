@@ -2,7 +2,7 @@
 
 PUT {{base_url}}/viaje/1/43/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWdhZG9yMUBlamVtcGxvLmNvbSIsImlhdCI6MTc0NjkxMjY5NywiZXhwIjoxNzQ2OTQ4Njk3fQ.u1qAFtPyYjepp1e_AqP1NoPqte55qhb5gAmoIMZQoqNQvvesPlB_S_0xeo5MbHBV
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWdhZG9yMkBlamVtcGxvLmNvbSIsImlhdCI6MTc0NjkxNDgzNSwiZXhwIjoxNzQ2OTUwODM1fQ.D6U6SCzsxsaqIybbBrj8-qMISmqzMAXwR6Uou3jlcEjG28CUWNJ7A6CnKd8ZVGbF
 // idcaravana: 1
 // idciudad: 43 
 // idruta: 1
