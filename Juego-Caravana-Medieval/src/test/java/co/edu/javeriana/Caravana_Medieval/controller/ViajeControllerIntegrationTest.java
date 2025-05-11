@@ -171,13 +171,14 @@ public class ViajeControllerIntegrationTest {
         headers.add("Authorization", "Bearer " + token);
         System.out.println("Headers configurados correctamente");
 
+        jugador.getCaravana();
+
         // Realizar la petición al endpoint de viaje
         System.out.println("Enviando petición a: " + SERVER_URL + "viaje/" + caravana.getId() + "/"
                 + ciudadDestino.getId() + "/" + ruta.getId());
 
         webTestClient.put()
-                .uri(SERVER_URL + "viaje/{idCaravana}/{idCiudadDestino}/{idRuta}",
-                        caravana.getId(),
+                .uri(SERVER_URL + "viaje/{idCiudadDestino}/{idRuta}",
                         ciudadDestino.getId(),
                         ruta.getId())
                 .headers(httpHeaders -> httpHeaders.addAll(headers))

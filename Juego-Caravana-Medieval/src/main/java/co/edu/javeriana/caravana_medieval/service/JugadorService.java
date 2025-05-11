@@ -59,4 +59,15 @@ public class JugadorService {
         };
     }
 
+    public JugadorDTO getJugadorbyEmail(String email) {
+        return jugadorRepository.findByEmail(email)
+                .map(jugador -> new JugadorDTO(
+                        jugador.getId(),
+                        jugador.getNombre(),
+                        jugador.getEmail(),
+                        jugador.getRole(),
+                        jugador.getCaravana().getId()))
+                .orElse(null);
+    }
+
 }

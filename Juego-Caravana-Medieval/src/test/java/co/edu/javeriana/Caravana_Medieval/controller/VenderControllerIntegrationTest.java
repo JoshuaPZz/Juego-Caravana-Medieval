@@ -169,7 +169,7 @@ public class VenderControllerIntegrationTest {
 
         // Ejecutar petición y validar respuesta
         webTestClient.put()
-                .uri(SERVER_URL + "vender/productos/{idCaravana}", caravana.getId())
+                .uri(SERVER_URL + "vender/productos")
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(dto)

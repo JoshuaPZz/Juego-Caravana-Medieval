@@ -19,7 +19,7 @@ export class ServiciosService {
 
   comprar(idServicio: number, idCaravana: number): Observable<any> {
     return this.httpClient.put<any>(
-      `${environment.serverUrl}/comprar/servicios/${idServicio}/${idCaravana}`,
+      `${environment.serverUrl}/comprar/servicios/${idServicio}`,
       null
     );
   }

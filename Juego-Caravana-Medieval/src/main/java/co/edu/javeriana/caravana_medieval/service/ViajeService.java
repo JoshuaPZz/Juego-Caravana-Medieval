@@ -35,6 +35,8 @@ public class ViajeService {
     private CiudadRutaService ciudadRutaService;
     @Autowired
     private RutaService rutaService;
+    @Autowired
+    private JwtService jwtService;
 
     public CiudadDTO getCiudadActual(Long id) {
         Ciudad ciudad = caravanaService.getCiudadActual(id);
@@ -46,6 +48,7 @@ public class ViajeService {
     @Transactional
     public CaravanaDTO viajar(Long idCaravana, Long idCiudadDestino, Long idRuta) {
         // Obtener entidades necesarias
+
         Caravana caravana = caravanaService.getCaravanaById(idCaravana);
         Ciudad ciudadActual = caravanaService.getCiudadActual(idCaravana);
         Ciudad ciudadDestino = ciudadRutaService.getCiudadDestinoByid(idCiudadDestino);
@@ -76,17 +79,17 @@ public class ViajeService {
 
         // Actualizar los datos de la caravana
         int dano = 0;
-        if(caravana.isTieneGuardias()){
+        if (caravana.isTieneGuardias()) {
             dano = (int) Math.round(ruta.getDano() * 0.75);
         } else {
             dano = ruta.getDano();
-        }     
+        }
         // Calcular la duración del viaje
         Duration tiempoViaje = Duration.ofHours(ruta.getLongitud() / caravana.getVelocidad());
         caravana.setPuntosVida(caravana.getPuntosVida() - dano);
         caravana.setHoraViaje(caravana.getHoraViaje().plusHours(tiempoViaje.toHours()));
         caravana.setTiempoTranscurrido(caravana.getTiempoTranscurrido().plus(tiempoViaje));
-        if(caravana.getTiempoTranscurrido().compareTo(Duration.ofDays(5)) > 0){
+        if (caravana.getTiempoTranscurrido().compareTo(Duration.ofDays(5)) > 0) {
             throw new IllegalArgumentException("El tiempo se acabó.");
 
         }

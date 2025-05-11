@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.javeriana.caravana_medieval.dto.CaravanaDTO;
 import co.edu.javeriana.caravana_medieval.dto.CiudadDTO;
 import co.edu.javeriana.caravana_medieval.dto.ErrorDTO;
+import co.edu.javeriana.caravana_medieval.dto.JugadorDTO;
 import co.edu.javeriana.caravana_medieval.model.Role;
+import co.edu.javeriana.caravana_medieval.service.JugadorService;
+import co.edu.javeriana.caravana_medieval.service.JwtService;
 import co.edu.javeriana.caravana_medieval.service.ViajeService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 
@@ -25,6 +29,12 @@ import co.edu.javeriana.caravana_medieval.service.ViajeService;
 public class ViajeController {
     @Autowired
     private ViajeService viajeService;
+    @Autowired
+    private JwtService jwtService;
+    @Autowired
+    private JugadorService jugadorService;
+
+    private JugadorDTO jugadorDTO;
 
     @GetMapping("/ciudadActual/{id}")
     public CiudadDTO getCiudadActual(@PathVariable Long id) {
@@ -32,15 +42,30 @@ public class ViajeController {
     }
 
     @Secured({ Role.Code.CARAVANERO })
-    @PutMapping("/{idCaravana}/{idCiudadDestino}/{idRuta}")
+    @PutMapping("/{idCiudadDestino}/{idRuta}")
     public ResponseEntity<?> viajar(
-            @PathVariable Long idCaravana,
+            // @PathVariable Long idCaravana,
             @PathVariable Long idCiudadDestino,
-            @PathVariable Long idRuta) {
+            @PathVariable Long idRuta,
+            HttpServletRequest request) {
         try {
+
+            String authHeader = request.getHeader("Authorization");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ErrorDTO("Token no proporcionado o mal formado"));
+            }
+
+            // 4) Extrae el token y el username
+            String token = authHeader.substring(7);
+            String username = jwtService.extractUserName(token);
+
+            jugadorDTO = jugadorService.getJugadorbyEmail(username);
+
             System.out.println(
-                    "Iniciando viaje: caravana=" + idCaravana + ", destino=" + idCiudadDestino + ", ruta=" + idRuta);
-            CaravanaDTO caravanaDTO = viajeService.viajar(idCaravana, idCiudadDestino, idRuta);
+                    "Iniciando viaje: caravana=" + jugadorDTO.getIdCaravana() + ", destino=" + idCiudadDestino
+                            + ", ruta=" + idRuta);
+            CaravanaDTO caravanaDTO = viajeService.viajar(jugadorDTO.getIdCaravana(), idCiudadDestino, idRuta);
             System.out.println("Viaje completado con éxito");
             return ResponseEntity.ok(caravanaDTO);
         } catch (Exception e) {
