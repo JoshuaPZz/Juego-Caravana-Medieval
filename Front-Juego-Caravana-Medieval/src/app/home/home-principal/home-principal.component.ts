@@ -23,7 +23,6 @@ export class HomePrincipalComponent {
 
   ngOnInit(): void {
     const caravanaId = Number(this.route.snapshot.paramMap.get('id')) || 1;
-
     this.viajarService.ciudadActual(caravanaId).subscribe({
       next: (ciudad) => {
         this.ciudadActual = ciudad;

@@ -13,7 +13,7 @@ export class ViajarService {
 
   ciudadActual(id: number): Observable<CiudadDto> {
     return this.httpClient.get<CiudadDto>(
-      `${environment.serverUrl}/viaje/ciudadActual/${id}`
+      `${environment.serverUrl}/viaje/ciudadActual`
     );
   }
 

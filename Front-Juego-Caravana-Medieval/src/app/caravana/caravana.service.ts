@@ -14,9 +14,9 @@ import { CaravanaProductoDto } from '../dto/caravana-producto-dto';
 export class CaravanaService {
   constructor(private httpClient: HttpClient) {}
 
-  caravanaActual(id: number): Observable<CaravanaDto> {
+  caravanaActual(id : number): Observable<CaravanaDto> {
     return this.httpClient.get<CaravanaDto>(
-      `${environment.serverUrl}/caravana/${id}`
+      `${environment.serverUrl}/caravana/actual`
     );
   }
 

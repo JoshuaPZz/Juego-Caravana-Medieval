@@ -13,6 +13,7 @@ import { ProductoComprarComponent } from './productos/producto-comprar/producto-
 import { CaravanaProductosListComponent } from './caravana/caravana-productos-list/caravana-productos-list.component';
 import { ProductosVenderComponent } from './productos/productos-vender/productos-vender.component';
 import { CaravanaInventarioComponent } from './caravana/caravana-inventario/caravana-inventario.component';
+import { LoginComponent } from './authentication/login/login.component';
 export const routes: Routes = [
   { path: 'ciudades/list', component: CiudadListComponent }, // Listado de ciudades
   { path: 'ciudades/view/:id', component: CiudadViewComponent }, // Vista de una ciudad
@@ -23,7 +24,8 @@ export const routes: Routes = [
   { path: 'ciudad/:id/rutas', component: RutaDestinosComponent }, // Rutas desde una ciudad
   { path: 'ciudad/:id/servicios', component: ServicioListComponent }, // Servicios de una ciudad
   { path: 'comprar/servicio', component: ServicioComprarComponent },
-  { path: '', component: HomeInicioComponent }, // Componente de inicio
+  { path: '', component: LoginComponent }, // Componente de inicio
+  { path: 'home', component: HomeInicioComponent },
   { path: 'inicio', component: HomePrincipalComponent }, // Componente de pantalla principal
   { path: 'comprar/producto', component: ProductoComprarComponent }, // Comprar un producto
   { path: 'inventario', component: CaravanaInventarioComponent },
