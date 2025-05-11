@@ -27,4 +27,9 @@ public class JugadorController {
     public String getCaravanaIdByJugadorId(@PathVariable Long id) {
         return jugadorService.getCaravanaIdByJugadorId(id);
     }
+
+    @GetMapping("/email/{correo}")
+    public JugadorDTO getJugadorbyEmail(@PathVariable String correo) {
+        return jugadorService.getJugadorbyEmail(correo);
+    }
 }

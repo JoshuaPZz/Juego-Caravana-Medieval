@@ -1,0 +1,19 @@
+### Jugador_1 es COMERCIANTE
+# @name login
+POST http://localhost:8088/auth/login
+Content-Type: application/json
+
+{
+    "email": "jugador1@ejemplo.com",
+    "password": "Jugador_1"
+}
+
+### Jugador_2 es CARAVANERO
+# @name login
+POST http://localhost:8088/auth/login
+Content-Type: application/json
+
+{
+    "email": "jugador2@ejemplo.com",
+    "password": "Jugador_2"
+}

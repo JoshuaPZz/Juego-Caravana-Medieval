@@ -10,20 +10,21 @@ public class JugadorMapper {
 
     @Autowired
     private CaravanaRepository caravanaRepository;
-    
+
     public static JugadorDTO toDTO(Jugador jugador) {
         JugadorDTO jugadorDTO = new JugadorDTO();
         jugadorDTO.setNombre(jugador.getNombre());
         jugadorDTO.setId(jugador.getId());
-        jugadorDTO.setRol(jugador.getRol());
+        jugadorDTO.setRole(jugador.getRole());
         jugadorDTO.setIdCaravana(jugador.getCaravana().getId());
         return jugadorDTO;
-}
+    }
+
     public Jugador toEntity(JugadorDTO jugadorDTO) {
         Jugador jugador = new Jugador();
         jugador.setNombre(jugadorDTO.getNombre());
         jugador.setId(jugadorDTO.getId());
-        jugador.setRol(jugadorDTO.getRol());
+        jugador.setRole(jugadorDTO.getRole());
         jugador.setCaravana(caravanaRepository.findById(jugadorDTO.getIdCaravana()).orElse(null));
         return jugador;
     }

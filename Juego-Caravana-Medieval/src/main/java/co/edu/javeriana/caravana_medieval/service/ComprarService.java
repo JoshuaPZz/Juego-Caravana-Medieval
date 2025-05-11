@@ -135,7 +135,7 @@ public class ComprarService {
 
     public CaravanaProducto comprarProducto(CaravanaProductoDTO caravanaProductoDTO, Long idCaravana) {
         Caravana caravana = caravanaService.getCaravanaById(idCaravana);
-        if (caravana.getDineroDisponible() < 0) {
+        if (caravana.getDineroDisponible() <= 0) {
             throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
         }
         Ciudad ciudad = caravanaService.getCiudadActual(idCaravana);
@@ -160,6 +160,10 @@ public class ComprarService {
         if (caravanaProductoDTO.getCantidad() < 0) {
             throw new IllegalArgumentException("No puedes comprar cantidades negativas");
         }
+        if (caravana.getDineroDisponible()
+                - ciudadProductoDTO.getPrecioCompra() * caravanaProductoDTO.getCantidad() < 0) {
+            throw new IllegalArgumentException("No tienes suficiente dinero para comprar el producto.");
+        }
 
         Optional<CaravanaProducto> optCaravanaProducto = caravanaProductoRepository.findByIdProducto(producto.getId());
         CaravanaProducto caravanaProducto = optCaravanaProducto.orElseGet(() -> {
@@ -168,13 +172,14 @@ public class ComprarService {
             nuevo.setCaravana(caravana);
             return nuevo;
         });
-        
+
         caravanaProducto.setCantidad(caravanaProducto.getCantidad() + caravanaProductoDTO.getCantidad());
         caravana.getProductos().add(caravanaProducto);
-        if((ciudadProductoDTO.getPrecioCompra())*caravanaProductoDTO.getCantidad() < 0){
+        if ((ciudadProductoDTO.getPrecioCompra()) * caravanaProductoDTO.getCantidad() < 0) {
             throw new IllegalArgumentException("No te alcanza para comprar esta cantidad del producto");
         }
-        caravana.setDineroDisponible((int) (caravana.getDineroDisponible() - (ciudadProductoDTO.getPrecioCompra())*caravanaProductoDTO.getCantidad()));
+        caravana.setDineroDisponible((int) (caravana.getDineroDisponible()
+                - (ciudadProductoDTO.getPrecioCompra()) * caravanaProductoDTO.getCantidad()));
         ciudadProductoDTO.setStock(ciudadProductoDTO.getStock() - caravanaProductoDTO.getCantidad());
         if (ciudadProductoDTO.getStock() == 0) {
             ciudadProductoRepository.delete(ciudadProductoRepository.getReferenceById(ciudadProductoDTO.getId()));

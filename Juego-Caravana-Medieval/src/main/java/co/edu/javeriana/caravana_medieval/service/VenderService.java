@@ -39,22 +39,22 @@ public class VenderService {
 
         Producto producto = productoRepository.findById(ciudadProductoDTO.getIdProducto())
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
-        
+
         CaravanaProducto caravanaProducto = caravanaProductoRepository
                 .findByCaravanaIdAndProductoId(idCaravana, ciudadProductoDTO.getIdProducto())
                 .orElseThrow(() -> new RuntimeException("La caravana no tiene este producto"));
 
         Ciudad ciudad = caravana.getCiudadActual();
-        
+
         CiudadProducto ciudadProducto = ciudadProductoRepository
                 .findByCiudadIdAndProductoId(ciudad.getId(), ciudadProductoDTO.getIdProducto())
                 .orElse(null);
 
-        if(caravanaProducto.getCantidad() < ciudadProductoDTO.getStock()){
+        if (caravanaProducto.getCantidad() < ciudadProductoDTO.getStock()) {
             throw new IllegalArgumentException("La caravana no tiene la cantidad suficiente de productos para vender.");
         }
 
-        if (ciudadProductoDTO.getStock() < 0){
+        if (ciudadProductoDTO.getStock() < 0) {
             throw new RuntimeException("No se pueden vender cantidades negativas");
         }
 
@@ -76,7 +76,7 @@ public class VenderService {
             ciudadProducto.setPrecioCompra(nuevoPrecioCompra);
             ciudadProducto.setPrecioVenta(nuevoPrecioVenta);
 
-            precioVentaCalculado = nuevoPrecioVenta;        
+            precioVentaCalculado = nuevoPrecioVenta;
         } else {
             // El producto no existe en la ciudad
             ciudadProducto = new CiudadProducto();
@@ -113,7 +113,8 @@ public class VenderService {
 
         double dineroGanado = precioVentaCalculado * ciudadProductoDTO.getStock();
         caravana.setDineroDisponible(caravana.getDineroDisponible() + dineroGanado);
-        caravana.setCapacidadMax(caravana.getCapacidadMax() + ciudadProductoDTO.getStock());
+        // caravana.setCapacidadMax(caravana.getCapacidadMax() +
+        // ciudadProductoDTO.getStock());
 
         // Guardar los cambios en la caravana
         caravanaRepository.save(caravana);

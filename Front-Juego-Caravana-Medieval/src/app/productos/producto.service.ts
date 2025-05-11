@@ -20,7 +20,7 @@ export class ProductoService {
 
   venderProducto(ciudadProducto : CiudadProductoDto) : Observable<any> {
     return this.http.put<any>(
-      `${environment.serverUrl}/vender/productos/1`, ciudadProducto);
+      `${environment.serverUrl}/vender/productos`, ciudadProducto);
   }
   listProductsCiudad(idCiudad : number) : Observable<ProductoDto[]> {
     return this.http.get<ProductoDto[]>(
@@ -34,6 +34,6 @@ export class ProductoService {
     )
   }
   comprarProducto(caravanaProducto : CaravanaProductoDto) : Observable<any>{
-    return this.http.put<any>(`${environment.serverUrl}/comprar/productos/1`, caravanaProducto)
+    return this.http.put<any>(`${environment.serverUrl}/comprar/productos`, caravanaProducto)
   } 
 }

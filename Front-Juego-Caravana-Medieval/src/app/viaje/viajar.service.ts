@@ -19,7 +19,7 @@ export class ViajarService {
 
   viajar(ciudadDestinoId: number, rutaId: number, caravanaId: number): Observable<CaravanaDto>{
     return this.httpClient.put<CaravanaDto>(
-      `${environment.serverUrl}/viaje/${caravanaId}/${ciudadDestinoId}/${rutaId}`,
+      `${environment.serverUrl}/viaje/${ciudadDestinoId}/${rutaId}`,
       null
     );
   }
