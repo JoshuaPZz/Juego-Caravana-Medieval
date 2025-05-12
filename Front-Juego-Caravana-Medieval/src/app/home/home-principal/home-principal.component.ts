@@ -64,6 +64,10 @@ export class HomePrincipalComponent {
     this.rol = this.authservice.role() ?? undefined;
     console.log('Rol:', this.rol);
   }
+  logout(): void {
+    this.authservice.logout();
+    this.router.navigate(['']);
+  }
 
   getCiudadImagen(): string {
     const idsCaelid = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90];

@@ -1,6 +1,11 @@
 <div class="container">
   <div>
     <div class="rol-actual">Rol actual: {{ rol }}</div>
+    <div class="log-out">
+      <button (click)="logout()">Cerrar Sesión</button>
+    </div>
+
+
     <app-caravana-view></app-caravana-view>
     <h1>Ciudad Actual</h1>
 
