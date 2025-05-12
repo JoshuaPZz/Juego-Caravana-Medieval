@@ -124,13 +124,14 @@ public class ComprarService {
         caravana.setDineroDisponible(caravana.getDineroDisponible() - ciudadServicioComprar.getPrecio());
 
         ServicioCompra servicioCompra = new ServicioCompra(caravana, ciudad, servicio);
-        ciudad.getCompras().add(servicioCompra);
-        caravana.getCompras().add(servicioCompra);
+        // Guarda solo a través del repositorio de ServicioCompra
+        ServicioCompra savedCompra = servicioCompraRepository.save(servicioCompra);
 
-        // Guardar en los repositorios
+        // Actualiza las entidades pero no guardes las relaciones
+        caravana.setDineroDisponible(caravana.getDineroDisponible() - ciudadServicioComprar.getPrecio());
         caravanaRepository.save(caravana);
-        ciudadRepository.save(ciudad);
-        return servicioCompraRepository.save(servicioCompra);
+
+        return savedCompra;
     }
 
     public CaravanaProducto comprarProducto(CaravanaProductoDTO caravanaProductoDTO, Long idCaravana) {
