@@ -51,6 +51,7 @@ export class CaravanaService {
       .set('Authorization', `Bearer ${rawToken}`);   
     return this.httpClient.put<any>(
       `${environment.serverUrl}/caravana/nuevojuego`, 
+      {},
       { headers, withCredentials: true }
     );
   }
