@@ -36,9 +36,28 @@ public class ViajeController {
 
     private JugadorDTO jugadorDTO;
 
-    @GetMapping("/ciudadActual/{id}")
-    public CiudadDTO getCiudadActual(@PathVariable Long id) {
-        return viajeService.getCiudadActual(id);
+    @GetMapping("/ciudadActual")
+    public ResponseEntity<?> getCiudadActual(HttpServletRequest request) {
+        try {
+
+            String authHeader = request.getHeader("Authorization");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ErrorDTO("Token no proporcionado o mal formado"));
+            }
+            // 4) Extrae el token y el username
+            String token = authHeader.substring(7);
+            String username = jwtService.extractUserName(token);
+
+            jugadorDTO = jugadorService.getJugadorbyEmail(username);
+            CiudadDTO ciudadActual = viajeService.getCiudadActual(jugadorDTO.getIdCaravana());
+            return ResponseEntity.ok(ciudadActual);
+        } catch (Exception e) {
+            System.err.println("Error al buscar la ciudad actual de la caravana " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError()
+                    .body(new ErrorDTO("Error interno del servidor: " + e.getMessage()));
+        }
     }
 
     @Secured({ Role.Code.CARAVANERO })
