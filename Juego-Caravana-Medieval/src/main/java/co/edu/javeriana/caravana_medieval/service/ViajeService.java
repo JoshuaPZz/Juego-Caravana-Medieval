@@ -35,8 +35,6 @@ public class ViajeService {
     private CiudadRutaService ciudadRutaService;
     @Autowired
     private RutaService rutaService;
-    @Autowired
-    private JwtService jwtService;
 
     public CiudadDTO getCiudadActual(Long id) {
         Ciudad ciudad = caravanaService.getCiudadActual(id);

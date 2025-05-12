@@ -38,7 +38,6 @@ public class CaravanaController {
     @GetMapping("/actual")
     public ResponseEntity<?> getCaravanaById(HttpServletRequest request) {
          try {
-
             String authHeader = request.getHeader("Authorization");
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -62,15 +61,48 @@ public class CaravanaController {
         
     }
 
-    @GetMapping("/{id}/productos")
-    public List<ProductoDTO> getCaravanaProductoById(@PathVariable Long id) {
-        List<ProductoDTO> productoDTO = caravanaService.getCaravanaProductoById(id);
-        return productoDTO;
+    @GetMapping("/productos")
+    public ResponseEntity<?> getCaravanaProductoById(HttpServletRequest request) {
+         try {
+            String authHeader = request.getHeader("Authorization");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ErrorDTO("Token no proporcionado o mal formado"));
+            }
+            // 4) Extrae el token y el username
+            String token = authHeader.substring(7);
+            String username = jwtService.extractUserName(token);
+            jugadorDTO = jugadorService.getJugadorbyEmail(username);
+            List<ProductoDTO> productoDTO = caravanaService.getCaravanaProductoById(jugadorDTO.getIdCaravana());
+            return ResponseEntity.ok(productoDTO);
+        }catch (Exception e) {
+            System.err.println("Error al buscar los productos de la caravana " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError()
+                    .body(new ErrorDTO("Error interno del servidor: " + e.getMessage()));
+        }
     }
 
-    @GetMapping("/{id}/caravanaproductos")
-    public List<CaravanaProductoDTO> getCaravanaProductoDTOs(@PathVariable Long id){
-        return caravanaService.getCaravanaProductoDTOs(id);
+    @GetMapping("/caravanaproductos")
+    public ResponseEntity<?> getCaravanaProductoDTOs(HttpServletRequest request){
+        try {
+            String authHeader = request.getHeader("Authorization");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ErrorDTO("Token no proporcionado o mal formado"));
+            }
+            // 4) Extrae el token y el username
+            String token = authHeader.substring(7);
+            String username = jwtService.extractUserName(token);
+            jugadorDTO = jugadorService.getJugadorbyEmail(username);
+            List<CaravanaProductoDTO> caravanaProducto = caravanaService.getCaravanaProductoDTOs(jugadorDTO.getIdCaravana());
+            return ResponseEntity.ok(caravanaProducto);
+        }catch (Exception e) {
+            System.err.println("Error al buscar los Caravana/Producto " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError()
+                    .body(new ErrorDTO("Error interno del servidor: " + e.getMessage()));
+        }
     }
 
     @PutMapping("/nuevojuego")

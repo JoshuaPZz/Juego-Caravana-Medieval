@@ -17,7 +17,7 @@ export class RutaService {
     const headers = new HttpHeaders()
     .set('Authorization', `Bearer ${rawToken}`);
     return this.httpClient.get<CiudadDto[]>(
-      `${environment.serverUrl}/ciudad/${id}/ciudadesorigen`,   //CAMBIAR NO SE DEBE MANDAR EL ID DE LA CARAVANA
+      `${environment.serverUrl}/ciudad/ciudadesorigen`,
       { headers, withCredentials: true }
     );
   }
@@ -26,7 +26,7 @@ export class RutaService {
     const headers = new HttpHeaders()
     .set('Authorization', `Bearer ${rawToken}`);
     return this.httpClient.get<RutaDTO[]>(
-      `${environment.serverUrl}/ciudad/${id}/rutashacia/${iddestino}`,   //CAMBIAR NO SE DEBE MANDAR EL ID DE LA CARAVANA
+      `${environment.serverUrl}/ciudad/rutashacia/${iddestino}`,   //CAMBIAR NO SE DEBE MANDAR EL ID DE LA CARAVANA
       { headers, withCredentials: true }
     );
   }

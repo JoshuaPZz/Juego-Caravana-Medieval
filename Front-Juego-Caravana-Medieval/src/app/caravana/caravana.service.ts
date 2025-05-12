@@ -30,7 +30,7 @@ export class CaravanaService {
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${rawToken}`);
     return this.httpClient.get<ProductoDto[]>(
-      `${environment.serverUrl}/caravana/${id}/productos`, //CAMBIAR NO SE DEBE MANDAR EL ID DE LA CARAVANA
+      `${environment.serverUrl}/caravana/productos`, //CAMBIAR NO SE DEBE MANDAR EL ID DE LA CARAVANA
       { headers, withCredentials: true }
     );
   }
@@ -40,7 +40,7 @@ export class CaravanaService {
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${rawToken}`);      
     return this.httpClient.get<CaravanaProductoDto[]>(
-      `${environment.serverUrl}/caravana/${id}/caravanaproductos`,      //CAMBIAR NO SE DEBE MANDAR EL ID DE LA CARAVANA
+      `${environment.serverUrl}/caravana/caravanaproductos`,      //CAMBIAR NO SE DEBE MANDAR EL ID DE LA CARAVANA
       { headers, withCredentials: true }
     );
   }
