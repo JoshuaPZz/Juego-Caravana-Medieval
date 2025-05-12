@@ -14,10 +14,15 @@
   </div>
 
   <div>
-    <button (click)="viajar()">Viajar</button>
-    <button (click)="comprarProductos()">Comprar Producto</button>
-    <button (click)="comprarServicios()">Comprar Servicio</button>
-    <button (click)="venderProducto()">Vender Producto</button>
-    <button (click)="verInventario()">Ver Inventario de Productos</button>
+    <ng-container *ngIf="rol === 'CARAVANERO'; else COMERCIANTE">
+      <button (click)="viajar()">Viajar</button>
+      <button (click)="verInventario()">Ver Inventario de Productos</button>
+    </ng-container>
+    <ng-template #COMERCIANTE>
+      <button (click)="comprarProductos()">Comprar Producto</button>
+      <button (click)="comprarServicios()">Comprar Servicio</button>
+      <button (click)="venderProducto()">Vender Producto</button>
+      <button (click)="verInventario()">Ver Inventario de Productos</button>
+    </ng-template>
   </div>
 </div>
