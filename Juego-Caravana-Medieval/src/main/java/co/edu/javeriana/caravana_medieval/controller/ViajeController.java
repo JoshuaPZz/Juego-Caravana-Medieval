@@ -38,7 +38,7 @@ public class ViajeController {
 
     @GetMapping("/ciudadActual")
     public ResponseEntity<?> getCiudadActual(HttpServletRequest request) {
-         try {
+        try {
 
             String authHeader = request.getHeader("Authorization");
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
