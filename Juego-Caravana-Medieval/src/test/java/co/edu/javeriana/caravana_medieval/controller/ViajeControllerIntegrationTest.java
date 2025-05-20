@@ -1,4 +1,4 @@
-package co.edu.javeriana.Caravana_Medieval.controller;
+package co.edu.javeriana.caravana_medieval.controller;
 
 import co.edu.javeriana.caravana_medieval.dto.CaravanaDTO;
 import co.edu.javeriana.caravana_medieval.dto.JwtAuthenticationResponse;

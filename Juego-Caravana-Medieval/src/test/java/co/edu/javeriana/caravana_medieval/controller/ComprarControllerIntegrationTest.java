@@ -1,50 +1,56 @@
-package co.edu.javeriana.Caravana_Medieval.controller;
+package co.edu.javeriana.caravana_medieval.controller;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Collections;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 
-import co.edu.javeriana.caravana_medieval.dto.CiudadProductoDTO;
+import co.edu.javeriana.caravana_medieval.dto.CaravanaProductoDTO;
 import co.edu.javeriana.caravana_medieval.dto.JwtAuthenticationResponse;
 import co.edu.javeriana.caravana_medieval.dto.LoginDTO;
 import co.edu.javeriana.caravana_medieval.model.Caravana;
 import co.edu.javeriana.caravana_medieval.model.CaravanaProducto;
 import co.edu.javeriana.caravana_medieval.model.Ciudad;
 import co.edu.javeriana.caravana_medieval.model.CiudadProducto;
+import co.edu.javeriana.caravana_medieval.model.CiudadServicio;
 import co.edu.javeriana.caravana_medieval.model.Jugador;
 import co.edu.javeriana.caravana_medieval.model.Producto;
 import co.edu.javeriana.caravana_medieval.model.Role;
+import co.edu.javeriana.caravana_medieval.model.Servicio;
+import co.edu.javeriana.caravana_medieval.model.ServicioCompra;
 import co.edu.javeriana.caravana_medieval.repository.CaravanaProductoRepository;
 import co.edu.javeriana.caravana_medieval.repository.CaravanaRepository;
 import co.edu.javeriana.caravana_medieval.repository.CiudadProductoRepository;
 import co.edu.javeriana.caravana_medieval.repository.CiudadRepository;
+import co.edu.javeriana.caravana_medieval.repository.CiudadServicioRepository;
 import co.edu.javeriana.caravana_medieval.repository.JugadorRepository;
 import co.edu.javeriana.caravana_medieval.repository.ProductoRepository;
+import co.edu.javeriana.caravana_medieval.repository.ServicioCompraRepository;
+import co.edu.javeriana.caravana_medieval.repository.ServicioRepository;
 import co.edu.javeriana.caravana_medieval.service.AuthenticationService;
 import co.edu.javeriana.caravana_medieval.service.JwtService;
-
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ActiveProfiles("integration-testing")
-public class VenderControllerIntegrationTest {
+public class ComprarControllerIntegrationTest {
 
     private String SERVER_URL;
 
@@ -63,6 +69,13 @@ public class VenderControllerIntegrationTest {
     private CiudadRepository ciudadRepository;
     @Autowired
     private JugadorRepository jugadorRepository;
+    @Autowired
+    private ServicioRepository servicioRepository;
+    @Autowired
+    private CiudadServicioRepository ciudadServicioRepository;
+    @Autowired
+    private ServicioCompraRepository servicioCompraRepository;
+
     @Autowired(required = false)
     private JwtService jwtService;
     @Autowired(required = false)
@@ -74,9 +87,10 @@ public class VenderControllerIntegrationTest {
     private Caravana caravana;
     private Ciudad ciudad;
     private Producto producto;
+    private Servicio servicio;
     private CaravanaProducto caravanaProducto;
 
-    public VenderControllerIntegrationTest(@Value("${server.port}") int serverPort) {
+    public ComprarControllerIntegrationTest(@Value("${server.port}") int serverPort) {
         this.SERVER_URL = "http://localhost:" + serverPort + "/";
     }
 
@@ -89,7 +103,11 @@ public class VenderControllerIntegrationTest {
         productoRepository.save(producto);
         ciudadProductoRepository.save(new CiudadProducto(ciudad, producto, 23, 22, 100));
 
-        caravana = new Caravana("CaravanaPrueba", 10, 100, 500, 200, ciudad, null, false);
+        servicio = new Servicio("Reparar", "Repara el daño sufrido por la caravana.");
+        servicioRepository.save(servicio);
+        ciudadServicioRepository.save(new CiudadServicio(ciudad, servicio, 50));
+
+        caravana = new Caravana("CaravanaPrueba", 10, 100, 500, 20, ciudad, null, false);
         caravana.setHoraViaje(java.time.LocalTime.of(10, 0));
         caravanaRepository.save(caravana);
 
@@ -150,17 +168,17 @@ public class VenderControllerIntegrationTest {
     }
 
     @Test
-    void venderProducto() {
-        System.out.println("Iniciando prueba de vender");
+    void comprarProducto() {
+        System.out.println("Iniciando prueba de comprar producto");
         // Obtener token válido
         String token = getValidToken();
         assertNotNull(token);
-        System.out.println("Token obtenido: " + token.substring(0, 10) + "...");
+        System.out.println("Token válido: " + token.substring(0, 10) + "...");
 
-        // Preparar DTO de venta
-        CiudadProductoDTO dto = new CiudadProductoDTO();
+        // Preparar DTO de compra
+        CaravanaProductoDTO dto = new CaravanaProductoDTO();
         dto.setIdProducto(producto.getId());
-        dto.setStock(5);
+        dto.setCantidad(5);
 
         // Configurar headers
         HttpHeaders headers = new HttpHeaders();
@@ -169,7 +187,7 @@ public class VenderControllerIntegrationTest {
 
         // Ejecutar petición y validar respuesta
         webTestClient.put()
-                .uri(SERVER_URL + "vender/productos")
+                .uri(SERVER_URL + "comprar/productos")
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(dto)
@@ -177,7 +195,7 @@ public class VenderControllerIntegrationTest {
                 .expectStatus().isOk()
                 .expectBody().isEmpty();
 
-        // Verificar caravana en BD
+        // Verificar en la BD
         Caravana updatedCaravana = caravanaRepository.findById(caravana.getId()).orElseThrow();
         assertThat(updatedCaravana.getCapacidadMax()).isEqualTo(100);
 
@@ -185,9 +203,55 @@ public class VenderControllerIntegrationTest {
         CaravanaProducto cp = caravanaProductoRepository
                 .findByCaravanaIdAndProductoId(caravana.getId(), producto.getId())
                 .orElseThrow();
-        assertThat(cp.getCantidad()).isEqualTo(5);
+        assertThat(cp.getCantidad()).isEqualTo(15);
 
-        System.out.println("Prueba de venta completada con éxito");
+        // Verificar CiudadProducto en BD
+        CiudadProducto cd = ciudadProductoRepository
+                .findByCiudadIdAndProductoId(ciudad.getId(), producto.getId())
+                .orElseThrow();
+        assertThat(cd.getStock()).isEqualTo(95);
+    }
+
+    @Test
+    void comprarServicio() {
+        System.out.println("Iniciando prueba de comprar servicio");
+        // Obtener token válido
+        String token = getValidToken();
+        assertNotNull(token);
+        System.out.println("Token válido: " + token.substring(0, 10) + "...");
+
+        // Configurar headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+        System.out.println("Headers configurados correctamente");
+
+        // Ejecutar petición y validar respuesta
+        webTestClient.put()
+                .uri(SERVER_URL + "comprar/servicios/{idServicio}", servicio.getId())
+                .headers(httpHeaders -> httpHeaders.addAll(headers))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody().isEmpty();
+
+        // Verificar que ahora sí existe
+        ServicioCompra compra = servicioCompraRepository
+                .findByCaravanaIdAndCiudadIdAndServicioId(
+                        caravana.getId(),
+                        ciudad.getId(),
+                        servicio.getId())
+                .orElseThrow(() -> new AssertionError("Compra no registrada"));
+
+        assertThat(compra).isNotNull();
+
+        // SEGUNDA COMPRA (Debe fallar)
+        webTestClient.put()
+                .uri(SERVER_URL + "comprar/servicios/{idServicio}", servicio.getId())
+                .headers(httpHeaders -> httpHeaders.addAll(headers))
+                .exchange()
+                .expectStatus().is4xxClientError();
+
+        System.out.println("La segunda compra fue correctamente rechazada.");
+
     }
 
 }
