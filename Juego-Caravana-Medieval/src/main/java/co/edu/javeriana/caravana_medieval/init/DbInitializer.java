@@ -19,7 +19,7 @@ import co.edu.javeriana.caravana_medieval.repository.*;
 import jakarta.transaction.Transactional;
 
 @Component
-@Profile("!integration-testing")
+@Profile ({"!integration-testing", "!system-testing"})
 public class DbInitializer implements CommandLineRunner {
 
     @Autowired

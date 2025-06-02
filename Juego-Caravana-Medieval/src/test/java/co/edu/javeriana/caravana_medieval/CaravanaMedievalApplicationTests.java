@@ -1,4 +1,4 @@
-package co.edu.javeriana.Caravana_Medieval;
+package co.edu.javeriana.caravana_medieval;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

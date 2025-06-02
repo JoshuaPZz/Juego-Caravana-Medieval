@@ -1,4 +1,4 @@
-package co.edu.javeriana.Caravana_Medieval.controller;
+package co.edu.javeriana.caravana_medieval.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
