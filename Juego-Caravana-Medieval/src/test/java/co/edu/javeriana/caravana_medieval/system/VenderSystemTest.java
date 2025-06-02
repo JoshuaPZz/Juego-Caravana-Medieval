@@ -13,6 +13,9 @@ import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.PlaywrightException;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
+
 import co.edu.javeriana.caravana_medieval.model.Caravana;
 import co.edu.javeriana.caravana_medieval.model.CaravanaProducto;
 import co.edu.javeriana.caravana_medieval.model.Ciudad;
@@ -79,15 +82,12 @@ public class VenderSystemTest {
     void init() {
         ciudad = new Ciudad("CiudadOrigen", 0);
         ciudadRepository.save(ciudad);
-
         producto = new Producto("ProductoPrueba", 2, "Flores de la region");
         productoRepository.save(producto);
         ciudadProductoRepository.save(new CiudadProducto(ciudad, producto, 23, 22, 100));
-
         caravana = new Caravana("CaravanaPrueba", 10, 100, 500, 200, ciudad, null, false);
         caravana.setHoraViaje(java.time.LocalTime.of(10, 0));
         caravanaRepository.save(caravana);
-
         caravanaProducto = new CaravanaProducto(caravana, producto, 10);
         caravanaProductoRepository.save(caravanaProducto);
         String password = "Jugador2";
@@ -103,12 +103,14 @@ public class VenderSystemTest {
     }
     @AfterEach
     void end() {
-       browser.close();
-       playwright.close();
+        browser.close();
+        playwright.close();
     }
 
     @Test
     void venderProducto() {
+        String cantidadVenta = "5";
+        String stockRestante = "5";
         page.navigate(SERVER_URL);
         page.locator("input[name='email']").fill(jugador.getEmail()); 
         page.locator("input[name='password']").fill("Jugador2");
@@ -116,13 +118,33 @@ public class VenderSystemTest {
         loginButton.waitFor();
         loginButton.click();
         page.locator("#playBtn").click();
-        String plataPrev = "500";
-
         page.locator("#venderBtn").click();
-        page.locator("//table//tr[1]//input").fill("10");
+        page.locator("//table//tr[1]//input").fill(cantidadVenta);
         page.locator("//table//tr[1]//button").click();
+        Locator mensaje = page.locator("//app-popup//p");
+        mensaje.waitFor();
+        PlaywrightAssertions.assertThat(mensaje).hasText("Producto vendido con éxito.");
         page.reload();
-        page.waitForTimeout(10000_000);
-   }
+        Locator valorFinal = page.locator("//table//tr[1]//td[5]");
+        PlaywrightAssertions.assertThat(valorFinal).hasText(stockRestante);
+    } 
+
+    @Test
+    void venderProductoExtraStock() {
+        String cantidadVenta = "11";
+        page.navigate(SERVER_URL);
+        page.locator("input[name='email']").fill(jugador.getEmail()); 
+        page.locator("input[name='password']").fill("Jugador2");
+        Locator loginButton = page.locator("button[type='submit']");
+        loginButton.waitFor();
+        loginButton.click();
+        page.locator("#playBtn").click();
+        page.locator("#venderBtn").click();
+        page.locator("//table//tr[1]//input").fill(cantidadVenta);
+        page.locator("//table//tr[1]//button").click();
+        Locator mensaje = page.locator("//app-popup//p");
+        mensaje.waitFor();
+        PlaywrightAssertions.assertThat(mensaje).hasText("La caravana no tiene la cantidad suficiente de productos para vender.");
+    }
 
 }
