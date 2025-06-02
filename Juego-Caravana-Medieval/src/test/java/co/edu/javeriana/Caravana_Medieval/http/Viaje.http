@@ -1,6 +1,0 @@
-@base_url = http://localhost:8088
-
-PUT {{base_url}}/viaje/1/43/1
-// idcaravana: 1
-// idciudad: 43 
-// idruta: 1

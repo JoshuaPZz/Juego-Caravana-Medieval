@@ -5,25 +5,29 @@ import { ViajarService } from '../../viaje/viajar.service';
 import { PopupComponent } from '../../popup/popup.component';
 import { CiudadDto } from '../../dto/ciudad-dto';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthServiceService } from '../../servicios/auth-services/auth-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home-principal',
-  imports: [CaravanaViewComponent],
+  imports: [CaravanaViewComponent, CommonModule],
   templateUrl: './home-principal.component.html',
   styleUrl: './home-principal.component.css',
 })
 export class HomePrincipalComponent {
   ciudadActual!: CiudadDto;
+  rol?: string; 
   constructor(
-    private router: Router,
-    private viajarService: ViajarService,
-    private route: ActivatedRoute,
-    private dialog: MatDialog
+    private readonly router: Router,
+    private readonly viajarService: ViajarService,
+    private readonly route: ActivatedRoute,
+    private readonly dialog: MatDialog,
+    private readonly authservice: AuthServiceService
   ) {}
 
   ngOnInit(): void {
+    this.saberRol()
     const caravanaId = Number(this.route.snapshot.paramMap.get('id')) || 1;
-
     this.viajarService.ciudadActual(caravanaId).subscribe({
       next: (ciudad) => {
         this.ciudadActual = ciudad;
@@ -55,6 +59,14 @@ export class HomePrincipalComponent {
   }
   verInventario(): void {
     this.router.navigate(['inventario']);
+  }
+  saberRol(): void {
+    this.rol = this.authservice.role() ?? undefined;
+    console.log('Rol:', this.rol);
+  }
+  logout(): void {
+    this.authservice.logout();
+    this.router.navigate(['']);
   }
 
   getCiudadImagen(): string {

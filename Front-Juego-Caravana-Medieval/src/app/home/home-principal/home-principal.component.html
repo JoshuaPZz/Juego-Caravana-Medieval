@@ -1,5 +1,11 @@
 <div class="container">
   <div>
+    <div class="rol-actual">Rol actual: {{ rol }}</div>
+    <div class="log-out">
+      <button (click)="logout()">Cerrar Sesión</button>
+    </div>
+
+
     <app-caravana-view></app-caravana-view>
     <h1>Ciudad Actual</h1>
 
@@ -14,10 +20,15 @@
   </div>
 
   <div>
-    <button (click)="viajar()">Viajar</button>
-    <button (click)="comprarProductos()">Comprar Producto</button>
-    <button (click)="comprarServicios()">Comprar Servicio</button>
-    <button (click)="venderProducto()">Vender Producto</button>
-    <button (click)="verInventario()">Ver Inventario de Productos</button>
+    <ng-container *ngIf="rol === 'CARAVANERO'; else COMERCIANTE">
+      <button (click)="viajar()">Viajar</button>
+      <button (click)="verInventario()">Ver Inventario de Productos</button>
+    </ng-container>
+    <ng-template #COMERCIANTE>
+      <button (click)="comprarProductos()">Comprar Producto</button>
+      <button (click)="comprarServicios()">Comprar Servicio</button>
+      <button id="venderBtn" (click)="venderProducto()">Vender Producto</button>
+      <button (click)="verInventario()">Ver Inventario de Productos</button>
+    </ng-template>
   </div>
 </div>

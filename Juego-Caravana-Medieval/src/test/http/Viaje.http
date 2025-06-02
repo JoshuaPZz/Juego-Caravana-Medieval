@@ -1,0 +1,8 @@
+@base_url = http://localhost:8088
+
+PUT {{base_url}}/viaje/1/43/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqdWdhZG9yMkBlamVtcGxvLmNvbSIsImlhdCI6MTc0NjkxNDgzNSwiZXhwIjoxNzQ2OTUwODM1fQ.D6U6SCzsxsaqIybbBrj8-qMISmqzMAXwR6Uou3jlcEjG28CUWNJ7A6CnKd8ZVGbF
+// idcaravana: 1
+// idciudad: 43 
+// idruta: 1

@@ -1,6 +1,9 @@
 package co.edu.javeriana.caravana_medieval.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import co.edu.javeriana.caravana_medieval.repository.CaravanaRepository;
@@ -17,16 +20,26 @@ public class JugadorService {
     private JugadorRepository jugadorRepository;
     @Autowired
     private CaravanaRepository caravanaRepository;
-    
+
     public List<JugadorDTO> getAllJugadores() {
         return jugadorRepository.findAll().stream()
-                .map(jugador -> new JugadorDTO(jugador.getId(), jugador.getNombre(), jugador.getRol(),caravanaRepository.findById(jugador.getCaravana().getId()).get().getId()))
+                .map(jugador -> new JugadorDTO(
+                        jugador.getId(),
+                        jugador.getNombre(),
+                        jugador.getEmail(),
+                        jugador.getRole(),
+                        jugador.getCaravana().getId()))
                 .toList();
     }
 
     public JugadorDTO getJugadorById(Long id) {
         return jugadorRepository.findById(id)
-                .map(jugador -> new JugadorDTO(jugador.getId(), jugador.getNombre(), jugador.getRol(),jugador.getCaravana().getId()))
+                .map(jugador -> new JugadorDTO(
+                        jugador.getId(),
+                        jugador.getNombre(),
+                        jugador.getEmail(),
+                        jugador.getRole(),
+                        jugador.getCaravana().getId()))
                 .orElse(null);
     }
 
@@ -35,6 +48,26 @@ public class JugadorService {
                 .map(jugador -> jugador.getCaravana().getId().toString())
                 .orElse(null);
     }
-    
-    
+
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) {
+                return jugadorRepository.findByEmail(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            }
+        };
+    }
+
+    public JugadorDTO getJugadorbyEmail(String email) {
+        return jugadorRepository.findByEmail(email)
+                .map(jugador -> new JugadorDTO(
+                        jugador.getId(),
+                        jugador.getNombre(),
+                        jugador.getEmail(),
+                        jugador.getRole(),
+                        jugador.getCaravana().getId()))
+                .orElse(null);
+    }
+
 }
