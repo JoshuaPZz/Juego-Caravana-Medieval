@@ -258,10 +258,9 @@ public class VenderControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(dto)
                 .exchange()
-                .expectStatus().is5xxServerError() // Cambiado a 500 si ese es el comportamiento actual
+                .expectStatus().is5xxServerError()
                 .expectBody(String.class)
                 .value(response -> {
-                    // El mensaje puede venir en diferentes formatos según el handler de excepciones
                     assertThat(response).containsAnyOf(
                             "No se pueden vender cantidades negativas",
                             "RuntimeException",
